@@ -104,5 +104,13 @@ Axiom Ob8ThePrecedenceConditionF_floating3 :
    ∀ x y: Ob, ob_is_individual(x) ⇒ x ¶ ob_c(y,x).
         
 
+(* Some simple proofs *)
 
-
+Lemma A_B_to_Precedence :
+  ∀ z y: Ob, (ob_a(z) = z ∧ ob_b(z) = z)  ⇒ z ¶ ob_c(y,z).
+Proof.
+  intros.
+  apply Ob8ThePrecedenceConditionF_floating3.
+  apply Ob3Individuals.
+  auto.
+Qed.
