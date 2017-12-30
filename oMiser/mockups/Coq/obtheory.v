@@ -107,10 +107,10 @@ Axiom Ob8ThePrecedenceConditionF_floating3 :
 (* Some simple proofs *)
 
 Lemma A_B_to_Precedence :
-  ∀ z y: Ob, (ob_a(z) = z ∧ ob_b(z) = z)  ⇒ z ¶ ob_c(y,z).
+  ∀ x y: Ob, (ob_a(x) = x ∧ ob_b(x) = x)  ⇒ x ¶ ob_c(y,x).
 Proof.
   intros.
   apply Ob8ThePrecedenceConditionF_floating3.
   apply Ob3Individuals.
-  auto.
+  assumption.
 Qed.
