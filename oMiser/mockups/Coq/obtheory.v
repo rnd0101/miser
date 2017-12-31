@@ -17,6 +17,7 @@ Set Implicit Arguments.
 Variable Ob : Type.
 Variables ob_a ob_b ob_e : Ob -> Ob.
 Variable ob_is_individual ob_is_singleton ob_is_pair ob_is_enclosure: Ob -> Prop.
+Variable obap_is_evref obap_is_evbinop obap_is_evunop: Ob -> Prop.
 Variable ob_c : Ob * Ob -> Ob.
 Variable prec : Ob * Ob -> Prop.
 
@@ -134,6 +135,7 @@ Axiom Obap2LiteralIndividualsD:
 
 (* Obap3. Universal Apply Function *)
 Variable obap_ap: Ob * Ob -> Ob. 
+Variable obap_d: Ob * Ob -> Ob. 
 Variable obap_apint: Ob * Ob -> Ob. 
 Variable obap_ev: Ob * Ob * Ob -> Ob. 
 Variable obap_eval: Ob -> Ob. 
@@ -194,6 +196,45 @@ Axiom Obap5ApplicativeTreatmentOfIndividualsK:
   ∀ p x: Ob, obap_is_lindy(p) ∧ ¬ obap_is_lindy_everywhere(x)  
      ⇒ obap_apint(p,x) = p :: ob_e(x).
 
+(* Evaluation functions *)
+Axiom Obap6EvA:
+  obap_is_evref(obap_SELF).
+Axiom Obap6EvB:   
+  obap_is_evref(obap_ARG).
+Axiom Obap6EvC:        
+  ∀ p x: Ob, obap_ev(p,x,obap_SELF) = p.
+Axiom Obap6EvD:
+  ∀ p x: Ob, obap_ev(p,x,obap_ARG) = x.
+Axiom Obap6EvE:        
+  ∀ e p x: Ob, ob_is_individual(e) ∧ ¬ obap_is_evref(e) ⇒ obap_ev(p,x,e) = e.
+Axiom Obap6EvF:   
+  ∀ p x y : Ob, obap_ev(p,x,ob_e(y)) = y.
+Axiom Obap6EvG:
+  obap_is_evbinop(obap_C).
+Axiom Obap6EvH:
+  obap_is_evbinop(obap_D).
+Axiom Obap6EvI:   
+  ∀ e1 e2 p x: Ob, obap_ev(p,x,obap_C::e1::e2) = ob_c(obap_ev(p,x,e1), obap_ev(p,x,e2)).
+Axiom Obap6EvJ:          
+  ∀ e1 e2 p x: Ob, obap_ev(p,x,obap_D::e1::e2) = obap_d(obap_ev(p,x,e1), obap_ev(p,x,e2))       .
+Axiom Obap6EvK:
+  ∀ x y: Ob, x = y ⇒ obap_d(x,y) = obap_A.
+Axiom Obap6EvL:
+  ∀ x y: Ob, x ≠ y ⇒ obap_d(x,y) = obap_B.
+Axiom Obap6EvM:
+  ∀ e1 e2 p x: Ob, obap_is_evbinop(e1) ∧ ob_is_singleton(e2)
+     ⇒ obap_ev(p,x,e1::e2) = obap_ap(e1, obap_ev(p,x,e2)).
+Axiom Obap6EvN:   
+  obap_is_evunop(obap_EV).
+Axiom Obap6EvO:   
+  ∀ e2 p x: Ob, obap_ev(p,x,obap_EV :: e2) = obap_ev(p,x,obap_ev(p,x,e2)).
+Axiom Obap6EvP:
+  ∀ e1 e2 p x: Ob, ¬ ( obap_is_evbinop(e1) ∨ obap_is_evunop(e1) )
+           ⇒ obap_ev(p,x,e1::e2) = obap_ap(obap_ev(p,x,e1), obap_ev(p,x,e2)).
+
+Axiom Obap7Eval:
+  ∀ e: Ob, obap_eval(e) = obap_ev(obap_SELF, obap_ARG, e).
+                                
 (* Some simple proofs *)
 
 Lemma A_B_to_Precedence :
