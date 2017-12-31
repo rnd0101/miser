@@ -133,7 +133,9 @@ Axiom Obap2LiteralIndividualsD:
   ∀ x y: Ob, obap_is_lindy(x) ∧ ¬ obap_is_lindy(y) ⇒ x ≠ y.
 
 (* Obap3. Universal Apply Function *)
-Variable obap_ap: Ob -> Ob -> Ob. 
+Variable obap_ap: Ob * Ob -> Ob. 
+Variable obap_apint: Ob * Ob -> Ob. 
+Variable obap_ev: Ob * Ob * Ob -> Ob. 
 Variable obap_eval: Ob -> Ob. 
 Variable obap_is_pure_lindy: Ob -> Prop.
 Variable obap_is_lindy_everywhere: Ob -> Prop.
@@ -150,8 +152,47 @@ Axiom Obap4apD:
 Axiom Obap4apE:
   ∀ x: Ob, obap_is_lindy_everywhere(ob_e(x)) ⇔ obap_is_lindy_everywhere(x).
 Axiom Obap4apF:
-∀ x y: Ob, obap_is_lindy_everywhere(x :: y)
+  ∀ x y: Ob, obap_is_lindy_everywhere(x :: y)
              ⇔ obap_is_lindy_everywhere(x) ∧ obap_is_lindy_everywhere(y).
+
+Axiom Obap4apG:
+  ∀ p x: Ob, ob_is_enclosure(p) ⇒ obap_ap(p,x) = ob_a(p).
+
+Axiom Obap4apH:
+  ∀ p x: Ob, ob_is_individual(p) ⇒ obap_ap(p,x) = obap_apint(p,x).
+
+Axiom Obap4apI:
+  ∀ p x: Ob, obap_is_pure_lindy(p) ∧ obap_is_lindy_everywhere(x)
+        ⇒ (ob_is_pair(p) ⇒ obap_ap(p,x) = p :: x).                                     
+
+Axiom Obap4apJ:
+  ∀ p x: Ob, ¬ ( obap_is_pure_lindy(p) ∧ obap_is_lindy_everywhere(x) )
+        ⇒ (ob_is_pair(p) ⇒ obap_ap(p,x) = obap_ev(p,x,p)).
+
+Axiom Obap5ApplicativeTreatmentOfIndividualsA:   
+  ∀ x: Ob, obap_apint(ob_NIL, x) = x.
+Axiom Obap5ApplicativeTreatmentOfIndividualsB:
+  ∀ x: Ob, obap_apint(obap_A, x) = ob_a(x).
+Axiom Obap5ApplicativeTreatmentOfIndividualsC:   
+  ∀ x: Ob, obap_apint(obap_B, x) = ob_b(x).
+Axiom Obap5ApplicativeTreatmentOfIndividualsD:   
+  ∀ x: Ob, obap_apint(obap_C, x) = obap_C :: ob_e(x) :: obap_ARG.
+Axiom Obap5ApplicativeTreatmentOfIndividualsE:
+  ∀ x: Ob, obap_apint(obap_D, x) = obap_D :: ob_e(x) :: obap_ARG.
+Axiom Obap5ApplicativeTreatmentOfIndividualsF:
+  ∀ x: Ob, obap_apint(obap_E, x) = ob_e(x).
+Axiom Obap5ApplicativeTreatmentOfIndividualsG:    
+  ∀ x: Ob, obap_apint(obap_SELF, x) = ob_e(obap_SELF) :: ob_e(x).
+Axiom Obap5ApplicativeTreatmentOfIndividualsH:
+  ∀ x: Ob, obap_apint(obap_ARG, x) = ob_e(obap_ARG) :: ob_e(x).
+Axiom Obap5ApplicativeTreatmentOfIndividualsI:
+  ∀ x: Ob, obap_apint(obap_EV, x) = ob_e(obap_EV) :: ob_e(x).  
+Axiom Obap5ApplicativeTreatmentOfIndividualsJ:
+  ∀ p x: Ob, obap_is_lindy(p) ∧ obap_is_lindy_everywhere(x)
+     ⇒ obap_apint(p,x) = p :: x.
+Axiom Obap5ApplicativeTreatmentOfIndividualsK:
+  ∀ p x: Ob, obap_is_lindy(p) ∧ ¬ obap_is_lindy_everywhere(x)  
+     ⇒ obap_apint(p,x) = p :: ob_e(x).
 
 (* Some simple proofs *)
 
