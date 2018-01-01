@@ -1,3 +1,4 @@
+Module ob.
 
 (* Primitive notions *)
 
@@ -12,7 +13,6 @@ Require Export Classical_Pred_Type.
 
 Axiom excluded_middle: forall P: Prop, P \/ ~P.  (* part of classic? *)
 
-Set Implicit Arguments.
 
 Variable Ob : Type.
 Variables ob_a ob_b ob_e : Ob -> Ob.
@@ -26,12 +26,11 @@ Notation "x ¶ y" := (prec(x, y)) (at level 70, no associativity): type_scope.
 Notation "x :: y" := (ob_c(x,y)) (at level 60, right associativity): type_scope.
 Notation "` x" := (ob_e(x)) (at level 55, right associativity).
 
-
 Axiom Ob1PairsA :
   ∀ x y z : Ob, z = ob_c(x,y) ⇒ ob_a(z) = x ∧ ob_b(z) = y.
 
 Axiom Ob1PairsB :
-  ∀ x y z : Ob, z = ob_c(ob_a(z),ob_b(z)) ⇔ ob_a(z) ≠ z ∧ ob_b(z) ≠ z.
+  ∀ z : Ob, z = ob_c(ob_a(z),ob_b(z)) ⇔ ob_a(z) ≠ z ∧ ob_b(z) ≠ z.
 
 Axiom Ob2EnclosuresA :
   ∀ x z : Ob, z = ob_e(x) ⇒ ob_a(z) = x ∧ ob_b(z) = z.
@@ -56,7 +55,7 @@ Axiom Ob5totality2 :
   ∀ z : Ob,
     (ob_is_individual(z) ∧ ¬ ob_is_enclosure(z) ∧ ¬ ob_is_pair(z))
     ∨ (ob_is_enclosure(z) ∧ ¬ ob_is_individual(z) ∧ ¬ ob_is_pair(z))
-    ∨ (ob_is_pair(z) ∧ ¬ ob_is_enclosure(z) ∧ ¬ ob_is_individual(z)).            
+    ∨ (ob_is_pair(z) ∧ ¬ ob_is_enclosure(z) ∧ ¬ ob_is_individual(z)).
 
 Axiom Ob6StructuralIdentityA:
   ∀ u v w x y z : Ob, u = ob_c(v,w) ∧ z = ob_c(x,y)
@@ -234,4 +233,5 @@ Axiom Obap6EvP:
 
 Axiom Obap7Eval:
   ∀ e: Ob, obap_eval(e) = obap_ev(obap_SELF, obap_ARG, e).
-                                
+
+End ob.
