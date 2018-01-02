@@ -1,6 +1,6 @@
 
 Require Import Coq.Unicode.Utf8_core.
-Load ob_obap_theory.
+Require Import ob_obap_theory.
 
 (* Some simple proofs *)
 
