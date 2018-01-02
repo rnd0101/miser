@@ -1,6 +1,6 @@
 
 Require Import Coq.Unicode.Utf8_core.
-Require Import ob_obap_theory.
+Load ob_obap_theory.
 
 (* Some simple proofs *)
 
@@ -28,7 +28,7 @@ Qed.
 Definition ob_logo := ob_NIL :: ` ob_NIL.
 Definition nob_logo := ` ob_logo.
 
-Lemma ckOb1a :
+Example ckOb1a :
   ∀ z: Ob, z = (` ob_logo :: ob_NIL) ⇒ (ob_a z = ` ob_logo) ∧ (ob_b z = ob_NIL).
 Proof.
   intros.
@@ -36,16 +36,43 @@ Proof.
   trivial.
 Qed.
 
-Eval simpl in ob_a (ob_logo :: ob_b ob_logo).
-
-Lemma ckOb1b :
+Example ckOb1b :
   ∀ x: Ob, x = ob_a (ob_logo :: ob_b ob_logo) ⇒ x = ob_logo ∧ ob_a x ≠ x ∧ ob_b x ≠ x.
 Proof. (* kudos to Anton Trunov https://stackoverflow.com/q/48048374 *)
   unfold ob_logo; intros H.
   rewrite <-Ob1PairsB.
   remember (ob_c (ob_NIL, ob_e ob_NIL)) as f eqn:F.
-  pose proof (Ob1PairsA F) as [F1 F2].
+  pose proof (Ob1PairsA _ _ _ F) as [F1 F2].
   remember (ob_c (f, ob_b f)) as g eqn:G.
-  pose proof (Ob1PairsA G) as [G1 G2].
+  pose proof (Ob1PairsA _ _ _ G) as [G1 G2].
   split; congruence.
 Qed.
+
+Example ck0b1c :
+  let z := ob_logo :: nob_logo :: ob_NIL
+              in z = ob_c(ob_logo, ob_c(nob_logo, ob_NIL)).
+Proof.
+  trivial.
+Qed.
+
+Example ckOb2a :
+ ∀ z, z = ob_e(ob_b ob_logo) ⇒
+           ob_a z = ob_b ob_logo ∧ ob_b z = z.
+Proof.
+  intros; split.
+  apply Ob2EnclosuresA; congruence.
+  apply Ob2EnclosuresA in H.
+  destruct H.
+  trivial.
+Qed.
+
+Example ckOb2b :
+  ∀ z, z = ob_e(ob_a nob_logo) ⇒
+       z = nob_logo ∧ ob_a z = ob_logo ∧ ob_b z = z.
+Proof.
+  (* TODO *)
+Admitted.
+
+
+
+
