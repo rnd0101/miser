@@ -1,15 +1,14 @@
-Module ob.
+Require Export Coq.Unicode.Utf8_core.
+Require Export Classical_Prop.
+Require Export Classical_Pred_Type.
 
 (* Primitive notions *)
 
 (* Some syntactic sugar *)
-Require Import Coq.Unicode.Utf8_core.
 Notation "x ⇒ y" := (x -> y)
                       (at level 99, y at level 200, right associativity): type_scope.
 Notation "x ⇔ y" := (x <-> y) (at level 95, no associativity): type_scope.
 
-Require Export Classical_Prop.
-Require Export Classical_Pred_Type.
 
 Axiom excluded_middle: forall P: Prop, P \/ ~P.  (* part of classic? *)
 
@@ -233,5 +232,3 @@ Axiom Obap6EvP:
 
 Axiom Obap7Eval:
   ∀ e: Ob, obap_eval(e) = obap_ev(obap_SELF, obap_ARG, e).
-
-End ob.
