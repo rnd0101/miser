@@ -70,9 +70,52 @@ Example ckOb2b :
   ∀ z, z = ob_e(ob_a nob_logo) ⇒
        z = nob_logo ∧ ob_a z = ob_logo ∧ ob_b z = z.
 Proof.
-  (* TODO *)
-Admitted.
+  intros.
+  assert (ob_a z = ob_logo).
+  unfold ob_logo.
+  apply Ob1PairsA.
+   apply Ob2EnclosuresA in H.
+  unfold nob_logo.
+  unfold nob_logo in H.
+  unfold ob_logo.
+  unfold ob_logo in H.
+  remember (ob_c (ob_NIL, ob_e ob_NIL)) as f eqn:F.
+  remember (` f) as g eqn:G.
+  pose proof (Ob2EnclosuresA _ _ _ G) as [G1 G2].
 
+  Focus 1.
+  unfold nob_logo in H.
+  apply Ob2EnclosuresA in H.
+
+(*   intros; split.
+  Focus 2.
+  apply Ob2EnclosuresA in H.
+  intuition.
+  unfold nob_logo in H0.
+  assert (ob_a (` ob_logo) = ob_logo)
+
+  intuition.
+  apply Ob2EnclosuresA in H.
+  unfold nob_logo.
+  Focus 3.
+  rewrite <-Ob1PairsA.
+  intuition.
+ *)
+
+
+(*   Focus 2.
+  apply Ob2EnclosuresA.
+  unfold nob_logo in H.
+  apply Ob2EnclosuresA in H.
+
+  intuition.
+ *)
+(*   unfold nob_logo.
+  remember (` ob_logo) as f eqn:F.
+  intros; split.
+  apply Ob2EnclosuresA in H.
+  apply Ob2EnclosuresA in F.
+ *)
 
 
 
