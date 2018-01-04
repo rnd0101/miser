@@ -11,5 +11,5 @@ P : 'NIL' | 'A' | 'B' | 'C' | 'D' | 'E' | 'SELF' | 'ARG' | 'EV';
 D : '`';
 C : '::';
 lindie : LINDIE;
-LINDIE : '"' [a-zA-Z0-9_]* '"';
+LINDIE : '"' [a-zA-Z0-9_]+ '"';
 WS : [ \t\r\n]+ -> skip ;
