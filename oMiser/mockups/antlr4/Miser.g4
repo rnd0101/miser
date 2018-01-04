@@ -1,0 +1,15 @@
+grammar Miser;
+program : ob '.';
+ob : i | '(' ob ')' | pair | enclosure;
+pair : '(' ob C ob ')';
+enclosure : D ob;
+i : individual | primitive ;
+individual : I | lindie;
+primitive : P;
+I : [a-z]+;
+P : 'NIL' | 'A' | 'B' | 'C' | 'D' | 'E' | 'SELF' | 'ARG' | 'EV';
+D : '`';
+C : '::';
+lindie : LINDIE;
+LINDIE : '"' [a-zA-Z0-9_]* '"';
+WS : [ \t\r\n]+ -> skip ;
