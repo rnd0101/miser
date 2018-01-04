@@ -70,6 +70,8 @@ Example ckOb2b :
   ∀ z, z = ob_e(ob_a nob_logo) ⇒
        z = nob_logo ∧ ob_a z = ob_logo ∧ ob_b z = z.
 Proof.
+Admitted.
+(*
   intros.
   assert (ob_a z = ob_logo).
   unfold ob_logo.
@@ -86,7 +88,7 @@ Proof.
   Focus 1.
   unfold nob_logo in H.
   apply Ob2EnclosuresA in H.
-
+*)
 (*   intros; split.
   Focus 2.
   apply Ob2EnclosuresA in H.
@@ -116,6 +118,3 @@ Proof.
   apply Ob2EnclosuresA in H.
   apply Ob2EnclosuresA in F.
  *)
-
-
-
