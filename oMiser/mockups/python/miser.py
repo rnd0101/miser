@@ -132,6 +132,8 @@ class obap(object):
 x = Ob('x')
 y = Ob('y')
 l = Lindy('ImLindy')
+assert Lindy('x') != x
+assert Lindy('x') != Primitive('x')
 
 EXAMPLE = ob.e(
     ob.c(ob.c(x, l), ob.e(ob.NIL))
