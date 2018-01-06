@@ -29,6 +29,12 @@
         <Class IRI="#EvUnOp"/>
     </Declaration>
     <Declaration>
+        <ObjectProperty IRI="#miserProperty"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ob:b"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Enclosure"/>
     </Declaration>
     <Declaration>
@@ -45,6 +51,9 @@
     </Declaration>
     <Declaration>
         <NamedIndividual abbreviatedIRI="ob:b"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ob:a"/>
     </Declaration>
     <Declaration>
         <NamedIndividual abbreviatedIRI="obap:ARG"/>
@@ -80,7 +89,13 @@
         <NamedIndividual abbreviatedIRI="obap:eval"/>
     </Declaration>
     <Declaration>
+        <DataProperty IRI="#lindy"/>
+    </Declaration>
+    <Declaration>
         <Class IRI="#Ob"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="ob:e"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Singleton"/>
@@ -110,10 +125,10 @@
         <NamedIndividual abbreviatedIRI="obap:D"/>
     </Declaration>
     <Declaration>
-        <NamedIndividual abbreviatedIRI="obap:apint"/>
+        <NamedIndividual abbreviatedIRI="obap:B"/>
     </Declaration>
     <Declaration>
-        <NamedIndividual abbreviatedIRI="obap:B"/>
+        <NamedIndividual abbreviatedIRI="obap:apint"/>
     </Declaration>
     <SubClassOf>
         <Class IRI="#Enclosure"/>
@@ -255,6 +270,50 @@
         <Class IRI="#Of"/>
         <NamedIndividual abbreviatedIRI="obap:eval"/>
     </ClassAssertion>
+    <SubObjectPropertyOf>
+        <ObjectProperty abbreviatedIRI="ob:a"/>
+        <ObjectProperty IRI="#miserProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty abbreviatedIRI="ob:b"/>
+        <ObjectProperty IRI="#miserProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty abbreviatedIRI="ob:e"/>
+        <ObjectProperty IRI="#miserProperty"/>
+    </SubObjectPropertyOf>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ob:a"/>
+        <Class IRI="#Ob"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ob:b"/>
+        <Class IRI="#Ob"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="ob:e"/>
+        <Class IRI="#Ob"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ob:a"/>
+        <Class IRI="#Ob"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ob:b"/>
+        <Class IRI="#Ob"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="ob:e"/>
+        <Class IRI="#Enclosure"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty IRI="#lindy"/>
+        <Class IRI="#Lindy"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="#lindy"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
         <IRI>#Ob</IRI>

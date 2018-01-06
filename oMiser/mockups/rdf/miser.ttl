@@ -13,6 +13,45 @@
                                        rdfs:comment "Experimental ontology for Miser project"@en .
 
 #################################################################
+#    Object Properties
+#################################################################
+
+###  http://miser-theory.info/2018/miser#miserProperty
+:miserProperty rdf:type owl:ObjectProperty .
+
+
+###  http://miser-theory.info/2018/ob#a
+ob:a rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :miserProperty ;
+     rdfs:domain :Ob ;
+     rdfs:range :Ob .
+
+
+###  http://miser-theory.info/2018/ob#b
+ob:b rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :miserProperty ;
+     rdfs:domain :Ob ;
+     rdfs:range :Ob .
+
+
+###  http://miser-theory.info/2018/ob#e
+ob:e rdf:type owl:ObjectProperty ;
+     rdfs:subPropertyOf :miserProperty ;
+     rdfs:domain :Ob ;
+     rdfs:range :Enclosure .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://miser-theory.info/2018/miser#lindy
+:lindy rdf:type owl:DatatypeProperty ;
+       rdfs:domain :Lindy ;
+       rdfs:range xsd:string .
+
+
+#################################################################
 #    Classes
 #################################################################
 
