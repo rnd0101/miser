@@ -213,11 +213,15 @@ UpgradeLog*.htm
 *.bim.layout
 *.bim_*.settings
 
+# IDEA artefacts
+.idea
+
 # Microsoft Fakes
 FakesAssemblies/
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 0.0.5 2018-01-07-00:00 Added .idea
 # 0.0.7 2017-11-17-13:19 Adjust annotation and confirm *.scc is ignored.
 # 0.0.6 2017-07-26-13:36 Transpose for the orcmid/miser GitHub Project
 # 0.0.5 2016-10-04-12:30 Transpose for the orcmid/Adv10 GitHub Project
