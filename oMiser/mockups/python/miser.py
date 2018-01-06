@@ -215,7 +215,7 @@ class obap(object):
 x = Ob('x')
 y = Ob('y')
 l = Lindy('ImLindy')
-assert Lindy('x') != x
+assert Lindy('x') != x  # TODO: fix for python3
 assert Lindy('x') != Primitive('x', lambda self, x: x)
 
 print(obap.D.obap_int(x))
