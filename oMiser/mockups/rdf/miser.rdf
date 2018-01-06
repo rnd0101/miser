@@ -15,6 +15,261 @@
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="obap" IRI="http://miser-theory.info/2018/obap#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal xml:lang="en" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Experimental ontology for Miser project</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="#Primitive"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:SELF"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EvUnOp"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Enclosure"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Lindy"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Individual"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ot"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EvRef"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ob:b"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:ARG"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pair"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PureLindy"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:E"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:d"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:C"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:A"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EvBinOp"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ob:NIL"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Of"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:eval"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Ob"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Singleton"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:EV"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:ap"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:ev"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ob:e"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ob:c"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#LindyEverywhere"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="ob:a"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:D"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:apint"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI="obap:B"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Enclosure"/>
+        <Class IRI="#Ob"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EvBinOp"/>
+        <Class IRI="#Primitive"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EvRef"/>
+        <Class IRI="#Primitive"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EvUnOp"/>
+        <Class IRI="#Primitive"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Individual"/>
+        <Class IRI="#Ob"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Lindy"/>
+        <Class IRI="#Individual"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#LindyEverywhere"/>
+        <Class IRI="#Ob"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Pair"/>
+        <Class IRI="#Ob"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Primitive"/>
+        <Class IRI="#Individual"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#PureLindy"/>
+        <Class IRI="#Ob"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Singleton"/>
+        <Class IRI="#Ob"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#Enclosure"/>
+        <Class IRI="#Individual"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Enclosure"/>
+        <Class IRI="#Pair"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Individual"/>
+        <Class IRI="#Pair"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Lindy"/>
+        <Class IRI="#Primitive"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Pair"/>
+        <Class IRI="#Singleton"/>
+    </DisjointClasses>
+    <ClassAssertion>
+        <Class IRI="#Primitive"/>
+        <NamedIndividual abbreviatedIRI="ob:NIL"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="ob:a"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="ob:b"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="ob:c"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="ob:e"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Primitive"/>
+        <NamedIndividual abbreviatedIRI="obap:A"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EvRef"/>
+        <NamedIndividual abbreviatedIRI="obap:ARG"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Primitive"/>
+        <NamedIndividual abbreviatedIRI="obap:B"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EvBinOp"/>
+        <NamedIndividual abbreviatedIRI="obap:C"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EvBinOp"/>
+        <NamedIndividual abbreviatedIRI="obap:D"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Primitive"/>
+        <NamedIndividual abbreviatedIRI="obap:E"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EvUnOp"/>
+        <NamedIndividual abbreviatedIRI="obap:EV"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Primitive"/>
+        <NamedIndividual abbreviatedIRI="obap:EV"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EvRef"/>
+        <NamedIndividual abbreviatedIRI="obap:SELF"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="obap:ap"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="obap:apint"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="obap:d"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="obap:ev"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Of"/>
+        <NamedIndividual abbreviatedIRI="obap:eval"/>
+    </ClassAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Ob</IRI>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">all of the obs</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Of</IRI>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">all functions on obs</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <IRI>#Ot</IRI>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">the applied-logic theory in which the structure is characterized</Literal>
+    </AnnotationAssertion>
 </Ontology>
 
 
