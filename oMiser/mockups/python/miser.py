@@ -236,8 +236,14 @@ class obap(object):
 
 
 def repl_loop():
+    print("oMiser / Python syntax interpreter")
+    print("Press Ctrl-D to leave.")
     while True:
-        s = input("oMiser> ")
+        try:
+            s = input("\noMiser> ")
+        except EOFError:
+            print("\nBye!")
+            break
         if not isinstance(s, Ob):
             print("ERROR: Ob expected")
             continue
