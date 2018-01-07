@@ -238,6 +238,9 @@ class obap(object):
 def repl_loop():
     while True:
         s = input("oMiser> ")
+        if not isinstance(s, Ob):
+            print("ERROR: Ob expected")
+            continue
         print("INPUT: {}".format(repr(s)))
         print("ABBR: {}".format(str(s)))
         print("\nOUTPUT: {}".format(repr(obap.eval(s))))
