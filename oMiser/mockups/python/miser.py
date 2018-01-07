@@ -13,7 +13,7 @@ class Ob(object):
         return False
 
     def is_individual(self):
-        return False
+        return self.a == self.b
 
     def is_primitive(self):
         return False
@@ -42,6 +42,7 @@ class Ob(object):
 
 class Individual(Ob):
     type_ = 'individual'
+
     def __init__(self, name):
         self.a = self
         self.b = self
@@ -56,6 +57,7 @@ class Individual(Ob):
 
 class Enclosure(Ob):
     type_ = 'enclosure'
+
     def __init__(self, x):
         self.a = x
         self.b = self
@@ -84,12 +86,13 @@ class Enclosure(Ob):
 
 class Pair(Ob):
     type_ = 'pair'
+
     def __init__(self, x, y):
         self.a = x
         self.b = y
 
     def is_pair(self):
-        return False
+        return True
 
     def is_pure_lindy(self):
         return self.a.is_pure_lindy() and self.b.is_pure_lindy()
@@ -115,6 +118,7 @@ class Pair(Ob):
 
 class Primitive(Individual):
     type_ = 'primitive'
+
     def __init__(self, name, apint):
         self.a = self
         self.b = self
@@ -133,6 +137,7 @@ class Primitive(Individual):
 
 class Lindy(Individual):
     type_ = 'lindy'
+
     def is_lindy(self):
         return True
 
@@ -221,20 +226,32 @@ class obap(object):
         return obap.ev(obap.SELF, obap.ARG, e)
 
 
-x = Ob('x')
-y = Ob('y')
-l = Lindy('ImLindy')
-assert Lindy('x') != x  # TODO: fix for python3
-assert Lindy('x') != Primitive('x', lambda self, x: x)
-assert ob.c(x, ob.e(y)) == ob.c(x, ob.e(y))
+def repl_loop():
+    while True:
+        s = input("oMiser> ")
+        print("INPUT: {}".format(repr(s)))
+        print("\nINPUT: {}".format(str(s)))
+        print("\nOUTPUT: {}".format(repr(obap.eval(s))))
 
-print(obap.D.obap_int(x))
 
-EXAMPLE = ob.e(
-    ob.c(ob.c(x, l), ob.e(ob.NIL))
-)
+def test():
+    x = Ob('x')
+    y = Ob('y')
+    l = Lindy('ImLindy')
+    assert Lindy('x') != x  # TODO: fix for python3
+    assert Lindy('x') != Primitive('x', lambda self, x: x)
+    assert ob.c(x, ob.e(y)) == ob.c(x, ob.e(y))
 
-print(EXAMPLE)
-print(repr(EXAMPLE))
+    print(obap.D.obap_int(x))
 
-print(obap.eval(EXAMPLE))
+    EXAMPLE = ob.e(
+        ob.c(ob.c(x, l), ob.e(ob.NIL))
+    )
+
+    print(EXAMPLE)
+    print(repr(EXAMPLE))
+    print(obap.eval(EXAMPLE))
+
+
+if __name__ == '__main__':
+    repl_loop()
