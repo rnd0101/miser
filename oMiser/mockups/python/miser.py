@@ -39,6 +39,9 @@ class Ob(object):
     def __eq__(self, other):
         return self is other
 
+    def __ne__(self, other):
+        return not (self == other)  # Not needed in py3
+
     def __str__(self):
         return self.name
 
@@ -236,7 +239,7 @@ def repl_loop():
     while True:
         s = input("oMiser> ")
         print("INPUT: {}".format(repr(s)))
-        print("\nINPUT: {}".format(str(s)))
+        print("ABBR: {}".format(str(s)))
         print("\nOUTPUT: {}".format(repr(obap.eval(s))))
 
 
