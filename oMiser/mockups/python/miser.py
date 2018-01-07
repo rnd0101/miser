@@ -1,6 +1,7 @@
 class Ob(object):
     a = None
     b = None
+    type_ = 'ob'
 
     def __init__(self, name):
         self.name = name
@@ -40,6 +41,7 @@ class Ob(object):
 
 
 class Individual(Ob):
+    type_ = 'individual'
     def __init__(self, name):
         self.a = self
         self.b = self
@@ -53,6 +55,7 @@ class Individual(Ob):
 
 
 class Enclosure(Ob):
+    type_ = 'enclosure'
     def __init__(self, x):
         self.a = x
         self.b = self
@@ -80,6 +83,7 @@ class Enclosure(Ob):
 
 
 class Pair(Ob):
+    type_ = 'pair'
     def __init__(self, x, y):
         self.a = x
         self.b = y
@@ -110,6 +114,7 @@ class Pair(Ob):
 
 
 class Primitive(Individual):
+    type_ = 'primitive'
     def __init__(self, name, apint):
         self.a = self
         self.b = self
@@ -122,13 +127,17 @@ class Primitive(Individual):
     def is_primitive(self):
         return True
 
+    def __eq__(self, other):
+        return self.name == other.name and self.type_ == other.type_
+
 
 class Lindy(Individual):
+    type_ = 'lindy'
     def is_lindy(self):
         return True
 
     def __eq__(self, other):
-        return self.name == other.name
+        return self.name == other.name and self.type_ == other.type_
 
     def __str__(self):
         return '"{}"'.format(str(self.name))
@@ -217,6 +226,7 @@ y = Ob('y')
 l = Lindy('ImLindy')
 assert Lindy('x') != x  # TODO: fix for python3
 assert Lindy('x') != Primitive('x', lambda self, x: x)
+assert ob.c(x, ob.e(y)) == ob.c(x, ob.e(y))
 
 print(obap.D.obap_int(x))
 
