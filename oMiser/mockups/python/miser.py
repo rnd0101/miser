@@ -36,6 +36,9 @@ class Ob(object):
     def obap_int(self, x):
         raise ValueError("Ob individual {} can't be interpreted.".format(repr(self)))
 
+    def __eq__(self, other):
+        return self is other
+
     def __str__(self):
         return self.name
 
