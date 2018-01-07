@@ -33,6 +33,9 @@ class Ob(object):
     def obap_ap(self, x):
         return obap.apint(self, x)
 
+    def obap_int(self, x):
+        raise ValueError("Ob individual {} can't be interpreted.".format(repr(self)))
+
     def __str__(self):
         return self.name
 
