@@ -250,7 +250,7 @@ def test():
     x = Ob('x')
     y = Ob('y')
     l = Lindy('ImLindy')
-    assert Lindy('x') != x  # TODO: fix for python3
+    assert Lindy('x') != x
     assert Lindy('x') != Primitive('x', lambda self, x: x)
     assert ob.c(x, ob.e(y)) == ob.c(x, ob.e(y))
 
