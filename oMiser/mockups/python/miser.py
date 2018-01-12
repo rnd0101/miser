@@ -1,43 +1,23 @@
-class Ob(object):
+# -*- coding: utf-8 -*-
+
+class ob(object):
+    """Abstract Ob class"""
+    name = None
     a = None
     b = None
-    type_ = 'ob'
 
-    def __init__(self, name):
-        self.name = name
-
-    def is_enclosure(self):
+    @property
+    def is_pure_lindy_trace(self):
         return False
 
-    def is_pair(self):
-        return False
+    def ap(self, x):
+        return c(e(p), e(x))
 
-    def is_individual(self):
-        return self.a == self.b
+    def ev(self, p, x):
+        return self
 
-    def is_primitive(self):
-        return False
-
-    def is_lindy(self):
-        return False
-
-    def is_pure_lindy(self):
-        return self.is_lindy()
-
-    def is_lindy_everywhere(self):
-        return self.is_lindy()
-
-    def is_singleton(self):
-        return ob.b(self) == self
-
-    def obap_ap(self, x):
-        return obap.apint(self, x)
-
-    def obap_int(self, x):
-        raise ValueError("Ob individual {} can't be interpreted.".format(repr(self)))
-
-    def __eq__(self, other):
-        return self is other
+    def __pow__(self, other, modulo=None):
+        return c(self, other)
 
     def __ne__(self, other):
         return not (self == other)  # Not needed in py3
@@ -46,74 +26,34 @@ class Ob(object):
         return self.name
 
     def __repr__(self):
-        return "Ob({})".format(repr(self.name))
+        return "ob({})".format(repr(self.name))
 
 
-class Individual(Ob):
-    type_ = 'individual'
-
-    def __init__(self, name):
-        self.a = self
-        self.b = self
-        self.name = name
-
-    def is_individual(self):
-        return True
-
-    def __eq__(self, other):
-        return self is other
-
-
-class Enclosure(Ob):
-    type_ = 'enclosure'
-
-    def __init__(self, x):
-        self.a = x
-        self.b = self
-
-    def is_enclosure(self):
-        return True
-
-    def is_pure_lindy(self):
-        return False
-
-    def is_lindy_everywhere(self):
-        return self.a.is_lindy_everywhere()
-
-    def obap_ap(self, x):
-        return ob.a(x)
-
-    def __eq__(self, other):
-        return self.a == other.a
-
-    def __str__(self):
-        return "`({})".format(str(self.a))
-
-    def __repr__(self):
-        return "ob.e({})".format(repr(self.a))
-
-
-class Pair(Ob):
-    type_ = 'pair'
-
+class c(ob):
     def __init__(self, x, y):
         self.a = x
         self.b = y
 
-    def is_pair(self):
-        return True
+    @property
+    def is_pure_lindy_trace(self):
+        return self.a.is_pure_lindy_trace and self.b.is_pure_lindy_trace
 
-    def is_pure_lindy(self):
-        return self.a.is_pure_lindy() and self.b.is_pure_lindy()
+    def ap(self, x):
+        if c(self, x).is_pure_lindy_trace:
+            return c(self, x)
+        return ev(self, x, self)
 
-    def is_lindy_everywhere(self):
-        return self.a.is_lindy_everywhere() and self.b.is_lindy_everywhere()
-
-    def obap_ap(self, x):
-        if self.is_pure_lindy() and x.is_lindy_everywhere:
-            return ob.c(self, x)
-        else:
-            return obap.ev(self, x, self)
+    def ev(self, p, x):
+        if self.a == C and is_pair(self.b):
+            return c(ev(p, x, self.b.a), ev(p, x, self.b.b))
+        if self.a == D and is_pair(self.b):
+            if ev(p, x, self.b.a) == ev(p, x, self.b.b):
+                return A
+            else:
+                return B
+        if self.a == EV:
+            return ev(p, x, ev(p, x, self.b))
+        return ap(ev(p, x, self.a), ev(p, x, self.b))
 
     def __eq__(self, other):
         return self.a == other.a and self.b == other.b
@@ -122,154 +62,175 @@ class Pair(Ob):
         return "({} :: {})".format(str(self.a), str(self.b))
 
     def __repr__(self):
-        return "ob.c({}, {})".format(repr(self.a), repr(self.b))
+        return "c({}, {})".format(repr(self.a), repr(self.b))
 
 
-class Primitive(Individual):
-    type_ = 'primitive'
-
-    def __init__(self, name, apint):
-        self.a = self
+class e(ob):
+    def __init__(self, x):
+        self.a = x
         self.b = self
-        self.name = name
-        self.apint = apint
 
-    def obap_int(self, x):
-        return self.apint(self, x)
+    def ap(self, x):
+        return self.a
 
-    def is_primitive(self):
-        return True
+    def ev(self, p, x):
+        return self.a
 
     def __eq__(self, other):
-        return self.name == other.name and self.type_ == other.type_
+        return self.a == other.a
+
+    def __str__(self):
+        if is_individual(self):
+            return "`{}".format(str(self.a))
+        return "`({})".format(str(self.a))
+
+    def __repr__(self):
+        return "e({})".format(repr(self.a))
 
 
-class Lindy(Individual):
-    type_ = 'lindy'
+class L(ob):
+    def __init__(self, name):
+        self.name = name
+        self.a = self
+        self.b = self
 
+    @property
     def is_lindy(self):
         return True
 
+    @property
+    def is_pure_lindy_trace(self):
+        return True
+
+    def ap(self, x):
+        if x.is_pure_lindy_trace:
+            return c(self, x)
+        return c(self, e(x))
+
     def __eq__(self, other):
-        return self.name == other.name and self.type_ == other.type_
+        return self.name == other.name
 
     def __str__(self):
         return '"{}"'.format(str(self.name))
 
     def __repr__(self):
-        return "Lindy({})".format(repr(self.name))
+        return "L({})".format(repr(self.name))
 
 
-class ob(object):
-    NIL = Primitive('NIL', lambda self, x: x)
+class Individual(ob):
+    def __init__(self, name):
+        self.name = name
+        self.a = self
+        self.b = self
 
-    @classmethod
-    def a(cls, x):
-        return x.a
+    def __eq__(self, other):
+        return self.name == other.name
 
-    @classmethod
-    def b(cls, x):
-        return x.b
+    def __str__(self):
+        return ".{}".format(self.name)
 
-    @classmethod
-    def c(cls, x, y):
-        return Pair(x, y)
-
-    @classmethod
-    def e(cls, x):
-        return Enclosure(x)
+    def __repr__(self):
+        return self.name
 
 
-class obap(object):
-    ARG = Primitive('ARG', lambda self, x: ob.c(ob.e(self), ob.e(x)))
-    SELF = Primitive('SELF', lambda self, x: ob.c(ob.e(self), ob.e(x)))
-    EV = Primitive('EV', lambda self, x: ob.c(ob.e(self), ob.e(x)))
-    A = Primitive('A', lambda self, x: ob.a(x))
-    B = Primitive('B', lambda self, x: ob.b(x))
-    C = Primitive('C', lambda self, x: ob.c(self, ob.c(ob.e(x), obap.ARG)))
-    D = Primitive('D', lambda self, x: ob.c(self, ob.c(ob.e(x), obap.ARG)))
-    E = Primitive('E', lambda self, x: ob.e(x))
-
-    @staticmethod
-    def ap(p, x):
-        """determines the application of ob p, taken as
-           expression of a procedure, to ob x, taken as
-           the operand"""
-        return p.obap_ap(x)
-
-    @staticmethod
-    def apint(p, x):
-        return p.obap_int(x)
-
-    @staticmethod
-    def d(x, y):
-        return obap.A if x == y else obap.B
-
-    @staticmethod
-    def ev(p, x, e):
-        if e is obap.SELF:
-            return p
-        if e is obap.ARG:
-            return x
-        if e.is_individual():
-            return e
-        if e.is_enclosure():
-            return ob.a(e)
-        assert e.is_pair()
-        e_a = ob.a(e)
-        e_b = ob.b(e)
-        if e_a == obap.EV:
-            return obap.ev(p, x, obap.ev(p, x, e_b))
-        if e_a == obap.C:
-            if e_b.is_singleton():
-                return obap.ap(e_a, obap.ev(p, x, e_b))
-            return ob.c(obap.ev(p, x, ob.a(e_b)), obap.ev(p, x, ob.b(e_b)))
-        if e_a == obap.D:
-            if e_b.is_singleton():
-                return obap.ap(e_a, obap.ev(p, x, e_b))
-            return obap.d(obap.ev(p, x, ob.a(e_b)), obap.ev(p, x, ob.b(e_b)))
-        return obap.ap(obap.ev(p, x, e_a), obap.ev(p, x, e_b))
-
-    @staticmethod
-    def eval(e):
-        return obap.ev(obap.SELF, obap.ARG, e)
+class NIL_(Individual):
+    def ap(self, x):
+        return x
 
 
-def repl_loop():
-    print("oMiser / Python syntax interpreter")
-    print("Press Ctrl-D to leave.")
-    while True:
-        try:
-            s = input("\noMiser> ")
-        except EOFError:
-            print("\nBye!")
-            break
-        if not isinstance(s, Ob):
-            print("ERROR: Ob expected")
-            continue
-        print("INPUT: {}".format(repr(s)))
-        print("ABBR: {}".format(str(s)))
-        print("\nOUTPUT: {}".format(repr(obap.eval(s))))
+class A_(Individual):
+    def ap(self, x):
+        return a(x)
+
+
+class B_(Individual):
+    def ap(self, x):
+        return b(x)
+
+
+class C_(Individual):
+    def ap(self, x):
+        return c(C, c(e(x), ARG))
+
+
+class D_(Individual):
+    def ap(self, x):
+        return c(D, c(e(x), ARG))
+
+
+class E_(Individual):
+    def ap(self, x):
+        return e(x)
+
+
+class SELF_(Individual):
+    def ev(self, p, x):
+        return p
+
+
+class ARG_(Individual):
+    def ev(self, p, x):
+        return x
+
+
+class EV_(Individual):
+    pass
+
+
+NIL = NIL_('NIL')
+A = A_('A')
+B = B_('B')
+C = C_('C')
+D = D_('D')
+E = E_('E')
+SELF = SELF_('SELF')
+ARG = ARG_('ARG')
+EV = EV_('EV')
+
+
+def a(z): return z.a
+
+
+def b(z): return z.b
+
+
+def is_singleton(x): return b(x) == x
+
+
+def is_individual(x): return a(x) == x
+
+
+def is_pair(x): return isinstance(x, c)
+
+
+def is_lindy(x): return getattr(x, 'is_lindy', False) and x.is_lindy
+
+
+def ap(p, x): return p.ap(x)
+
+
+def ev(p, x, exp): return exp.ev(p, x)
+
+
+def eval(exp): return ev(SELF, ARG, exp)
 
 
 def test():
-    x = Ob('x')
-    y = Ob('y')
-    l = Lindy('ImLindy')
-    assert Lindy('x') != x
-    assert Lindy('x') != Primitive('x', lambda self, x: x)
-    assert ob.c(x, ob.e(y)) == ob.c(x, ob.e(y))
-
-    print(obap.D.obap_int(x))
-
-    EXAMPLE = ob.e(
-        ob.c(ob.c(x, l), ob.e(ob.NIL))
+    x = L("x")
+    l = L("ImLindy")
+    EXAMPLE = e(
+        c(c(x, l), e(NIL))
     )
 
     print(EXAMPLE)
     print(repr(EXAMPLE))
-    print(obap.eval(EXAMPLE))
+    print(eval(EXAMPLE))
+    print(NIL, repr(NIL))
+    print(EV, repr(EV))
 
+    print(eval(c(c(L("X"), L("Z")), c(L("Y"), L("Z")))))
 
-if __name__ == '__main__':
-    repl_loop()
+    cK = E ** ARG
+    print(eval((e(cK) ** e(L("X"))) ** e(L("Y"))) == L("X"))
+
+test()
