@@ -56,7 +56,7 @@ class c(ob):
         return ap(ev(p, x, self.a), ev(p, x, self.b))
 
     def __eq__(self, other):
-        return self.a == other.a
+        return self.a == other.a and self.b == other.b
 
     def __str__(self):
         return "({} :: {})".format(str(self.a), str(self.b))
@@ -77,7 +77,7 @@ class e(ob):
         return self.a
 
     def __eq__(self, other):
-        return self.a == other.a and self.b == other.b
+        return self.a == other.a
 
     def __str__(self):
         if is_individual(self):
