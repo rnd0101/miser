@@ -215,6 +215,9 @@ def ev(p, x, exp): return exp.ev(p, x)
 def eval(exp): return ev(SELF, ARG, exp)
 
 
+cK = E ** ARG  # K-combinator
+cS = '.C ‵.C  (.C  (.E  .C (.E .ARG) ‵.ARG) ‵(.C (.E .ARG) ‵.ARG) )'  # S-combinator. TODO: parse to Python
+
 def test():
     x = L("x")
     l = L("ImLindy")
@@ -230,7 +233,8 @@ def test():
 
     print(eval(c(c(L("X"), L("Z")), c(L("Y"), L("Z")))))
 
-    cK = E ** ARG
-    print(eval((e(cK) ** e(L("X"))) ** e(L("Y"))) == L("X"))
+    exp = (e(cK) ** e(L("X"))) ** e(L("Y"))
+    print("{} == {}".format(exp, eval(exp)))
+    assert eval(exp) == L("X")
 
 test()
