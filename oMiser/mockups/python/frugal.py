@@ -4,7 +4,7 @@ from parsimonious import Grammar, NodeVisitor
 from parsimonious.grammar import RuleVisitor
 
 frugal_grammar = Grammar(ur"""
-    program = term cons*
+    program = term cons* space*
     term = primitive / lindy / enclosure / subterm
     primitive = ".ARG" / ".A" / ".B" / ".C" / ".D" / ".EV" / ".E" / ".SELF" / ".NIL"
     quote = "\""
@@ -48,7 +48,7 @@ class FrugalVisitor(RuleVisitor):
         return self.ctx.e(term)
 
     def visit_program(self, node, children):
-        head, tail = children
+        head, tail, _ = children
         if type(tail) != list:
             tail = []
         seq = [head] + tail
