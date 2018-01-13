@@ -226,7 +226,7 @@ def eval(exp): return ev(SELF, ARG, exp)
 
 
 cK = E ** ARG  # K-combinator
-cS = '.C ‵.C  (.C  (.E  .C (.E .ARG) ‵.ARG) ‵(.C (.E .ARG) ‵.ARG) )'  # S-combinator. TODO: parse to Python
+cS = c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E, ARG), e(ARG))))))))  # S-combinator
 
 
 def test():

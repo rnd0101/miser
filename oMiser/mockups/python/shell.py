@@ -1,4 +1,4 @@
-from parsimonious import ParseError
+from parsimonious import ParseError, VisitationError
 
 import miser
 from frugal import frugal_to_tree
@@ -16,7 +16,7 @@ def repl_loop(debug=False):
 
         try:
             s = frugal_to_tree(s, miser)
-        except ParseError as exc:
+        except (ParseError, VisitationError) as exc:
             print("Parsing error: {}".format(exc))
             continue
         if not isinstance(s, miser.ob):

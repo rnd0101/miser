@@ -6,7 +6,7 @@ from parsimonious.grammar import RuleVisitor
 frugal_grammar = Grammar(ur"""
     program = term cons* space*
     term = primitive / lindy / enclosure / subterm
-    primitive = ".ARG" / ".A" / ".B" / ".C" / ".D" / ".EV" / ".E" / ".SELF" / ".NIL"
+    primitive = ".ARG" / ".A" / ".B" / ".C" / ".D" / ".EV" / ".E" / ".SELF" / ".NIL" / ~"[.][a-zA-Z]+"  
     quote = "\""
     enclosure = ~"`|‵" term
     cons = space* "::"? space* term
