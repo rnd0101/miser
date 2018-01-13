@@ -27,7 +27,7 @@ MISER_OBS = [item for item in dir(miser) if isinstance(getattr(miser, item), mis
 def completer(text, state):
     completions = ["." + o + " " for o in MISER_OBS if ("." + o).startswith(text)]
     if len(completions) == 0:
-        return completions[0] + " "
+        return
     return completions[state]
 
 
