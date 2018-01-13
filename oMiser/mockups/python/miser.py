@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+DEBUG = True
+
 class ob(object):
     """Abstract Ob class"""
     name = None
@@ -206,10 +208,18 @@ def is_pair(x): return isinstance(x, c)
 def is_lindy(x): return getattr(x, 'is_lindy', False) and x.is_lindy
 
 
-def ap(p, x): return p.ap(x)
+def ap(p, x):
+    res = p.ap(x)
+    if DEBUG:
+        print("ap ({}) ({}) -> {}".format(p, x, res))
+    return res
 
 
-def ev(p, x, exp): return exp.ev(p, x)
+def ev(p, x, exp):
+    res = exp.ev(p, x)
+    if DEBUG:
+        print("ev ({}) ({}) ({}) -> {}".format(p, x, exp, res))
+    return res
 
 
 def eval(exp): return ev(SELF, ARG, exp)
@@ -217,6 +227,7 @@ def eval(exp): return ev(SELF, ARG, exp)
 
 cK = E ** ARG  # K-combinator
 cS = '.C ‵.C  (.C  (.E  .C (.E .ARG) ‵.ARG) ‵(.C (.E .ARG) ‵.ARG) )'  # S-combinator. TODO: parse to Python
+
 
 def test():
     x = L("x")
@@ -237,4 +248,4 @@ def test():
     print("{} == {}".format(exp, eval(exp)))
     assert eval(exp) == L("X")
 
-#test()
+# test()
