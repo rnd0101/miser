@@ -11,7 +11,7 @@ class ob(object):
         return False
 
     def ap(self, x):
-        return c(e(p), e(x))
+        return c(e(self), e(x))
 
     def ev(self, p, x):
         return self
@@ -237,4 +237,4 @@ def test():
     print("{} == {}".format(exp, eval(exp)))
     assert eval(exp) == L("X")
 
-test()
+#test()
