@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-DEBUG = True
+DEBUG = False
 
 class ob(object):
     """Abstract Ob class"""

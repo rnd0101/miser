@@ -1,7 +1,43 @@
+import os
+import readline
+import atexit
+
 from parsimonious import ParseError, VisitationError
 
 import miser
 from frugal import frugal_to_tree
+
+readline.set_completer_delims(' \t\n')
+if 'libedit' in readline.__doc__:
+    readline.parse_and_bind("bind ^I rl_complete")
+else:
+    readline.parse_and_bind("tab: complete")
+
+histfile = os.path.join(os.path.expanduser("~"), ".frugal_history")
+try:
+    readline.read_history_file(histfile)
+    readline.set_history_length(1000)
+except IOError:
+    pass
+atexit.register(readline.write_history_file, histfile)
+
+MISER_OBS = [item for item in dir(miser) if isinstance(getattr(miser, item), miser.ob)]
+
+
+def completer(text, state):
+    # print text, state
+    completions = []
+    for o in MISER_OBS:
+        if ("." + o).startswith(text):
+            completions.append("." + o + " ")
+    # print MISER_OBS
+    # print text, state
+    if len(completions) == 0:
+        return completions[0] + " "
+    return completions[state]
+
+
+readline.set_completer(completer)
 
 
 def repl_loop(debug=False):
