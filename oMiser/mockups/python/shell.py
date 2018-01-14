@@ -44,6 +44,8 @@ def repl_loop(debug=False):
             print("\nBye!")
             break
 
+        if not s.strip():
+            continue
         try:
             s = frugal_to_tree(s, miser)
         except (ParseError, VisitationError) as exc:
