@@ -52,11 +52,14 @@ def repl_loop(debug=False):
         if not isinstance(s, miser.ob):
             print("ERROR: Ob expected")
             continue
+        print("INPUT: {}".format(str(s)))
+        evaluated = miser.eval(s)
         if debug:
             print("INPUT: {}".format(repr(s)))
-            print("\nOUTPUT: {}".format(repr(miser.eval(s))))
-        print("INPUT: {}".format(str(s)))
-        print("\nOUTPUT: {}".format(str(miser.eval(s))))
+            print("\nOUTPUT: {}".format(repr(evaluated)))
+        print("\nOUTPUT: {}".format(str(evaluated)))
+        if debug:
+            print("\nOUTPUT STATE: {}".format(repr(evaluated.__getstate__())))
 
 
 if __name__ == "__main__":

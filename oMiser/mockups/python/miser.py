@@ -21,6 +21,9 @@ class ob(object):
     def __pow__(self, other, modulo=None):
         return c(self, other)
 
+    def __eq__(self, other):
+        return self.__class__ == other.__class__ and self.__getstate__() == other.__getstate__()
+
     def __ne__(self, other):
         return not (self == other)  # Not needed in py3
 
@@ -57,8 +60,11 @@ class c(ob):
             return ev(p, x, ev(p, x, self.b))
         return ap(ev(p, x, self.a), ev(p, x, self.b))
 
-    def __eq__(self, other):
-        return self.a == other.a and self.b == other.b
+    def __setstate__(self, state):
+        self.a, self.b = state
+
+    def __getstate__(self):
+        return (self.a.__getstate__(), self.b.__getstate__())
 
     def __str__(self):
         return "({} :: {})".format(str(self.a), str(self.b))
@@ -78,8 +84,11 @@ class e(ob):
     def ev(self, p, x):
         return self.a
 
-    def __eq__(self, other):
-        return self.a == other.a
+    def __setstate__(self, state):
+        self.a, = state
+
+    def __getstate__(self):
+        return (self.a.__getstate__(), )
 
     def __str__(self):
         if is_individual(self):
@@ -109,8 +118,11 @@ class L(ob):
             return c(self, x)
         return c(self, e(x))
 
-    def __eq__(self, other):
-        return self.name == other.name
+    def __setstate__(self, state):
+        self.name = state
+
+    def __getstate__(self):
+        return self.name
 
     def __str__(self):
         return '"{}"'.format(str(self.name))
@@ -125,8 +137,11 @@ class Individual(ob):
         self.a = self
         self.b = self
 
-    def __eq__(self, other):
-        return self.name == other.name
+    def __setstate__(self, state):
+        self.name = state
+
+    def __getstate__(self):
+        return self.name
 
     def __str__(self):
         return ".{}".format(self.name)
