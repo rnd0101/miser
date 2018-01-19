@@ -6,6 +6,9 @@ from parsimonious import ParseError, VisitationError
 
 import miser
 from frugal import frugal_to_tree
+from graph import make_graph
+
+DOT_FILE_PATH = "/tmp/omiser.dot"
 
 readline.set_completer_delims(' \t\n')
 if 'libedit' in readline.__doc__:
@@ -34,7 +37,7 @@ def completer(text, state):
 readline.set_completer(completer)
 
 
-def repl_loop(debug=False):
+def repl_loop(debug=True):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     while True:
@@ -46,6 +49,10 @@ def repl_loop(debug=False):
 
         if not s.strip():
             continue
+        graph = False
+        if s.startswith("graph "):
+            s = s[len("graph "):]
+            graph = True
         try:
             s = frugal_to_tree(s, miser)
         except (ParseError, VisitationError) as exc:
@@ -55,7 +62,12 @@ def repl_loop(debug=False):
             print("ERROR: Ob expected")
             continue
         print("INPUT: {}".format(str(s)))
-        evaluated = miser.eval(s)
+        if graph:
+            make_graph(s, DOT_FILE_PATH)
+            print("Graphviz file written to {}".format(DOT_FILE_PATH))
+            continue
+        else:
+            evaluated = miser.eval(s)
         if debug:
             print("INPUT: {}".format(repr(s)))
             print("\nOUTPUT: {}".format(repr(evaluated)))
