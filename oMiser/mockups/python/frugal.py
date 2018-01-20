@@ -5,16 +5,20 @@ from parsimonious.grammar import RuleVisitor
 
 frugal_grammar = Grammar(ur"""
     program = space? term cons* space?
+    cons = space? "::"? space? term
     term = primitive / lindy / enclosure / subterm / list
     primitive = ".ARG" / ".A" / ".B" / ".C" / ".D" / ".EV" / ".E" / ".SELF" / ".NIL" / ~"[.][a-zA-Z]+"  
     quote = "\""
     enclosure = ~"`|‵" space? term
-    cons = space? "::"? space? term
     subterm = "(" space? program space? ")"
     list = "[" list_item ("," list_item)* "]"
     list_item = space? program space?
     lindy = quote ~"[A-Za-z0-9]+"i quote
     space = ~"\s+"i
+    comment_begin = "(*"
+    comment_end = "*)"
+    comment = comment_begin comment_inside* comment_end
+    comment_inside = comment / (!comment_begin !comment_end ~".")
     """)
 
 

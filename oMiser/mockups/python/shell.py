@@ -16,31 +16,28 @@ if 'libedit' in readline.__doc__:
 else:
     readline.parse_and_bind("tab: complete")
 
-histfile = os.path.join(os.path.expanduser("~"), ".frugal_history")
+shell_history_file = os.path.join(os.path.expanduser("~"), ".frugal_history")
 try:
-    readline.read_history_file(histfile)
+    readline.read_history_file(shell_history_file)
     readline.set_history_length(1000)
 except IOError:
     pass
-atexit.register(readline.write_history_file, histfile)
-
-MISER_OBS = [item for item in dir(miser) if isinstance(getattr(miser, item), miser.ob)]
-
-
-def completer(text, state):
-    completions = ["." + o + " " for o in MISER_OBS if ("." + o).startswith(text)]
-    if len(completions) == 0:
-        return
-    return completions[state]
-
-
-readline.set_completer(completer)
+atexit.register(readline.write_history_file, shell_history_file)
 
 
 def repl_loop(debug=True):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace
+
+    def completer(text, state):
+        completions = [o + " " for o in workspace if o.startswith(text)]
+        if len(completions) == 0:
+            return
+        return completions[state]
+
+    readline.set_completer(completer)
+
     while True:
         try:
             s = raw_input("\noMiser> ")
