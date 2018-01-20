@@ -54,7 +54,7 @@ def repl_loop(debug=False):
             s = s[len("graph "):]
             graph = True
         try:
-            s = frugal_to_tree(s, miser)
+            s = frugal_to_tree(s, miser.namespace)
         except (ParseError, VisitationError) as exc:
             print("Parsing error: {}".format(exc))
             continue

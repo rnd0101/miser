@@ -23,7 +23,7 @@ def consify(ctx, lst):
     if len(lst) == 1:
         return lst[0]
     if len(lst) == 2:
-        return ctx.c(lst[-2], lst[-1])
+        return ctx['c('](lst[-2], lst[-1])
     return consify(ctx, lst[:-2] + [consify(ctx, lst[-2:])])
 
 
@@ -35,7 +35,7 @@ class FrugalVisitor(RuleVisitor):
 
     def visit_primitive(self, node, children):
         primitive, = children
-        return getattr(self.ctx, primitive.text.lstrip("."))
+        return self.ctx[primitive.text]
 
     def visit_cons(self, node, children):
         _, _, _, term = children
@@ -47,7 +47,7 @@ class FrugalVisitor(RuleVisitor):
 
     def visit_enclosure(self, node, children):
         _, _, term = children
-        return self.ctx.e(term)
+        return self.ctx['e('](term)
 
     def visit_program(self, node, children):
         _, head, tail, _ = children
@@ -68,7 +68,7 @@ class FrugalVisitor(RuleVisitor):
 
     def visit_lindy(self, node, children):
         _, s, _ = children
-        return self.ctx.L(s.text)
+        return self.ctx['L('](s.text)
 
 
 def frugal_to_tree(frugal_expression, ctx):

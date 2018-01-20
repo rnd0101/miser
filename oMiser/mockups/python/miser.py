@@ -2,6 +2,7 @@
 
 DEBUG = False
 
+
 class ob(object):
     """Abstract Ob class"""
     name = None
@@ -88,7 +89,7 @@ class e(ob):
         self.a, = state
 
     def __getstate__(self):
-        return (self.a.__getstate__(), )
+        return (self.a.__getstate__(),)
 
     def __str__(self):
         if is_individual(self):
@@ -243,6 +244,9 @@ def eval(exp): return ev(SELF, ARG, exp)
 cK = c(E, ARG)  # K-combinator
 cSpart = c(C, c(cK, e(ARG)))
 cS = c(C, c(e(C), c(C, c(c(E, cSpart), e(cSpart)))))  # S-combinator
+
+namespace = {('.' + k): v for k, v in vars().items() if isinstance(v, ob)}
+namespace.update({'L(': L, 'e(': e, 'c(': c})
 
 
 def test():
