@@ -1,6 +1,7 @@
 import os
 import readline
 import atexit
+from pprint import pprint
 
 from parsimonious import ParseError, VisitationError
 
@@ -30,14 +31,19 @@ def good_statement(s):
         return True
     return isinstance(s, tuple) and len(s) == 2 and isinstance(s[0], basestring) and isinstance(s[1], miser.ob)
 
+
 def repl_loop(debug=True):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace
-    workspace.update({"cS": miser.cS})  #examples of variables
+    workspace.update({"cS": miser.cS})  # examples of variables
 
     def completer(text, state):
-        completions = [o + " " for o in workspace if o.startswith(text)]
+        if text.startswith("^"):
+            completions = ["^" + o + " " for o in workspace
+                           if not o.startswith(".") and not o.endswith("(") and ("^" + o).startswith(text)]
+        else:
+            completions = [o + " " for o in workspace if not o.endswith("(") and o.startswith(text)]
         if len(completions) == 0:
             return
         return completions[state]
@@ -81,6 +87,8 @@ def repl_loop(debug=True):
                 print("INPUT: {}".format(str(s)))
             if to_var is not None:
                 workspace[to_var] = s
+                if debug:
+                    pprint(workspace)
             else:
                 evaluated = miser.eval(s)
                 if debug:
