@@ -25,10 +25,16 @@ except IOError:
 atexit.register(readline.write_history_file, shell_history_file)
 
 
+def good_statement(s):
+    if isinstance(s, miser.ob):
+        return True
+    return isinstance(s, tuple) and len(s) == 2 and isinstance(s[0], basestring) and isinstance(s[1], miser.ob)
+
 def repl_loop(debug=True):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace
+    workspace.update({"cS": miser.cS})  #examples of variables
 
     def completer(text, state):
         completions = [o + " " for o in workspace if o.startswith(text)]
@@ -52,26 +58,37 @@ def repl_loop(debug=True):
             s = s[len("graph "):]
             graph = True
         try:
-            s = frugal_to_tree(s, workspace)
+            statements = frugal_to_tree(s, workspace)
         except (ParseError, VisitationError) as exc:
             print("Parsing error: {}".format(exc))
             continue
-        if not isinstance(s, miser.ob):
-            print("ERROR: Ob expected")
+
+        if not all(good_statement(x) for x in statements):
+            print("ERROR: Ob expected, found: {}".format(statements))
             continue
-        print("INPUT: {}".format(str(s)))
+
         if graph:
-            make_graph(s, DOT_FILE_PATH)
+            make_graph(statements, DOT_FILE_PATH)
             print("Graphviz file written to {}".format(DOT_FILE_PATH))
             continue
-        else:
-            evaluated = miser.eval(s)
-        if debug:
-            print("INPUT: {}".format(repr(s)))
-            print("\nOUTPUT: {}".format(repr(evaluated)))
-        print("\nOUTPUT: {}".format(str(evaluated)))
-        if debug:
-            print("\nOUTPUT STATE: {}".format(repr(evaluated.__getstate__())))
+
+        for s in statements:
+            to_var = None
+            if isinstance(s, tuple):
+                to_var, s = s
+                print("ASSIGN INPUT: {} = {}".format(to_var, str(s)))
+            else:
+                print("INPUT: {}".format(str(s)))
+            if to_var is not None:
+                workspace[to_var] = s
+            else:
+                evaluated = miser.eval(s)
+                if debug:
+                    print("INPUT: {}".format(repr(s)))
+                    print("\nOUTPUT: {}".format(repr(evaluated)))
+                print("OUTPUT: {}".format(str(evaluated)))
+                if debug:
+                    print("\nOUTPUT STATE: {}".format(repr(evaluated.__getstate__())))
 
 
 if __name__ == "__main__":

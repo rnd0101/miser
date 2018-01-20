@@ -18,14 +18,15 @@ def graph_ob_structure(structure, level, prefix):
     return (name, g)
 
 
-def make_graph(ob, file_path):
+def make_graph(obs, file_path):
     graph = """digraph ob {
     node [shape=record];
     """
-    ob_structure = ob.__getstate__()
+    for (i, ob) in enumerate(obs):
+        ob_structure = ob.__getstate__()
+        _name, g = graph_ob_structure(ob_structure, 0, "ob{}_".format(i))
+        graph += g
 
-    _name, g = graph_ob_structure(ob_structure, 0, "ob")
-
-    graph += g + """}"""
+    graph += """}"""
     with open(file_path, "w") as f:
         print >> f, graph
