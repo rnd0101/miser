@@ -51,7 +51,6 @@ def repl_loop(debug=True):
         if not s.strip():
             continue
         graph = False
-        import pdb; pdb.set_trace()  # TODO: XXX remove
         if s.startswith("graph "):
             s = s[len("graph "):]
             graph = True
