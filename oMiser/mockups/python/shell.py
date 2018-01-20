@@ -37,9 +37,10 @@ def completer(text, state):
 readline.set_completer(completer)
 
 
-def repl_loop(debug=False):
+def repl_loop(debug=True):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
+    workspace = miser.namespace
     while True:
         try:
             s = raw_input("\noMiser> ")
@@ -50,11 +51,12 @@ def repl_loop(debug=False):
         if not s.strip():
             continue
         graph = False
+        import pdb; pdb.set_trace()  # TODO: XXX remove
         if s.startswith("graph "):
             s = s[len("graph "):]
             graph = True
         try:
-            s = frugal_to_tree(s, miser.namespace)
+            s = frugal_to_tree(s, workspace)
         except (ParseError, VisitationError) as exc:
             print("Parsing error: {}".format(exc))
             continue

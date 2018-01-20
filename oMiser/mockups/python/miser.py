@@ -238,7 +238,8 @@ def ev(p, x, exp):
     return res
 
 
-def eval(exp): return ev(SELF, ARG, exp)
+def eval(exp):
+    return ev(SELF, ARG, exp)
 
 
 cK = c(E, ARG)  # K-combinator
@@ -250,6 +251,7 @@ namespace.update({'L(': L, 'e(': e, 'c(': c})
 
 
 def test():
+    eval(cK)
     x = L("x")
     l = L("ImLindy")
     EXAMPLE = e(
@@ -268,4 +270,6 @@ def test():
     print("{} == {}".format(exp, eval(exp)))
     assert eval(exp) == L("X")
 
-# test()
+
+if __name__ == "__main__":
+    test()
