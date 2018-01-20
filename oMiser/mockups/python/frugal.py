@@ -4,15 +4,15 @@ from parsimonious import Grammar, NodeVisitor
 from parsimonious.grammar import RuleVisitor
 
 frugal_grammar = Grammar(ur"""
-    program = term cons* space*
+    program = space? term cons* space?
     term = primitive / lindy / enclosure / subterm / list
     primitive = ".ARG" / ".A" / ".B" / ".C" / ".D" / ".EV" / ".E" / ".SELF" / ".NIL" / ~"[.][a-zA-Z]+"  
     quote = "\""
-    enclosure = ~"`|‵" term
-    cons = space* "::"? space* term
-    subterm = "(" space* program space* ")"
+    enclosure = ~"`|‵" space? term
+    cons = space? "::"? space? term
+    subterm = "(" space? program space? ")"
     list = "[" list_item ("," list_item)* "]"
-    list_item = space* program space*
+    list_item = space? program space?
     lindy = quote ~"[A-Za-z0-9]+"i quote
     space = ~"\s+"i
     """)
@@ -46,11 +46,11 @@ class FrugalVisitor(RuleVisitor):
         return term
 
     def visit_enclosure(self, node, children):
-        _, term = children
+        _, _, term = children
         return self.ctx.e(term)
 
     def visit_program(self, node, children):
-        head, tail, _ = children
+        _, head, tail, _ = children
         if type(tail) != list:
             tail = []
         seq = [head] + tail
