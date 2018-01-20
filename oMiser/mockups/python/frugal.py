@@ -5,12 +5,14 @@ from parsimonious.grammar import RuleVisitor
 
 frugal_grammar = Grammar(ur"""
     program = term cons* space*
-    term = primitive / lindy / enclosure / subterm
+    term = primitive / lindy / enclosure / subterm / list
     primitive = ".ARG" / ".A" / ".B" / ".C" / ".D" / ".EV" / ".E" / ".SELF" / ".NIL" / ~"[.][a-zA-Z]+"  
     quote = "\""
     enclosure = ~"`|‵" term
     cons = space* "::"? space* term
     subterm = "(" space* program space* ")"
+    list = "[" list_item ("," list_item)* "]"
+    list_item = space* program space*
     lindy = quote ~"[A-Za-z0-9]+"i quote
     space = ~"\s+"i
     """)
@@ -53,6 +55,16 @@ class FrugalVisitor(RuleVisitor):
             tail = []
         seq = [head] + tail
         return consify(self.ctx, seq)
+
+    def visit_list(self, node, children):
+        _, head, tail, _ = children
+        if type(tail) != list:
+            tail = []
+        seq = [head] + [i[1] for i in tail]
+        return consify(self.ctx, seq)
+
+    def visit_list_item(self, node, children):
+        return children[1]
 
     def visit_lindy(self, node, children):
         _, s, _ = children

@@ -240,8 +240,9 @@ def ev(p, x, exp):
 def eval(exp): return ev(SELF, ARG, exp)
 
 
-cK = E ** ARG  # K-combinator
-cS = c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E, ARG), e(ARG))))))))  # S-combinator
+cK = c(E, ARG)  # K-combinator
+cSpart = c(C, c(cK, e(ARG)))
+cS = c(C, c(e(C), c(C, c(c(E, cSpart), e(cSpart)))))  # S-combinator
 
 
 def test():

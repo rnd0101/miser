@@ -37,7 +37,7 @@ def completer(text, state):
 readline.set_completer(completer)
 
 
-def repl_loop(debug=True):
+def repl_loop(debug=False):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     while True:
