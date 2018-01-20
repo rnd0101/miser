@@ -6,6 +6,7 @@ from pprint import pprint
 from parsimonious import ParseError, VisitationError
 
 import miser
+import library
 from frugal import frugal_to_tree
 from graph import make_graph
 
@@ -36,7 +37,7 @@ def repl_loop(debug=True):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace
-    workspace.update({"cS": miser.cS})  # examples of variables
+    workspace.update(library.namespace)
 
     def completer(text, state):
         if text.startswith("^"):

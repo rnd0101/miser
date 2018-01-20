@@ -242,10 +242,6 @@ def eval(exp):
     return ev(SELF, ARG, exp)
 
 
-cK = c(E, ARG)  # K-combinator
-cSpart = c(C, c(cK, e(ARG)))
-cS = c(C, c(e(C), c(C, c(c(E, cSpart), e(cSpart)))))  # S-combinator
-
 namespace = {('.' + k): v for k, v in vars().items() if isinstance(v, ob)}
 namespace.update({'L(': L, 'e(': e, 'c(': c})
 
