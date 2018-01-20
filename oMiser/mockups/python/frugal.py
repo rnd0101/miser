@@ -27,6 +27,14 @@ frugal_grammar = Grammar(ur"""
     comment_inside = comment / (!comment_begin !comment_end ~".")
     """)
 
+class ArgumentList(object):
+    """Structure for arguments. Dirty hack to get around lack of encoding for `f(x,y,z)` style"""
+    def __init__(self, t):
+        self._t = t
+
+    def get(self):
+        return self._t
+
 
 def consify(ctx, lst):
     """Given a list, construct pairs starting from the end"""
@@ -36,6 +44,21 @@ def consify(ctx, lst):
         return ctx['c('](lst[-2], lst[-1])
     return consify(ctx, lst[:-2] + [consify(ctx, lst[-2:])])
 
+
+def do_apply(ctx, lst):
+    """Given a list, do apply"""
+    if len(lst) == 1:
+        return lst[0]
+    if len(lst) == 2:
+        return ctx['ap('](lst[-2], lst[-1])
+    return do_apply(ctx, lst[:-2] + [do_apply(ctx, lst[-2:])])
+
+
+def do_apply_args(ctx, p, lst):
+    """Given a function and arguments, do apply in normal order"""
+    for arg in lst.get():
+        p = ctx['ap('](p, arg)
+    return p
 
 class FrugalVisitor(RuleVisitor):
     grammar = frugal_grammar
@@ -56,14 +79,17 @@ class FrugalVisitor(RuleVisitor):
         if type(tail) != list:
             tail = []
         seq = [head] + [i[1] for i in tail]
-        return consify(self.ctx, seq)  # TODO: application instead
+        if len(seq) > 1 and isinstance(seq[1], ArgumentList):
+            res = do_apply_args(self.ctx, seq[0], seq[1])
+        else:
+            res = do_apply(self.ctx, seq)   # This applies right away. TODO: structure first, then frugal-side eval/ap
+        return res
 
     def visit_statement(self, node, children):
         st, = children
         return st
 
     def visit_assignment(self, node, children):
-        # "ob" space var space? "=" space? expression space?
         _, _, varname, _, _, _, exp, _ = children
         return (varname, exp)
 
@@ -83,7 +109,9 @@ class FrugalVisitor(RuleVisitor):
         if type(tail) != list:
             return head
         seq = [head] + [i[1] for i in tail]
-        return consify(self.ctx, seq)   # TODO: application participant
+        if len(seq) < 2:
+            return seq[0]
+        return ArgumentList(seq)
 
     def visit_enclosure(self, node, children):
         _, _, term = children

@@ -33,7 +33,7 @@ def good_statement(s):
     return isinstance(s, tuple) and len(s) == 2 and isinstance(s[0], basestring) and isinstance(s[1], miser.ob)
 
 
-def repl_loop(debug=True):
+def repl_loop(debug=False):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace

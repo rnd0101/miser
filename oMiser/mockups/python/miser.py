@@ -243,11 +243,10 @@ def eval(exp):
 
 
 namespace = {('.' + k): v for k, v in vars().items() if isinstance(v, ob)}
-namespace.update({'L(': L, 'e(': e, 'c(': c})
+namespace.update({'L(': L, 'e(': e, 'c(': c, 'ap(': ap})
 
 
 def test():
-    eval(cK)
     x = L("x")
     l = L("ImLindy")
     EXAMPLE = e(
