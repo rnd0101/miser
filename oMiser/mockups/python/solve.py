@@ -24,7 +24,7 @@ def builder(max_level, visitor, top=False, config=None):
             EV,
             # cK,
             # cS,
-            #SELF,
+            # SELF,
         ]
     }
 
@@ -53,10 +53,10 @@ def do_apply_args(p, lst):
 
 
 # Some obs
-Lx = L("x")
-Ly = L("y")
-Lz = L("z")
-Lt = L("t")
+x = L("x")
+y = L("y")
+z = L("z")
+t = L("t")
 
 
 if __name__ == "__main__":
@@ -65,21 +65,9 @@ if __name__ == "__main__":
 
     rules = [
         (
-            [A, A],
-            B
-        ),
-        (
-            [A, B],
-            A
-        ),
-        (
-            [B, B],
-            B
-        ),
-        (
-            [B, A],
-            A
-        ),
+            [x ** (y ** z)],
+            (x ** y) ** z
+        )
     ]
 
     seen = set()
