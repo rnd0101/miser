@@ -87,20 +87,16 @@ def repl_loop(debug=False):
             to_var = None
             if isinstance(s, tuple):
                 to_var, s = s
-                print("ASSIGN INPUT: {} = {}".format(to_var, str(s)))
-            else:
-                print("INPUT: {}".format(str(s)))
+                print("{} = {}".format(to_var, str(s)))
             if to_var is not None:
                 workspace[to_var] = s
                 if debug:
                     pprint(workspace)
             else:
-                evaluated = miser.eval(s)
+                evaluated = s   # no evaluation
+                print("{}".format(str(evaluated)))
                 if debug:
-                    print("INPUT: {}".format(repr(s)))
                     print("\nOUTPUT: {}".format(repr(evaluated)))
-                print("OUTPUT: {}".format(str(evaluated)))
-                if debug:
                     print("\nOUTPUT STATE: {}".format(repr(evaluated.__getstate__())))
 
 
