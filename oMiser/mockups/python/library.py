@@ -42,4 +42,15 @@ hasX = EV ** (D ** ARG ** B ** ARG) \
                   ** e(A ** (SELF ** B ** ARG))
                   ))
 
+has = (
+        C ** e(EV)
+        ** C ** e(D ** ARG ** B ** ARG)
+        ** E ** C ** B
+        ** C ** e(EV)
+        ** C ** (C ** e(D)
+                 ** (C ** (E ** ARG)
+                     ** e(A ** ARG)))
+        ** E ** e(A ** SELF ** B ** ARG)
+)
+
 namespace = {k: v for k, v in vars().items() if isinstance(v, ob)}
