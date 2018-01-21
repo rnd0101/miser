@@ -48,12 +48,12 @@ if __name__ == "__main__":
     rules = [
         (
             c(L("x"), L("y")),
-            L("y")
+            c(L("y"), L("x"))
          ),
     ]
 
     all = set()
-    for i in xrange(10000):
+    for i in xrange(1000000):
         s = builder(20, visitor, top=True)
         if s in all:
             continue
@@ -61,6 +61,8 @@ if __name__ == "__main__":
         try:
             if any(ap(s, r[0]) == r[1] for r in rules):
                 print s
+                print
         except RuntimeError:
             print ("Infinite loop: {}".format(s))
+            print
 
