@@ -34,7 +34,7 @@ def good_statement(s):
 
 
 def repl_loop(debug=False, do_eval=False):
-    print("oMiser/Frugal syntax interpreter")
+    print("oFrugal shell for oMiser computational model")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace
     workspace.update(library.namespace)
@@ -53,7 +53,7 @@ def repl_loop(debug=False, do_eval=False):
 
     while True:
         try:
-            s = raw_input("\noMiser> ")
+            s = raw_input("\noFrugal> ")
         except EOFError:
             print("\nBye!")
             break
