@@ -47,22 +47,38 @@ if __name__ == "__main__":
 
     rules = [
         (
-            c(L("x"), L("y")),
-            c(L("y"), L("x"))
+#            c(L("x"), c(L("y"), L("z"))),
+#            c(c(L("x"), L("y")), L("z"))
+
+#            c(L("x"), L("y")),
+#            c(L("y"), L("x"))
+
+            e(L("x")),
+            c(L("x"), L("x"))
          ),
     ]
 
     all = set()
-    for i in xrange(1000000):
-        s = builder(20, visitor, top=True)
-        if s in all:
-            continue
-        all |= {s}
-        try:
-            if any(ap(s, r[0]) == r[1] for r in rules):
-                print s
+    solutions = []
+    max_level = 4
+    min_solution = 1000000
+    while not solutions:
+        max_level += 2
+        for i in xrange(1000000):
+            s = builder(max_level, visitor, top=True)
+            if s in all:
+                continue
+            all |= {s}
+            try:
+                if any(ap(s, r[0]) == r[1] for r in rules):
+                    if len(str(s)) < min_solution:
+                        print s
+                        min_solution = len(str(s))
+                        solutions.append(s)
+                        print
+            except RuntimeError:
+                #print ("Infinite loop: {}".format(s))
                 print
-        except RuntimeError:
-            print ("Infinite loop: {}".format(s))
-            print
 
+        if max_level > 50:
+            break
