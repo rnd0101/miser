@@ -33,7 +33,7 @@ def good_statement(s):
     return isinstance(s, tuple) and len(s) == 2 and isinstance(s[0], basestring) and isinstance(s[1], miser.ob)
 
 
-def repl_loop(debug=False):
+def repl_loop(debug=False, do_eval=False):
     print("oMiser/Frugal syntax interpreter")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace
@@ -64,6 +64,10 @@ def repl_loop(debug=False):
             debug = not debug
             print("Debug now {}".format(["OFF", "ON"][debug]))
             continue
+        elif s.strip() == "eval":
+            do_eval = not do_eval
+            print("Implicit eval now {}".format(["OFF", "ON"][do_eval]))
+            continue
         graph = False
         if s.startswith("graph "):
             s = s[len("graph "):]
@@ -93,7 +97,10 @@ def repl_loop(debug=False):
                 if debug:
                     pprint(workspace)
             else:
-                evaluated = s   # no evaluation
+                if do_eval:
+                    evaluated = miser.eval(s)
+                else:
+                    evaluated = s
                 print("{}".format(str(evaluated)))
                 if debug:
                     print("\nOUTPUT: {}".format(repr(evaluated)))
