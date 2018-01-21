@@ -126,7 +126,7 @@ class L(ob):
         return self.name
 
     def __str__(self):
-        return '"{}"'.format(str(self.name))
+        return '{}'.format(str(self.name))
 
     def __repr__(self):
         return "L({})".format(repr(self.name))

@@ -16,7 +16,7 @@ frugal_grammar = Grammar(ur"""
     subterm = "(" list_item ("," list_item)* ")"
     list = "[" list_item ("," list_item)* "]"
     list_item = space? expression space?
-    lindy = quote ~"[A-Za-z0-9]+"i quote
+    lindy = ~"[A-Za-z0-9]+"i
     new_var = "^" ~"[a-zA-Z0-9]+"i
     var = "^" ~"[a-zA-Z0-9]+"i
     quote = "\""
@@ -136,8 +136,7 @@ class FrugalVisitor(RuleVisitor):
         return children[1]
 
     def visit_lindy(self, node, children):
-        _, s, _ = children
-        return self.ctx['L('](s.text)
+        return self.ctx['L('](node.text)
 
 
 def frugal_to_tree(frugal_expression, ctx):
