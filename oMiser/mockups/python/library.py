@@ -53,4 +53,5 @@ has = (
         ** E ** e(A ** SELF ** B ** ARG)
 )
 
+
 namespace = {k: v for k, v in vars().items() if isinstance(v, ob)}
