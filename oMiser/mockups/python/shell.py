@@ -60,6 +60,10 @@ def repl_loop(debug=False):
 
         if not s.strip():
             continue
+        if s.strip() == "debug":
+            debug = not debug
+            print("Debug now {}".format(["OFF", "ON"][debug]))
+            continue
         graph = False
         if s.startswith("graph "):
             s = s[len("graph "):]

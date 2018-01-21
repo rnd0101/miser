@@ -8,7 +8,7 @@ frugal_grammar = Grammar(ur"""
     statement_seq = space? statement (";" space? statement)*
     statement = assignment / expression
     assignment = "ob" space new_var space? "=" space? expression space?
-    expression = space? primary (space primary)* space?
+    expression = space? primary (space? primary)* space?
     primary = term (space? "::" space? term)*
     term = primitive / lindy / var / enclosure / subterm / list
     primitive = ".ARG" / ".A" / ".B" / ".C" / ".D" / ".EV" / ".E" / ".SELF" / ".NIL" / ~"[.][a-zA-Z0-9]+"
