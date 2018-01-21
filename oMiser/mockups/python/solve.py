@@ -75,12 +75,14 @@ if __name__ == "__main__":
     max_level = 2
     min_solution = 1000000
     infs = 0
+    dups = 0
     while not solutions:
-        print "Level: {} Inf: {}".format(max_level, infs)
+        print "Level: {} Inf: {} Seen: {} Dups: {}".format(max_level, infs, len(seen), dups)
         max_level += 1
-        for i in xrange(max_level * 20000):
+        for i in xrange(max_level * 200000):
             s = builder(max_level, visitor, top=True)
             if s in seen:
+                dups += 1
                 continue
             if max_level < 6:
                 seen |= {s}
