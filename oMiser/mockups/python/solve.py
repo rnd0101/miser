@@ -6,6 +6,7 @@ Random / brute force solver to find miser scripts with given condition
 from random import choice
 
 from miser import c, E, ARG, C, e, NIL, EV, D, B, SELF, A, L, ap
+from library import cK, cS
 
 
 def builder(max_level, visitor, top=False, config=None):
@@ -20,8 +21,11 @@ def builder(max_level, visitor, top=False, config=None):
             D,
             E,
             NIL,
-            EV
-        ]  # SELF
+            EV,
+            # cK,
+            # cS,
+            #SELF,
+        ]
     }
 
     groups = "binops", "unops", "leafs"
@@ -32,14 +36,28 @@ def builder(max_level, visitor, top=False, config=None):
     op_group = choice(groups)
     op = choice(config[op_group])
     if op_group == "binops":
-        script = op(builder(max_level-1, visitor), builder(max_level-1, visitor))
+        script = op(builder(max_level - 1, visitor), builder(max_level - 1, visitor))
     elif op_group == "unops":
-        script = op(builder(max_level-1, visitor))
+        script = op(builder(max_level - 1, visitor))
     else:
         script = op
     visitor(script, top)
 
     return script
+
+
+def do_apply_args(p, lst):
+    for arg in lst:
+        p = ap(p, arg)
+    return p
+
+
+# Some obs
+Lx = L("x")
+Ly = L("y")
+Lz = L("z")
+Lt = L("t")
+
 
 if __name__ == "__main__":
     def visitor(ob, top):
@@ -47,38 +65,47 @@ if __name__ == "__main__":
 
     rules = [
         (
-#            c(L("x"), c(L("y"), L("z"))),
-#            c(c(L("x"), L("y")), L("z"))
-
-#            c(L("x"), L("y")),
-#            c(L("y"), L("x"))
-
-            e(L("x")),
-            c(L("x"), L("x"))
-         ),
+            [A, A],
+            B
+        ),
+        (
+            [A, B],
+            A
+        ),
+        (
+            [B, B],
+            B
+        ),
+        (
+            [B, A],
+            A
+        ),
     ]
 
-    all = set()
+    seen = set()
     solutions = []
-    max_level = 4
+    max_level = 2
     min_solution = 1000000
+    infs = 0
     while not solutions:
-        max_level += 2
-        for i in xrange(1000000):
+        print "Level: {} Inf: {}".format(max_level, infs)
+        max_level += 1
+        for i in xrange(max_level * 20000):
             s = builder(max_level, visitor, top=True)
-            if s in all:
+            if s in seen:
                 continue
-            all |= {s}
+            if max_level < 6:
+                seen |= {s}
             try:
-                if any(ap(s, r[0]) == r[1] for r in rules):
+                if all(do_apply_args(s, r[0]) == r[1] for r in rules):
                     if len(str(s)) < min_solution:
+                        print
                         print s
                         min_solution = len(str(s))
                         solutions.append(s)
-                        print
             except RuntimeError:
-                #print ("Infinite loop: {}".format(s))
-                print
+                # print ("Infinite loop: {}".format(s))
+                infs += 1
 
         if max_level > 50:
             break

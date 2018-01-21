@@ -54,4 +54,13 @@ has = (
 )
 
 
+# Some boolean operators
+bTRUE = A
+bFALSE = B
+bNOT = EV ** (D ** B)
+bOR = (C ** ARG) ** (C ** A)
+bAND = ARG ** (E ** B)
+bXOR = (ARG ** (D ** B)) ** B
+bSAY = L("TRUE") ** L("FALSE")
+
 namespace = {k: v for k, v in vars().items() if isinstance(v, ob)}
