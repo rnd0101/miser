@@ -35,6 +35,12 @@ class ArgumentList(object):
     def get(self):
         return self._t
 
+    def __str__(self):
+        return str(self._t)
+
+    def __repr__(self):
+        return "(" + ", ".join(str(t) for t in self._t) + ")"
+
 
 def consify(ctx, lst):
     """Given a list, construct pairs starting from the end"""

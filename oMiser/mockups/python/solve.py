@@ -64,10 +64,18 @@ if __name__ == "__main__":
         return
 
     rules = [
+ #       (
+ #           [x],
+ #           (x ** NIL)
+ #       ),
         (
-            [x ** (y ** z)],
-            (x ** y) ** z
-        )
+            [x ** y],
+            (x ** y ** NIL)
+        ),
+#        (
+#            [x ** y ** z],
+#            (x ** y ** z ** NIL)
+#        ),
     ]
 
     seen = set()
