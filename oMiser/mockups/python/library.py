@@ -61,6 +61,7 @@ has = (
 
 #swap = (B ** ARG) ** (A ** ARG)
 swap = c(EV, c(c(D, c(ARG, c(B, ARG))), e(c(ARG, c(C, c(c(B, ARG), c(A, ARG)))))))
+dup = C ** ARG ** ARG
 
 # Some boolean operators
 bTRUE = A
