@@ -5,29 +5,13 @@ Random / brute force solver to find miser scripts with given condition
 """
 from random import choice
 
+import time
+
 from miser import c, E, ARG, C, e, NIL, EV, D, B, SELF, A, L, ap
 from library import cK, cS
 
 
 def builder(max_level, visitor, top=False, config=None):
-    config = config or {
-        "binops": [c],
-        "unops": [e],
-        "leafs": [
-            ARG,
-            A,
-            B,
-            C,
-            D,
-            E,
-            NIL,
-            EV,
-            # cK,
-            # cS,
-            # SELF,
-        ]
-    }
-
     groups = "binops", "unops", "leafs"
     if max_level == 1:
         groups = "leafs",
@@ -36,9 +20,9 @@ def builder(max_level, visitor, top=False, config=None):
     op_group = choice(groups)
     op = choice(config[op_group])
     if op_group == "binops":
-        script = op(builder(max_level - 1, visitor), builder(max_level - 1, visitor))
+        script = op(builder(max_level - 1, visitor, config=config), builder(max_level - 1, visitor, config=config))
     elif op_group == "unops":
-        script = op(builder(max_level - 1, visitor))
+        script = op(builder(max_level - 1, visitor, config=config))
     else:
         script = op
     visitor(script, top)
@@ -68,32 +52,59 @@ if __name__ == "__main__":
  #           [x],
  #           (x ** NIL)
  #       ),
+#        (
+#            [x ** y],
+#            (x ** y ** NIL)
+#        ),
+        (
+            [x],
+            (x)
+        ),
         (
             [x ** y],
-            (x ** y ** NIL)
+            (y ** x)
         ),
-#        (
-#            [x ** y ** z],
-#            (x ** y ** z ** NIL)
-#        ),
+        (
+            [e(x) ** e(y)],
+            (e(y) ** e(x))
+        ),
     ]
 
     seen = set()
     solutions = []
-    max_level = 2
+    max_level = 3
     min_solution = 1000000
     infs = 0
     dups = 0
+    config = {
+        "binops": [c],
+        "unops": [e],
+        "leafs": [
+            ARG,
+            A,
+            B,
+            C,
+            D,
+            E,
+            NIL,
+            EV,
+            # cK,
+            # cS,
+            # SELF,
+        ]
+    }
     while not solutions:
-        print "Level: {} Inf: {} Seen: {} Dups: {}".format(max_level, infs, len(seen), dups)
+        t = time.time()
+        iters = max_level * 100000
+        print("Level: {} Iters: {}".format(max_level, iters))
         max_level += 1
-        for i in xrange(max_level * 200000):
-            s = builder(max_level, visitor, top=True)
+        for i in xrange(iters):
+            s = builder(max_level, visitor, top=True, config=config)
             if s in seen:
                 dups += 1
                 continue
-            if max_level < 6:
-                seen |= {s}
+            if len(seen) < 2000000:
+                seen.add(s)
             try:
                 if all(do_apply_args(s, r[0]) == r[1] for r in rules):
                     if len(str(s)) < min_solution:
@@ -103,7 +114,9 @@ if __name__ == "__main__":
                         solutions.append(s)
             except RuntimeError:
                 # print ("Infinite loop: {}".format(s))
+                seen.add(s)
                 infs += 1
 
-        if max_level > 50:
+        print("Inf: {} Seen: {} Dups: {} Speed: {} IPS".format(infs, len(seen), dups, iters // (time.time() - t)))
+        if max_level > 20:
             break
