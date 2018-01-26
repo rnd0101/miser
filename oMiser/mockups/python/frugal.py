@@ -6,8 +6,9 @@ from parsimonious.grammar import RuleVisitor
 frugal_grammar = Grammar(ur"""
     program = statement_seq
     statement_seq = space? statement (";" space? statement)*
-    statement = assignment / expression
+    statement = assignment / expression / command
     assignment = "ob" space new_var space? "=" space? expression space?
+    command = ("graph" / "include") space ~"\s+"i
     expression = space? primary (space? primary)* space?
     primary = term (space? "::" space? term)*
     term = primitive / lindy / var / enclosure / subterm / list

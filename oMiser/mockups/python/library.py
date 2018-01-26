@@ -71,4 +71,6 @@ bAND = ARG ** (E ** B)
 bXOR = (ARG ** (D ** B)) ** B
 bSAY = L("TRUE") ** L("FALSE")
 
+isIndividual = (D ** ARG ** B ** ARG)
+
 namespace = {k: v for k, v in vars().items() if isinstance(v, ob)}
