@@ -4,11 +4,13 @@ from parsimonious import Grammar, NodeVisitor
 from parsimonious.grammar import RuleVisitor
 
 frugal_grammar = Grammar(ur"""
-    program = command / statement_seq
+    program = command / equation_statement / statement_seq
     statement_seq = space? statement (";" space? statement)*
     statement = assignment / expression
     assignment = "ob" space new_var space? "=" space? expression space?
-    command = ("graph" / "include" / "solve" / "eval" / "debug") (space ~".+"i)?
+    command = ("graph" / "include" / "eval" / "debug") (space ~".+"i)?
+    equation_statement = "solve" equation+
+    equation = space "?" space? expression space? "==" space? expression space? ";"
     expression = space? primary (space? primary)* space?
     primary = term (space? "::" space? term)*
     term = primitive / lindy / var / enclosure / subterm / list
@@ -49,6 +51,12 @@ class Command(object):
         self.arguments = arguments
 
 
+class Equation(object):
+    def __init__(self, args, result):
+        self.args = args
+        self.result = result
+
+
 def consify(ctx, lst):
     """Given a list, construct pairs starting from the end"""
     if len(lst) == 1:
@@ -87,6 +95,10 @@ class FrugalVisitor(RuleVisitor):
         seq = [head] + [i[2] for i in tail]
         return seq
 
+    def visit_equation_statement(self, node, children):
+        _, tail = children
+        return tail
+
     def visit_expression(self, node, children):
         _, head, tail, _ = children
         if type(tail) != list:
@@ -109,6 +121,14 @@ class FrugalVisitor(RuleVisitor):
         else:
             args = ''
         return Command(name[0].text, args)
+
+    def visit_equation(self, node, children):
+        _, _, _, args, _, _, _, result, _, _ = children
+        if isinstance(args, ArgumentList):
+            args = args.get()
+        else:
+            args = [args]
+        return Equation(args, result)
 
     def visit_assignment(self, node, children):
         _, _, varname, _, _, _, exp, _ = children

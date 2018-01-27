@@ -7,8 +7,9 @@ from parsimonious import ParseError, VisitationError
 
 import miser
 import library
-from frugal import frugal_to_tree, Command
+from frugal import frugal_to_tree, Command, Equation
 from graph import make_graph
+from solve import solve
 
 DOT_FILE_PATH = "/tmp/omiser.dot"
 
@@ -83,6 +84,10 @@ def repl_loop(debug=False, do_eval=False):
                     print("Empty input.")
                     continue
                 statements = frugal_to_tree(statements.arguments, workspace)
+        elif isinstance(statements[0], Equation):
+            rules = [(eq.args, eq.result) for eq in statements]
+            solve(rules)
+            continue
 
         if not all(good_statement(x) for x in statements):
             print("ERROR: Ob expected, found: {}".format(statements))

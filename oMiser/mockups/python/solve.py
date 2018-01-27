@@ -94,6 +94,8 @@ def solve(rules):
         if max_level > 20:
             break
 
+    return solutions
+
 
 if __name__ == "__main__":
     rules = [
