@@ -10,7 +10,7 @@ frugal_grammar = Grammar(ur"""
     assignment = "ob" space new_var space? "=" space? expression space?
     command = ("graph" / "include" / "eval" / "debug") (space ~".+"i)?
     equation_statement = "solve" equation+
-    equation = space "?" space? expression space? "==" space? expression space? ";"
+    equation = space new_var space? expression space? "==" space? expression space? ";"
     expression = space? primary (space? primary)* space?
     primary = term (space? "::" space? term)*
     term = primitive / lindy / var / enclosure / subterm / list
@@ -52,9 +52,10 @@ class Command(object):
 
 
 class Equation(object):
-    def __init__(self, args, result):
+    def __init__(self, args, result, varname):
         self.args = args
         self.result = result
+        self.varname = varname
 
 
 def consify(ctx, lst):
@@ -123,12 +124,12 @@ class FrugalVisitor(RuleVisitor):
         return Command(name[0].text, args)
 
     def visit_equation(self, node, children):
-        _, _, _, args, _, _, _, result, _, _ = children
+        _, varname, _, args, _, _, _, result, _, _ = children
         if isinstance(args, ArgumentList):
             args = args.get()
         else:
             args = [args]
-        return Equation(args, result)
+        return Equation(args, result, varname)
 
     def visit_assignment(self, node, children):
         _, _, varname, _, _, _, exp, _ = children

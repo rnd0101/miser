@@ -85,8 +85,15 @@ def repl_loop(debug=False, do_eval=False):
                     continue
                 statements = frugal_to_tree(statements.arguments, workspace)
         elif isinstance(statements[0], Equation):
+            if len(set(eq.varname for eq in statements)) != 1:
+                print("ERROR: different variables")
+                continue
+            varname = statements[0].varname
             rules = [(eq.args, eq.result) for eq in statements]
-            solve(rules)
+            solutions = solve(rules)
+            workspace[varname] = solutions[-1]
+            if debug:
+                pprint(workspace)
             continue
 
         if not all(good_statement(x) for x in statements):
