@@ -59,7 +59,7 @@ has = (
         ** E ** e(A ** SELF ** B ** ARG)
 )
 
-#swap = (B ** ARG) ** (A ** ARG)
+simpleSwap = (B ** ARG) ** (A ** ARG)
 swap = c(EV, c(c(D, c(ARG, c(B, ARG))), e(c(ARG, c(C, c(c(B, ARG), c(A, ARG)))))))
 dup = C ** ARG ** ARG
 

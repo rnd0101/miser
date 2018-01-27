@@ -90,10 +90,17 @@ def repl_loop(debug=False, do_eval=False):
                 continue
             varname = statements[0].varname
             rules = [(eq.args, eq.result) for eq in statements]
-            solutions = solve(rules)
-            workspace[varname] = solutions[-1]
-            if debug:
-                pprint(workspace)
+            try:
+                solutions = solve(rules)
+            except KeyboardInterrupt:
+                print("Aborted.")
+                continue
+            if solutions:
+                workspace[varname] = solutions[-1]
+                if debug:
+                    pprint(workspace)
+            else:
+                print("No solution found, more calculations needed.")
             continue
 
         if not all(good_statement(x) for x in statements):
