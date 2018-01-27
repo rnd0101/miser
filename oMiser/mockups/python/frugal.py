@@ -4,11 +4,11 @@ from parsimonious import Grammar, NodeVisitor
 from parsimonious.grammar import RuleVisitor
 
 frugal_grammar = Grammar(ur"""
-    program = statement_seq
+    program = command / statement_seq
     statement_seq = space? statement (";" space? statement)*
-    statement = assignment / expression / command
+    statement = assignment / expression
     assignment = "ob" space new_var space? "=" space? expression space?
-    command = ("graph" / "include") space ~"\s+"i
+    command = ("graph" / "include" / "solve" / "eval" / "debug") (space ~".+"i)?
     expression = space? primary (space? primary)* space?
     primary = term (space? "::" space? term)*
     term = primitive / lindy / var / enclosure / subterm / list
@@ -41,6 +41,12 @@ class ArgumentList(object):
 
     def __repr__(self):
         return "(" + ", ".join(str(t) for t in self._t) + ")"
+
+
+class Command(object):
+    def __init__(self, name, arguments):
+        self.name = name
+        self.arguments = arguments
 
 
 def consify(ctx, lst):
@@ -95,6 +101,14 @@ class FrugalVisitor(RuleVisitor):
     def visit_statement(self, node, children):
         st, = children
         return st
+
+    def visit_command(self, node, children):
+        name, args = children
+        if type(args) == list:
+            args = args[0][1].text
+        else:
+            args = ''
+        return Command(name[0].text, args)
 
     def visit_assignment(self, node, children):
         _, _, varname, _, _, _, exp, _ = children

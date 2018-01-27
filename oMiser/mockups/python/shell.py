@@ -7,7 +7,7 @@ from parsimonious import ParseError, VisitationError
 
 import miser
 import library
-from frugal import frugal_to_tree
+from frugal import frugal_to_tree, Command
 from graph import make_graph
 
 DOT_FILE_PATH = "/tmp/omiser.dot"
@@ -60,23 +60,29 @@ def repl_loop(debug=False, do_eval=False):
 
         if not s.strip():
             continue
-        if s.strip() == "debug":
-            debug = not debug
-            print("Debug now {}".format(["OFF", "ON"][debug]))
-            continue
-        elif s.strip() == "eval":
-            do_eval = not do_eval
-            print("Implicit eval now {}".format(["OFF", "ON"][do_eval]))
-            continue
-        graph = False
-        if s.startswith("graph "):
-            s = s[len("graph "):]
-            graph = True
+
         try:
             statements = frugal_to_tree(s, workspace)
         except (ParseError, VisitationError) as exc:
             print("Parsing error: {}".format(exc))
             continue
+
+        graph = False
+        if isinstance(statements, Command):
+            if statements.name == "debug":
+                debug = not debug
+                print("Debug now {}".format(["OFF", "ON"][debug]))
+                continue
+            elif statements.name == "eval":
+                do_eval = not do_eval
+                print("Implicit eval now {}".format(["OFF", "ON"][do_eval]))
+                continue
+            elif statements.name == "graph":
+                graph = True
+                if not statements.arguments.strip():
+                    print("Empty input.")
+                    continue
+                statements = frugal_to_tree(statements.arguments, workspace)
 
         if not all(good_statement(x) for x in statements):
             print("ERROR: Ob expected, found: {}".format(statements))
