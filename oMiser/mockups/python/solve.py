@@ -11,7 +11,7 @@ from miser import c, E, ARG, C, e, NIL, EV, D, B, SELF, A, L, ap
 from library import cK, cS
 
 
-def builder(max_level, visitor, top=False, config=None):
+def builder(max_level, top=False, config=None):
     groups = "binops", "unops", "leafs"
     if max_level == 1:
         groups = "leafs",
@@ -20,12 +20,11 @@ def builder(max_level, visitor, top=False, config=None):
     op_group = choice(groups)
     op = choice(config[op_group])
     if op_group == "binops":
-        script = op(builder(max_level - 1, visitor, config=config), builder(max_level - 1, visitor, config=config))
+        script = op(builder(max_level - 1, config=config), builder(max_level - 1, config=config))
     elif op_group == "unops":
-        script = op(builder(max_level - 1, visitor, config=config))
+        script = op(builder(max_level - 1, config=config))
     else:
         script = op
-    visitor(script, top)
 
     return script
 
@@ -43,33 +42,7 @@ z = L("z")
 t = L("t")
 
 
-if __name__ == "__main__":
-    def visitor(ob, top):
-        return
-
-    rules = [
- #       (
- #           [x],
- #           (x ** NIL)
- #       ),
-#        (
-#            [x ** y],
-#            (x ** y ** NIL)
-#        ),
-        (
-            [x],
-            (x)
-        ),
-        (
-            [x ** y],
-            (y ** x)
-        ),
-#        (
-#            [e(x) ** e(y)],
-#            (e(y) ** e(x))
-#        ),
-    ]
-
+def solve(rules):
     seen = set()
     solutions = []
     max_level = 3
@@ -94,12 +67,12 @@ if __name__ == "__main__":
         ]
     }
     while not solutions:
-        t = time.time()
+        t0 = time.time()
         iters = max_level * 100000
         print("Level: {} Iters: {}".format(max_level, iters))
         max_level += 1
         for i in xrange(iters):
-            s = builder(max_level, visitor, top=True, config=config)
+            s = builder(max_level, top=True, config=config)
             if s in seen:
                 dups += 1
                 continue
@@ -117,6 +90,33 @@ if __name__ == "__main__":
                 seen.add(s)
                 infs += 1
 
-        print("Inf: {} Seen: {} Dups: {} Speed: {} IPS".format(infs, len(seen), dups, iters // (time.time() - t)))
+        print("Inf: {} Seen: {} Dups: {} Speed: {} IPS".format(infs, len(seen), dups, iters // (time.time() - t0)))
         if max_level > 20:
             break
+
+
+if __name__ == "__main__":
+    rules = [
+ #       (
+ #           [x],
+ #           (x ** NIL)
+ #       ),
+#        (
+#            [x ** y],
+#            (x ** y ** NIL)
+#        ),
+        (
+            [x],
+            (x)
+        ),
+        (
+            [x ** y],
+            (y ** x)
+        ),
+#        (
+#            [e(x) ** e(y)],
+#            (e(y) ** e(x))
+#        ),
+    ]
+
+    solve(rules)
