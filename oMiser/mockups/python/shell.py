@@ -83,7 +83,14 @@ def repl_loop(modules, debug=False, do_eval=False):
 
         graph = False
         if isinstance(statements, Command):
-            if statements.name == "debug":
+            if statements.name == "include":
+                file_name = statements.arguments.strip('"')
+                try:
+                    modules.append(open(file_name, "r"))
+                except IOError, x:
+                    print("ERROR: {}".format(x))
+                continue
+            elif statements.name == "debug":
                 debug = not debug
                 print("Debug now {}".format(["OFF", "ON"][debug]))
                 continue
