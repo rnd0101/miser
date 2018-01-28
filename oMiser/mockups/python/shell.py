@@ -1,3 +1,4 @@
+import argparse
 import os
 import readline
 import atexit
@@ -34,7 +35,7 @@ def good_statement(s):
     return isinstance(s, tuple) and len(s) == 2 and isinstance(s[0], basestring) and isinstance(s[1], miser.ob)
 
 
-def repl_loop(debug=False, do_eval=False):
+def repl_loop(modules, debug=False, do_eval=False):
     print("oFrugal shell for oMiser computational model")
     print("Press Ctrl-D to leave.")
     workspace = miser.namespace
@@ -53,11 +54,23 @@ def repl_loop(debug=False, do_eval=False):
     readline.set_completer(completer)
 
     while True:
-        try:
-            s = raw_input("\noFrugal> ")
-        except EOFError:
-            print("\nBye!")
-            break
+        line = None
+        while len(modules) > 0:
+            line = modules[0].readline()
+            if line:
+                break
+            to_close = modules.pop(0)
+            print("Read: {}".format(to_close.name))
+            to_close.close()
+
+        if line:
+            s = line
+        else:
+            try:
+                s = raw_input("\noFrugal> ")
+            except EOFError:
+                print("\nBye!")
+                break
 
         if not s.strip():
             continue
@@ -133,4 +146,8 @@ def repl_loop(debug=False, do_eval=False):
 
 
 if __name__ == "__main__":
-    repl_loop()
+    parser = argparse.ArgumentParser(description='oFrugal shell.')
+    parser.add_argument('modules', metavar='M', type=argparse.FileType('r'), nargs='*')
+    args = parser.parse_args()
+
+    repl_loop(args.modules)
