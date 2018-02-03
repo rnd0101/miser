@@ -5,7 +5,7 @@ import atexit
 from pprint import pprint
 
 from parsimonious import ParseError, VisitationError
-from ofrugal_grammar import parser as ofrugal_parser
+from ofrugal_grammar import parser as ofrugal_parser, Interpretation
 
 import miser
 import library
@@ -76,7 +76,10 @@ def repl_loop(modules, debug=False, do_eval=False):
         if not s.strip():
             continue
 
-        print (ofrugal_parser.parse(s))  # TODO: properly integrate into shell
+        parsed = ofrugal_parser.parse(s)
+        print (parsed)  # TODO: properly integrate into shell
+        I = Interpretation(workspace)
+        print (I(parsed))
 
         try:
             statements = frugal_to_tree(s, workspace)
