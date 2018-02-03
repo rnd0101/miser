@@ -3,6 +3,7 @@
 from parsimonious import Grammar, NodeVisitor
 from parsimonious.grammar import RuleVisitor
 
+
 frugal_grammar = Grammar(ur"""
     program = command / equation_statement / statement_seq
     statement_seq = space? statement (";" space? statement)*

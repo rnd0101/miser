@@ -1,0 +1,5 @@
+ob ^convert = .C :: ( .C :: (.E :: .ARG) :: ‵ (.A :: .ARG) ) :: ‵ (.B :: .ARG)
+ob ^convert3 = (.C ::(.C :: ( .C :: (.E :: .ARG) :: ‵ (.A :: .ARG) ) :: ‵ (.A :: (.B :: .ARG)) ) :: `(.B :: (.B :: .ARG)))
+ob ^indicator = .NIL::evaluated
+ob ^indicator2 = .NIL::evaluated2
+ob ^indicator3 = .NIL::evaluated3
