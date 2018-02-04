@@ -44,7 +44,6 @@ parser = lark.Lark(
     // 7. UNARIES
 
     unary: function_form         -> lift
-        | obap_form              -> lift
         | ("`" | "‵") obap_form  -> enclosure
         | ("`" | "‵") unary      -> enclosure 
 
@@ -53,6 +52,7 @@ parser = lark.Lark(
     ae_form: unary           -> lift
         | unary ae_form      -> application
     ae: ae_form              -> lift
+        | obap_form          -> lift
         | obap_form ae_form  -> application
 
     // 9. OB_EXP
@@ -98,7 +98,6 @@ class Interpretation(object):
             return getattr(self, arg.type)(arg)
 
     def LINDY(self, node):
-        print "LINDY"
         return self.ctx['L('](node.value)
 
     def PRIMITIVE(self, node):
