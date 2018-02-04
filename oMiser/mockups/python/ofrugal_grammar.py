@@ -9,9 +9,9 @@ parser = lark.Lark(
 
     // 3. TEXT, CHARACTERS, SPACING, AND CONCRETE LAYOUT CONSIDERATIONS
 
-    LINDY: /[a-zA-Z0-9_]+\w*/
-    PRIMITIVE: /\.[a-zA-Z0-9_]+\w*/ 
-    BINDING_NAME: /\^[a-zA-Z0-9_]+\w*/ 
+    LINDY: /[a-zA-Z0-9_]\w*/
+    PRIMITIVE: /\.[a-zA-Z0-9_]\w*/
+    BINDING_NAME: /\^[a-zA-Z0-9_]\w*/
 
     // 4. TERMS
 
@@ -62,10 +62,31 @@ parser = lark.Lark(
 
     ob_exp: binary           -> lift
 
+    // SHELL ADDITIONS
+
+    program: command 
+        | equation_statement
+        | statement_seq
+    ?statement_seq: statement (";" statement)*
+    statement: assignment 
+       | ob_exp
+    assignment: "ob" NEW_VAR "=" ob_exp
+    command: COMMAND command_parameters?
+    equation_statement: "solve" equation+
+    equation: new_var ob_exp "==" ob_exp ";"
+
+    command_parameters: COMMAND_PARAMETERS
+    new_var: NEW_VAR
+
+    NEW_VAR: /\^[a-zA-Z0-9_]\w*/
+    COMMAND_PARAMETERS: /.+/
+    
+    // Temprorarily:
+    COMMAND: /graph|include|eval|debug/i
 
     %import common.WS
     %ignore WS
-    """, start='ob_exp'
+    """, start='program'
 )
 
 
@@ -105,6 +126,15 @@ class Interpretation(object):
 
     def BINDING_NAME(self, node):
         return self.ctx[node.value.lstrip('^')]
+
+    def NEW_VAR(self, node):
+        return node.value.lstrip('^')
+
+    def COMMAND_PARAMETERS(self, node):
+        return node.value
+
+    def COMMAND(self, node):
+        return node.value
 
     def _unknown(self, node):
         return [node.data] + [self(c) for c in node.children]
