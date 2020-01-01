@@ -4,7 +4,7 @@ from parsimonious import Grammar, NodeVisitor
 from parsimonious.grammar import RuleVisitor
 
 
-frugal_grammar = Grammar("""
+frugal_grammar = Grammar(r"""
     program = command / equation_statement / statement_seq
     statement_seq = space? statement (";" space? statement)*
     statement = assignment / expression
