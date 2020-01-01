@@ -33,7 +33,7 @@ atexit.register(readline.write_history_file, shell_history_file)
 def good_statement(s):
     if isinstance(s, miser.ob):
         return True
-    return isinstance(s, tuple) and len(s) == 2 and isinstance(s[0], basestring) and isinstance(s[1], miser.ob)
+    return isinstance(s, tuple) and len(s) == 2 and isinstance(s[0], str) and isinstance(s[1], miser.ob)
 
 
 def repl_loop(modules, debug=False, do_eval=False):
@@ -61,14 +61,14 @@ def repl_loop(modules, debug=False, do_eval=False):
             if line:
                 break
             to_close = modules.pop(0)
-            print("Read: {}".format(to_close.name))
+            print(("Read: {}".format(to_close.name)))
             to_close.close()
 
         if line:
             s = line
         else:
             try:
-                s = raw_input("\noFrugal> ")
+                s = eval(input("\noFrugal> "))
             except EOFError:
                 print("\nBye!")
                 break
@@ -79,12 +79,12 @@ def repl_loop(modules, debug=False, do_eval=False):
         parsed = ofrugal_parser.parse(s)
         print (parsed)  # TODO: properly integrate into shell
         I = Interpretation(workspace)
-        print (I(parsed))
+        print((I(parsed)))
 
         try:
             statements = frugal_to_tree(s, workspace)
         except (ParseError, VisitationError) as exc:
-            print("Parsing error: {}".format(exc))
+            print(("Parsing error: {}".format(exc)))
             continue
 
         graph = False
@@ -93,16 +93,16 @@ def repl_loop(modules, debug=False, do_eval=False):
                 file_name = statements.arguments.strip('"')
                 try:
                     modules.append(open(file_name, "r"))
-                except IOError, x:
-                    print("ERROR: {}".format(x))
+                except IOError as x:
+                    print(("ERROR: {}".format(x)))
                 continue
             elif statements.name == "debug":
                 debug = not debug
-                print("Debug now {}".format(["OFF", "ON"][debug]))
+                print(("Debug now {}".format(["OFF", "ON"][debug])))
                 continue
             elif statements.name == "eval":
                 do_eval = not do_eval
-                print("Implicit eval now {}".format(["OFF", "ON"][do_eval]))
+                print(("Implicit eval now {}".format(["OFF", "ON"][do_eval])))
                 continue
             elif statements.name == "graph":
                 graph = True
@@ -130,19 +130,19 @@ def repl_loop(modules, debug=False, do_eval=False):
             continue
 
         if not all(good_statement(x) for x in statements):
-            print("ERROR: Ob expected, found: {}".format(statements))
+            print(("ERROR: Ob expected, found: {}".format(statements)))
             continue
 
         if graph:
             make_graph(statements, DOT_FILE_PATH)
-            print("Graphviz file written to {}".format(DOT_FILE_PATH))
+            print(("Graphviz file written to {}".format(DOT_FILE_PATH)))
             continue
 
         for s in statements:
             to_var = None
             if isinstance(s, tuple):
                 to_var, s = s
-                print("{} = {}".format(to_var, str(s)))
+                print(("{} = {}".format(to_var, str(s))))
             if to_var is not None:
                 workspace[to_var] = s
                 if debug:
@@ -152,10 +152,10 @@ def repl_loop(modules, debug=False, do_eval=False):
                     evaluated = miser.eval(s)
                 else:
                     evaluated = s
-                print("{}".format(str(evaluated)))
+                print(("{}".format(str(evaluated))))
                 if debug:
-                    print("\nOUTPUT: {}".format(repr(evaluated)))
-                    print("\nOUTPUT STATE: {}".format(repr(evaluated.__getstate__())))
+                    print(("\nOUTPUT: {}".format(repr(evaluated))))
+                    print(("\nOUTPUT STATE: {}".format(repr(evaluated.__getstate__()))))
 
 
 if __name__ == "__main__":

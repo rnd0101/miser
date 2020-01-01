@@ -69,9 +69,9 @@ def solve(rules):
     while not solutions:
         t0 = time.time()
         iters = max_level * 100000
-        print("Level: {} Iters: {}".format(max_level, iters))
+        print(("Level: {} Iters: {}".format(max_level, iters)))
         max_level += 1
-        for i in xrange(iters):
+        for i in range(iters):
             s = builder(max_level, top=True, config=config)
             if s in seen:
                 dups += 1
@@ -81,8 +81,8 @@ def solve(rules):
             try:
                 if all(do_apply_args(s, r[0]) == r[1] for r in rules):
                     if len(str(s)) < min_solution:
-                        print
-                        print s
+                        print()
+                        print(s)
                         min_solution = len(str(s))
                         solutions.append(s)
             except RuntimeError:
@@ -90,7 +90,7 @@ def solve(rules):
                 seen.add(s)
                 infs += 1
 
-        print("Inf: {} Seen: {} Dups: {} Speed: {} IPS".format(infs, len(seen), dups, iters // (time.time() - t0)))
+        print(("Inf: {} Seen: {} Dups: {} Speed: {} IPS".format(infs, len(seen), dups, iters // (time.time() - t0))))
         if max_level > 20:
             break
 

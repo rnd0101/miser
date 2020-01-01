@@ -5,7 +5,7 @@ from lark import Tree
 from lark.lexer import Token
 
 parser = lark.Lark(
-    u"""
+    """
 
     // 3. TEXT, CHARACTERS, SPACING, AND CONCRETE LAYOUT CONSIDERATIONS
 

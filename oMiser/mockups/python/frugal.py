@@ -4,7 +4,7 @@ from parsimonious import Grammar, NodeVisitor
 from parsimonious.grammar import RuleVisitor
 
 
-frugal_grammar = Grammar(ur"""
+frugal_grammar = Grammar("""
     program = command / equation_statement / statement_seq
     statement_seq = space? statement (";" space? statement)*
     statement = assignment / expression
@@ -188,4 +188,4 @@ def frugal_to_tree(frugal_expression, ctx):
 
 def test():
     import miser as obap
-    print(frugal_to_tree('.C `.C (.C (.E  .C (.E .ARG) `.ARG) `(.C (.E .ARG) `.ARG) )', obap))
+    print((frugal_to_tree('.C `.C (.C (.E  .C (.E .ARG) `.ARG) `(.C (.E .ARG) `.ARG) )', obap)))
