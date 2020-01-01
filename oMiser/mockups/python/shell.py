@@ -68,7 +68,7 @@ def repl_loop(modules, debug=False, do_eval=False):
             s = line
         else:
             try:
-                s = eval(input("\noFrugal> "))
+                s = input("\noFrugal> ")
             except EOFError:
                 print("\nBye!")
                 break
