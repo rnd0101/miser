@@ -4,6 +4,7 @@ import readline
 import atexit
 from pprint import pprint
 
+from lark import UnexpectedCharacters
 from parsimonious import ParseError, VisitationError
 from ofrugal_grammar import parser as ofrugal_parser, Interpretation
 
@@ -76,8 +77,13 @@ def repl_loop(modules, debug=False, do_eval=False):
         if not s.strip():
             continue
 
-        parsed = ofrugal_parser.parse(s)
-        print (parsed)  # TODO: properly integrate into shell
+        try:
+            parsed = ofrugal_parser.parse(s)
+        except UnexpectedCharacters as x:
+            print("\nParser error:", x)
+            continue
+        else:
+            print (parsed)  # TODO: properly integrate into shell
         I = Interpretation(workspace)
         print((I(parsed)))
 
@@ -118,6 +124,9 @@ def repl_loop(modules, debug=False, do_eval=False):
             rules = [(eq.args, eq.result) for eq in statements]
             try:
                 solutions = solve(rules)
+            except TypeError as x:
+                print("\nInternal error:", x)
+                continue
             except KeyboardInterrupt:
                 print("Aborted.")
                 continue
