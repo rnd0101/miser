@@ -22,11 +22,11 @@ class ob(object):
     def __pow__(self, other, modulo=None):
         return c(self, other)
 
+    def __hash__(self):
+        return hash(str(self))
+
     def __eq__(self, other):
         return self.__class__ == other.__class__ and self.__getstate__() == other.__getstate__()
-
-    def __ne__(self, other):
-        return not (self == other)  # Not needed in py3
 
     def __str__(self):
         return self.name
