@@ -83,9 +83,10 @@ def repl_loop(modules, debug=False, do_eval=False):
             print("\nParser error:", x)
             continue
         else:
-            print (parsed)  # TODO: properly integrate into shell
+            # print (parsed)  # TODO: properly integrate into shell
+            pass
         I = Interpretation(workspace)
-        print((I(parsed)))
+        # print((I(parsed)))
 
         try:
             statements = frugal_to_tree(s, workspace)
