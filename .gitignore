@@ -220,6 +220,8 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+__pycache__/
+
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # 0.0.5 2018-01-07-00:00 Added .idea
