@@ -1,0 +1,73 @@
+dev.txt 0.0.1                        UTF-8                       dh:2018-08-09
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|--*
+                             The Miser Project Code
+                             ======================
+
+                        <https://github.com/orcmid/miser>
+
+                 DEVELOPMENT OF MISER PROJECT SOFTWARE RELEASES
+
+                    INCREMENTAL DEVELOPMENT OF MISER SOFTWARE
+                    -----------------------------------------
+
+            <https://github.com/orcmid/miser/blob/master/dev/dev.txt>
+
+MANIFEST
+
+    dev.txt
+        this manifest and job-jar file
+
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                       Copyright 2018 Dennis E. Hamilton
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+TODO
+
+  * Consider whether different packagings may be served better by having
+    separate GitHub projects, perhaps tied to particular implementation/
+    integration approaches?
+
+  * For now, consider the development approach to be addressed here.  Where
+    incremental releases of various integrations are source-code managed
+    can be factored in once we have one and are looking for a second.
+
+  * Describe the development principles with respect to having a shallow
+    end to the pool and easy confirmability.
+
+  * Look into multi-platform support at the potential production library
+    level for C/C++ constructed libraries for oMiser and using oMiser.
+    Reconcile with the desire to minimize tooling and preservation of
+    an on-ramp for enthusiasts, students, and novices.
+
+  * E.g.,
+  <https://blogs.msdn.microsoft.com/vcblog/2018/04/24/announcing-a-single-c-library-manager-for-linux-macos-and-windows-vcpkg/>
+  and
+  <https://blogs.msdn.microsoft.com/vcblog/2016/09/19/vcpkg-a-tool-to-acquire-and-build-c-open-source-libraries-on-windows/>
+  with particular interest in how "repeatable builds" are achieved.
+
+  * Noticing that <https://github.com/Microsoft/vcpkg> depends on Powershell,
+    and that interferes with the "shallow-end" and minimal tooling notions
+    I have been attempting for nfoTools.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 0.0.1 2018-08-09-11:34 Elaborate TODOs.  Stop sitting on check-in for more.
+ 0.0.0 2018-04-19-10:29 Create placeholder and initial job jar for the
+       Miser Project code.
+
+                          ***** end of dev.txt *****

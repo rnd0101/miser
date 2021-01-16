@@ -1,32 +1,32 @@
-tutorials.txt 0.0.14                 UTF-8                        dh:2017-11-20
+tutorials.txt 0.0.29                 UTF-8                       dh:2019-11-09
 
                              The Miser Project Code
                              ======================
-                            
+
    <https://github.com/orcmid/miser/blob/master/oMiser/mockups/SML/tutorials>
 
                         SML MOCKUP TUTORIAL MATERIALS
                         -----------------------------
-              
+
     Tutorial materials derive from and/or about the SML mockup creation
     are cataloged here for document-management and preservation.  There is
     also tie-in with the mathematical specifications and the computation/
     programming model for oMiser/oFrugal for which the SML mockup provides
     proofs-of-concept.
-    
+
     Initial components of the tutorial sketch appeared on the Facebook
     Page "Golden Geek", <https://www.facebook.com/MiserProject/>
-    
-    Not all material is specific to SML and are also relevant to the treatment
+
+    Not all material is specific to SML.  Some are relevant to the treatment
     of models at <https://github.com/orcmid/miser/tree/master/models>.
-         
+
 MANIFEST
 
     ob-2017-07-25-0841-minimumOb.png
         <ob> is the singular structue on which oMiser is defined.  Illustrated
         using Standard SML of New Jersey.
         <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1938468599701047/>
-        
+
     ob-2017-07-26-0926-datatype-0.0.2.png
         <ob> as Abstract Data Type, Part 1
         <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1938924089655498/>
@@ -34,7 +34,7 @@ MANIFEST
     ob-2017-07-27-0920-primitives-0.0.4.png
         <ob> as Abstract Data Type, part 2
         <https://www.facebook.com/MiserProject/posts/1939431349604772>
-        
+
     ob-2017-07-28-1128-StructuralPredicates.png
          <ob> as Abstract Data Type, part 3
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1939858879562019/>
@@ -42,19 +42,19 @@ MANIFEST
     (no image)
          <ob> as Abstract Data Type, part 4
          <https://www.facebook.com/MiserProject/posts/1941329896081584>
-         
+
     ob-2017-08-05-1326-StructuralIdentities.png
          <ob> as Abstract Data Type, Part 5
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1942904502590790/>
-         
+
     ob-2017-08-17-0958-NoExhaustiveTesting.png
          <ob> as Abstract Data Type, Part 6
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1947722532108987/>
-  
+
     ob-2017-08-19-1213-InterpretingObInSML.png
          <ob> as Abstract Data Type, Part 7
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1948522398695667/>
-      
+
     ob-2017-08-21-0839-Theory2ob.sml-Identity.png
          <ob> as Abstract Data Type, part 8
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1949233065291267/>
@@ -62,40 +62,41 @@ MANIFEST
     ob-2017-08-21-1129-PrimitiveIndividualCondition.png
          <ob> as Abstract Data Type, part 9
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1949302878617619/>
-    
+
     ob-2017-08-22-0900-CompletedPrimitives.png
          <ob> as Abstract Data Type, Part 5 Correction
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1949623431918897/>
-         
+
     ob-2017-08-22-0953-DenumerableOrdering.png
          <ob> as Abstract Data Type, Part 10
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1949639558583951/>
-     
+
     ob-2017-08-28-0910-obtheory-Notation.png
          ‹ob› as Abstract Data Type, Part 11 - Logical Notation Refactored
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1951794215035152/>
          <https://www.flickr.com/photos/orcmid/36093998583/>
-         
+
     ob-2017-08-28-09-35-obtheory-PrimitiveNotions.png
          ‹ob› as Abstract Data Type, Part 12 - Primitive Notions Refactored
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1951801151701125/>
          <https://www.flickr.com/photos/orcmid/36902320615/>
-         
+
     ob-2017-08-29-1026-ob-SML-datatype.png
          ‹ob› as Abstract Data Type, Part 13 - SML Datatype Representation -
              Refactored
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1952187788329128/>
          <https://www.flickr.com/photos/orcmid/36068496004/>
-         
+
     ob-2017-08-29-1321-obtest-Soundness.png
-         ‹ob› as Abstract Data Type, Part 14 - Verifying the SML Interpretation
+         ‹ob› as Abstract Data Type, Part 14 - Verifying the SML
+         Interpretation
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1952234034991170/>
-         
+
     ob-2017-09-01-1133-DemonstratePrimitivesSML.png
          ‹ob› as Abstract Data Type, Part 15 - Checking the Primitive Notions
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1953694548178452/>
-         <https://www.flickr.com/photos/orcmid/36174341783/>    
-         
+         <https://www.flickr.com/photos/orcmid/36174341783/>
+
     ob-2017-09-03-0941-TotalityPartition.png
          ‹ob› as Abstract Data Type, Part 16, Totality and Partition
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1954102568137650/>
@@ -103,37 +104,77 @@ MANIFEST
     ob-2017-09-14-1515-OB-SignatureStable.png
          ‹ob› as Abstract Data Type, Part 17, Stabilized
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1958097167738190/>
-         
+
     ob-2017-09-29-0834-obap-Synopsis.png
          ‹ob› as Computational Model, Part 2, The Idea
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1963207360560504/>
-    
+
     ob-2017-10-03-0758-obap-Preliminaries.png
          ‹ob› as Computational Model, Part 3, Preliminaries
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1964638877084019/>
-         
-    ob-2017-10-04-0949-Additional Notions
+
+    ob-2017-10-04-0949-AdditionalNotions.png
          ‹ob› as Computational Model, Part 4, Additional Notions
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1965113610369879/>
-         
+
+    ob-2019-01-17-1244-obtheory.txt-0.2.5-Notation.png (update)
+         Miser Project: Hark! Is That a Theory I See Before Me?
+         <https://orcmid.blogspot.com/2018/07/miser-project-hark-is-that-theory-i-see.html>
+
+    ob-2018-08-26-1030-PrimitiveNotions.png
+         Miser Project: ‹ob› Primitive Functions
+         <https://orcmid.blogspot.com/2018/08/miser-project-ob-primitive-functions.html>
+
+    ob-2019-01-18-1150-obtheory.txt-0.2.6-Denumerability.png (update 2)
+    ob-2018-09-04-DenumerabilityEffectiveness.png
+         Miser Project: Narrowing ‹ob› for Computational Interpretation
+         <https://orcmid.blogspot.com/2018/09/miser-project-narrowing-ob-for.html>
+
+    ob-2018-10-30-1437-OB.sig.sml-0.1.1-validity.png (update 2)
+    ob-2018-10-15-1681-ob.sml-0.0.14-structure.png
+    obap-2018-10-16-1532-obaptheory.txt-0.0.29.png
+         Miser Project: Representing Obs as Data (3 images)
+         <https://orcmid.blogspot.com/2018/11/miser-project-representing-data-as-obs.html>
+
+    ob-2018-10-28-0909-mirror.jpg
+    Ob-2018-10-28-0909-mirror.nef
+    ob-2018-12-01-1558-boole.txt-0.1.0-basics.png
+    ob-2018-12-03-0934-boole.txt-0.1.1-axioms.png
+    ob-2018-12-07-0948-boole.txt-0.2.0-bpRep.png (update)
+    ob-2018-12-03-1022-boole.txt-0.1.2-bpObRep.png
+    ob-2019-01-02-0929-boole.txt-0.5.0-ob.p01.bpRep.png (update 2)
+    ob-2018-12-10-1423-boole.txt-0.3.0-baRep.png (update)
+    ob-2018-12-10-1419-boole.txt-0.3.0-bvn.png
+    ob-2018-12-10-1405-boole.txt-0.3.0-bn-iso-bvn.png
+    ob-2018-12-12-1059-boole.txt-0.4.0-ob.bvx.png (update 3)
+    ob-2018-12-12-1250-boole.txt-0.4.0-ob.bvx.cf.png (update 3)
+    ob-2018-12-12-1250-boole.txt-0.4.1-ob-bvx-circleback.png (update 3)
+    ob-2018-12-10-1331-boole.txt-0.3.0-Notes.png (update)
+    ob-2018-12-07-1520-boolw.txt-0.2.0-References.png
+         Miser Project: Representing Functions in ‹ob›'s Abstract World (14
+         images) <https://orcmid.blogspot.com/2018/12/miser-project-representing-functions-in.html/>
+
+    (images in miser/models/Bratman and miser/models/categories)
+         Miser Project: Interpretation, Representation, Computation, and
+         Manifestation.  <https://orcmid.blogspot.com/2019/02/miser-project-interpretation.html>
+
     (no image)
          ‹ob› as Computational Model, Part 5, Computational Mathiness
          <https://www.facebook.com/MiserProject/posts/1966565546891352>
-         
+
     (no image)
          oMiser Engine Programming Part 1 - The Stack
          <https://www.facebook.com/MiserProject/posts/1977735585774348>
-         
+
     omiser-2017-11-08-0820-1stStack.vsdx, .svg, .png
          oMiser Engine Programming: Part 2 - Zooming In
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1978237959057444/>
 
     see <https://github.com/orcmid/miser/tree/master/models/Bratman>
-    i051101d1.vsdx, .svg, .png
+         i051101d1.vsdx, .svg, .png
          Computation as Performance, Part 1: Engine Operation
          <https://www.facebook.com/MiserProject/photos/a.1938469166367657.1073741828.1935440363337204/1981890868692153/>
-         
-         
+
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
                        Copyright 2017 Dennis E. Hamilton
@@ -149,18 +190,47 @@ MANIFEST
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
- 
+
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- 
+
 TODO
 
  * Have non-GitHub preservation, ideally on static web pages under the
    Miser Project at http://miser-theory.info
-      
+
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+ 0.0.29 2019-11-09-09:53 Tidy up, removing names of some files that have been
+        deleted.
+ 0.0.28 2019-11-07-14:26 Replace Wordpress links with Blogspot ones for
+        Orcmid's Lair, deleting those images that have updates and are no
+        longer referenced in existing blog posts.
+ 0.0.27 2019-01-19-10:09 Reflect 2 updates to obtheory.txt screen captures.
+ 0.0.26 2019-01-02-09:54 Corrected 2.5 in boole.txt in the blog post.
+ 0.0.25 2018-12-12-14:08 Addition of the updates to boole.txt reflected in
+        the 2018-12-12 "Representing Functions in ‹ob›'s Abstract World"
+ 0.0.24 2018-12-11-15:44 Addition of the 3.5 circling-back update as boole.txt
+        0.3.1 in "Representing Functions in ‹ob›'s Abstract World"
+ 0.0.23 2018-12-10-17:20 Additions from the boole.txt 0.3.0 smoothing to
+        "Representing Functions in ‹ob›'s Abstract World"
+ 0.0.22 2018-12-08-11:37 Additions from the major revision to "Representing
+        Functions in ‹ob›'s Abstract World" article (renamed) at <https://orcmid.wordpress.com>
+ 0.0.21 2018-12-04-13:42 Additions from "Expressing Functions in ‹ob›'s
+        Abstract World" article at <https://orcmid.wordpress.com>
+ 0.0.20 2018-11-02-13:43 Addition of structural induction mentioning
+        ob-2018-11-02-1313-obtheory.txt-0.1.2-Denumerability.png
+ 0.0.19 2018-10-30-14:55 Addition of ob-2018-10-30-1437-OB.sig.sml-0.1.1.png
+        second update to the image in "Representing Data as Obs."
+ 0.0.18 2018-10-30-13:03 Addition of ob-2018-10-30-1239-OB.sig.sml-0.1.0.png
+        to update the image in "Representing Data as Obs."
+ 0.0.17 2018-10-24-09:45 Bring Manifest current with correction made to
+        replace earlier captures of obtheory.txt.
+ 0.0.16 2018-10-17-09:46 Bring Manifest current with images in Orcmid's
+        Live HideOut Miser Project articles through 2018-10-16
+ 0.0.15 2018-07-07-12:42 Touch up and add
+        ob-2018-07-07-1105-theory-0.0.25-notation.png
  0.0.14 2017-11-20-08:46 Touch ups. Tie to models and cross-connect the
-        Computation as Performance modeling 
+        Computation as Performance modeling
  0.0.13 2017-11-17-12:59 Bring Current and start including Visio diagrams
         for images that are authored in that manner.  SVG is also derived,
         as an alternative to the PNGs that are posted to the web, Facebook, etc.
@@ -173,9 +243,9 @@ TODO
        ob› as Abstract Data Type, Part 15.  Also reflect the preservation
        of some of the captures on Flickr, now that this part of the SML
        mockup is pretty stable.
- 0.0.8 2017-08-29-13:50 Add the capture used in ‹ob› as Abstract Data Type, 
+ 0.0.8 2017-08-29-13:50 Add the capture used in ‹ob› as Abstract Data Type,
        Part 14
- 0.0.7 2017-08-29-10:55 Add the captures used for ‹ob› as Abstract Data Type, 
+ 0.0.7 2017-08-29-10:55 Add the captures used for ‹ob› as Abstract Data Type,
        Parts 11-13
  0.0.6 2017-08-23-09:59 Bring current with the Part 5 correction and the
        <ob> as Abstract Data Type, part 10.  Expand consistent naming.
@@ -190,4 +260,3 @@ TODO
        the preservation of tutorial materials.
 
                         *** end of tutorials.txt ***
-                         

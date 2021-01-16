@@ -1,0 +1,209 @@
+challenges.txt 0.0.4                 UTF-8                       dh:2020-07-16
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|--*
+
+                          MISER THEORETICAL CONCEPTION
+                          ============================
+
+                     CHALLENGES IN MISER SYSTEM DEVELOPMENT
+                     --------------------------------------
+
+         <https://github.com/orcmid/miser/blob/master/challenges.txt>
+
+[SYNOPSIS: TBD]
+
+[CONTENT: TBD]
+
+REFERENCES AND BIBLIOGRAPHY
+
+ * Some of the challenges are aspects of the computation theory development,
+   addressed specifically in other materials.
+    - <https://github.com/orcmid/miser/blob/master/theory.txt>
+
+[Okasaki1998]
+   Okasaki, Chris.  Purely Functional Data Structures.  Cambridge University
+   Press (New York: 1998).  ISBN 0-521-66350-4 pbk.  This extensive treatment
+   on means of efficient functional implementations for data structures is
+   mined for potential under-the-covers optimizations.  Exploration of the
+   structures, and the ML laziness extension, aids in the establishment of
+   an ontology that reconciles differences between implementations, and their
+   encapsulations, and ideas of concrete types tied to abstract types/classes.
+   The handiness of the machine-like interpretation of ‹ob› into oMiser is to
+   be investigated.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                        Copyright 2018 Dennis E. Hamilton
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ATTRIBUTION
+
+   Hamilton, Dennis E. Challenges in Miser System Development.  Miser Theoretical Conception text file challenges.txt version 0.0.4 dated
+   2020-07-16, available on the Internet as a version of
+   <https://github.com/orcmid/miser/blob/master/challenges.txt>
+
+TODO
+
+ * 1. The first challenge is the demonstration of universality
+ * 1.1 is demonstration that the <ob> is complete and the obs are
+       denumerably infinite, so they are usable as arithmetic, Goedel
+       numberings, whatever.
+ * 1.2 one demonstration is that the context-free grammar for canonical
+       obs is solvable and that the obs are finite and distinguished.
+ * 1.3 the completeness of ob.a, ob.b, ob.c, in FOL= as primitive
+       operations in expressing computable functions on obs is demonstrable
+ * 1.4 then it is asserted that the computable Of are all available as
+       computations using obap.ap(f,x).
+ * 1.5 This needs to be stated better.  Determination that the oMiser
+       computational model is Church-Turing complete takes a little more and
+       will be addressed further at theory.txt,
+       <https://github.com/orcmid/miser/blob/master/theory.txt>.
+
+ * 2. The additional establishment is the use of oMiser and oFrugal
+      operations to demonstrate
+ * 2.1 Combinatory Arithmetic in all its glory
+ * 2.2 Computational representation of the lambda-calculus
+ * 2.3 Computational representation of obap.ap itself (without cheating)
+ * 2.4 Computational representation of arbitrary single-tape Turing Machines,
+       including those asserted to be Universal
+ * 2.5 Demonstration of the recursive functions, if necessary
+ * 2.6 Accounting for Backus FP/FFP and the primitives
+
+ * 3. Another challenge is with regard to acceleration including native
+      operations behind scripts, and other forms of acceleration.  See Issue
+      #26, <https://github.com/orcmid/miser/issues/26>.
+
+ * 4. The first kind of reasoning to consider is propositions on ob
+      itself and what sort of deduction is available.
+
+ * 5. The second kind of reasoning is with regard to representations and
+      deductions about those and the fidelity of interpretation
+
+ * 6. How one reasons about accelerators is mysterious because they are
+      somewhat different with respect to interpretation, and interpretation
+      of what.
+
+ * 7. Security challenges including threat models to oMiser implementations
+      and also on the provenance and integrity of shared scripts and
+      acceleration schemes.  The certification and signing of distributed
+      materials is an acute consideration.  There may be need to deal with
+      packaging/name-spaces and identity of artifacts.  The Crev project
+      may be helpful with respect to TROSTing.
+
+ * 8. Data-type representation via capsules and semblances.  This might get
+      to denotational semantics and other matters.
+
+ * 9. Reasoning about data-type representations.
+
+ * 10. Reasoning about accelerations behind data types.
+
+ * 11. Reasoning about optimization with respect to type restriction and
+       casting across interfaces.  Open-box rewriting.
+
+ * 12. Safe embedding of oMiser operation within interactive structures
+       and protocols.
+
+ * Find other TODOs of this nature and transpose them to this file.
+
+ * There is a challenge of obap extension (obapx) principles.  These
+   remain functional in oMiser.
+
+ * There needs to be a different way of handling compute expressions and
+   the prospect of assignment and interactions.  The goal is to introduce
+   interactive cases without reverting to assignment and side-effects
+   everywhere.  It is unclear how to accomplish this.  See Issue #30,
+   <https://github.com/orcmid/miser/issues/30>.
+
+ * There needs to be distinction of types, implementations, classes,
+   encapsulated interpretation, and semblance.
+
+ * At the oMiser level there is only extensional equality and this limits
+   identification of types as identification of specific interpretations.
+   The challenge is to have a worthy nomenclature on the matter.
+
+ * The idea of semblance has to do with a level-up (interface) common
+   interpretation.  It is still an interpretation even though commonly
+   described as an abstract data type.
+
+ * We have to navigate that semblance is evocative, suggestive, and
+   can be convenient yet precise enough to be rigorous even when
+   casually generalized yet without causing human confusion.  How is
+   that to be established?
+
+ * Although output can be implicit, explicit output can be considered
+   in the manner of the SML/NJ print operation.  That is not entirely
+   satisfying. It may be an essential hack but perhaps it is more about
+   engineering than theoretical challenge.
+
+ * The idea of reproducibility might fit with allowing external input
+   also, in the sense that the stream becomes immutable and can be
+   re-processed?  Will this keep things well-defined for oMiser?
+
+ * Is there something paradoxical about a sink providing source that
+   has simply not been accessed yet?  One must then deal with the
+   matter of encountering the/an end of the source and acting on that,
+   so the sink becomes a problem?
+
+ * A challenge in the above is considering any kind of self-interactive
+   operation as still well-defined because there is no time-traveling
+   required?  Or is this some weird computational causality business?
+
+ * Another challenge has to do with attacks against the engine and/or
+   storage of obs.  This may between difficult and impossible to
+   prevent.  The question is whether it becomes detectable and
+   amenable to forensic analysis?
+
+ * Move some of these to engineering, since they seem to be beyond
+   the association of theory and representation/interpretation.
+
+ * The crev project may be relevant to trosting with respect to Miser
+   deliverables and also Miser application.  The idea of TROSTing might
+   need to be revived here. <https://github.com/crev-dev>.
+
+ * Moving from reasoning about ‹ob› to reasoning about code and the
+   compiling of the script interpretation of an ob is going to be a
+   major challenge.  There may be something in the work of McCarthy
+   that began from dealing with flow charts, along with later
+   efforts in that respect.  This has to do with machine models.
+
+ * Optimization across interface boundaries (i.e., erasing the
+   interface and optimizing what's possible by blending implementa-
+   tions) is a big challenge.  Although it is an engineering matter,
+   it requires theoretical support and constraints against improper
+   optimizations.
+
+ * The explicit applications in the REPL are opportunities for
+   code optimization when an extension is constructed. This can take
+   advantage of there being an enhanced implementation in oFrugal that
+   exploits the definition time of a binding.  This may depend on there
+   being delayed evaluation for usability reasons (avoiding evaluation
+   until well-formedness and binding values are confirmed) as a guide
+   to where optimization is not wasted.
+
+ * Tie this to theory.txt also.
+
+ * This is worthy of much more work.  There are some matters that I have let
+   go invisible and need to revive/incorporate in other materials.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 0.0.4 2020-07-16-08:13 More TODOs and touch-ups, connections with other
+       materials.
+ 0.0.3 2020-07-16-07:42 Revisit and manage TODOs.
+ 0.0.2 2018-08-09-11:40 Add [Okasaki1998], ...
+ 0.0.1 2018-04-17-10:26 Additional challenge TODOs
+ 0.0.0 2018-04-12-12:12 Create placeholder, with starter TODOs.
+
+                         *** end of challenges.txt ***

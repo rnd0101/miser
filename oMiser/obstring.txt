@@ -1,0 +1,115 @@
+obstring.txt 0.0.4                  UTF-8                        dh:2018-04-18
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|--*
+
+
+                           The Miser Project Code
+                           ======================
+
+      <https://github.com/orcmid/miser/blob/master/oMiser/obstring.txt>
+
+       FRUGALESE GRAMMAR FOR DISPLAYING CANONICAL OBS IN OB-EXP FORM
+       -------------------------------------------------------------
+
+    obstring is the string expression of obs that exploits the right-
+    associativity of "::" to eliminate unnecessary parentheses.  This
+    is, apart from the presence of white space, a unique ob-exp for
+    every Canonical Ob.
+
+    The grammar satisfied by the string is essentially ob-exp without
+    anything that involves an application in its interpretation.
+
+    See also
+    <https://github.com/orcmid/miser/blob/master/oMiser/ob-exp.txt>
+
+ 1. SUMMARY GRAMMAR
+
+    Here is the reduced summary grammar for the Canonical Obs.  Any
+    of these forms are suitable.  Reducing the use of parentheses is
+    handled in the procedure for expressing such obs.
+
+    〈term〉 ::= 〈lindy〉 | 〈primitive〉
+
+    〈unary〉 ::= 〈term〉 | ( 〈canonical〉 ) | ‵ 〈unary〉
+
+    〈binary〉 ::= 〈unary〉 | 〈unary〉 :: 〈binary〉
+
+    〈canonical〉 ::= 〈binary〉
+
+ 2. SIMPLE EXPRESSION
+
+    Using SML/NJ, the expression of an ob, x, is as follows:
+
+    fun term(x: ob)
+      = case x
+          of L(s) => s
+           | NIL => ".NIL"
+           | A => ".A"
+           | B => ".B"
+           | C => ".C"
+           | E => ".E"
+           | D => ".D"
+           | SELF => ".SELF"
+           | ARG => ".ARG"
+           | EV => ".EV"
+           | _ => "?!"
+
+    fun canonical(x: ob)
+      = let fun unary(x)
+            = if is_individual(x)
+              then term(x)
+              else if is_singleton(x)
+                   then "`" ^ unary(a x)
+                        (* XXX: Using back-tick here *)
+                   else "( " ^ canonical(x) ^ " )"
+         in if is_pair(x)
+            then unary(a x) ^ " :: " ^ canonical(b x)
+            else unary(x)
+        end;
+
+
+    To avoid console Unicode limitations/difficulties, the back-tick (grave
+    accent) is used in this procedure.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                   Copyright 2018 Dennis E. Hamilton
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+TODO
+
+  * In practice, we don't want to insert more than one space at
+    any point in the ob-exp.  This simple expression avoids that but it
+    is more involved when there are more forms.
+
+  * A pretty-print form that uses indentation is a bit trickier.  That
+    needs to be done.  Line wraps should be used to honor margins also.
+
+  * When there are extensions, we need applicative expressions for their
+    canonical expression.  These are for the application of specific
+    extension primitives and they support maintenance of extensional
+    identity among all obs.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 0.0.4 2019-04-18-10:24 Manage TODOs and reconcile with latest refinement
+       of applicable concepts.  Touch-ups
+ 0.0.3 2018-02-09-11:16 Rename to obstring.txt to reflect the expected
+       function/method name.
+ 0.0.2 2018-02-07-18:24 Correct the term and canonical functions to agree with
+       the test results for the implementation in obap.sml 0.0.9.
+ 0.0.1 2018-02-04-11:58 Provide direct basic expression.
+
+                     *** end of show-ob.txt ***

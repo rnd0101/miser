@@ -1,0 +1,95 @@
+categories.txt 0.0.3                  UTF-8                     dh:2019-05-23
+
+                             The Miser Project Code
+                             ======================
+
+    <https://github.com/orcmid/blob/master/models/categories/categories.txt>
+
+           DEPICTION, ENGINEERING, AND VERIFICATION OF COMPUTATION
+
+                       STRUCTURE AND CATEGORY DEPICTIONS
+                       ---------------------------------
+
+    Synopsis TBD
+
+
+
+NOTES AND REFERENCES
+
+    References TBD
+
+MANIFEST
+
+    categories.txt
+        this synopsis, manifest, and job-jar file
+
+    Interpretation-2019-03-26-0921.jpg (simplified)
+    Interpretation-2019-03-17-1013.jpg (update)
+    Interpretation-2019-02-05-1314.jpg
+        category-theory style diagram of typical interpretation of one
+        structure in another, accompanying the narrative in the article on
+        Interpretation, Representation, Computation, and Manifestation at
+        <https://orcmid.wordpress.com/2019/02/11/miser-project-interpretation-representation-computation-and-manifestation/>
+
+
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                    Copyright 2018-2019 Dennis E. Hamilton
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ ATTRIBUTION
+
+   Hamilton, Dennis E. Structure and Category Depictions.  Miser Theory
+   Conception text file version 0.0.3 categories.txt dated 2019-05-23,
+   available, with folder of materials, on the Internet as a version of
+   <https://github.com/orcmid/blob/master/models/categories/categories.txt>
+
+TODO
+
+  * Introduce the representation diagram here also.
+
+  * Get to Manifestation.
+
+  * Introduce ontological commitment in the reconciliation of interpretation,
+    representation, and manifestation.  Identify affordance in the matter.
+    See Issue #16 discussion related to this.  Emphasize the contribution of
+    William L. Anderson in the discussion leading to and clarifying the idea
+    of ontological commitment.  Contrast with the notion of "paradigm."
+
+  * Emphasize the informality and keeping it simple without the intricacies
+    of category theory, available for separate investigation but not crucial
+    for demonstration of the computational model.
+
+  * Not just turtles all the way down, it is turtles everywhere.
+
+  * Add connections to category theory.
+
+  * There might need to be some smoothing of boole.txt around awkwardness
+    and the choice of representation.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  0.0.3 2019-05-23-09:14 Introduce ontological commitment into the effort to
+        reconcile interpretation, representation, and manifestation.  Manage
+        TODOs
+  0.0.2 2019-03-26-09:59 Add third Interpretation image, attribution,
+        manage ToDos.
+  0.0.1 2019-03-17-10:23 Corrections, addition of interpretation diagrams
+  0.0.0 2019-03-17-09:47 Placeholder for capturing category-style diagrams
+        in modeling as part of the Miser conception.
+
+                   ***** end of categories.txt *****

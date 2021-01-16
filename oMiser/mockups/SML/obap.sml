@@ -1,4 +1,4 @@
-(* obap.sml 0.0.8                     UTF-8                      dh:2018-01-09
+(* obap.sml 0.0.11                    UTF-8                      dh:2018-02-17
 
                        OMISER ‹ob› INTERPRETATION IN SML
                        ================================
@@ -16,6 +16,8 @@
    <https://github.com/orcmid/miser/blob/master/oMiser/mockups/SML/OB.sig.sml>.
    For consideration of the soundness of this interpretation, see
    <https://github.com/orcmid/miser/blob/master/oMiser/mockups/SML/obcheck.sml>.
+   For the grammar used to express Canonical Obs and obaptheory terms, see
+   <https://github.com/orcmid/miser/blob/master/oMiser/obstring.txt>.
    *)
    
 use "OBAP.sig.sml";
@@ -54,6 +56,8 @@ structure obap :> OBAP
 
       fun is_enclosure x 
           = is_singleton x andalso not (is_individual x)
+
+      fun ` x = e(x)
                    
       infixr 5 ##
       fun (x ## y) = c(x, y)
@@ -108,6 +112,37 @@ structure obap :> OBAP
       
       (* Obap7: obap.eval(e) *)
       fun eval(exp: ob) = ev(SELF, ARG, exp)
+      
+      (* obstring.txt presentation of canonical ob structure in a string *)
+      
+       fun term(x: ob)
+         = case x
+             of L(s) => s
+              | NIL => ".NIL"
+              | A => ".A"
+              | B => ".B"
+              | C => ".C"
+              | E => ".E"
+              | D => ".D"
+              | SELF => ".SELF"
+              | ARG => ".ARG"
+              | EV => ".EV"
+              | _ => "?!"
+
+       fun obstring(x: ob)
+         = let fun unary(x) 
+            = if is_individual(x)
+                 then term(x)
+                 else if is_singleton(x)
+                      then "`" ^ unary(a x)
+                           (* XXX: Using back-tick here *)
+                      else "( " ^ obstring(x) ^ " )"
+            in if is_pair(x)
+               then unary(a x) ^ " :: " ^ obstring(b x)
+               else unary(x)
+           end;
+ 
+      
    end
    
   
@@ -136,11 +171,16 @@ structure obap :> OBAP
  
     * Look at creating a library that can be installed via the SML/NJ
       Compilation Manager and reused easily that way.
+      
+    * Get the string operations to all work in Unicode.
    
    *)
    
 (* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+   0.0.11 2018-02-17-13:09 Include ' x "unary" operation for use
+   0.0.10 2018-02-09-12:17 Reflect change from show-ob.txt to obstring.txt
+   0.0.9 2018-02-07-17:09 Add obstring implementation to the structure
    0.0.8 2018-01-09-21:12 Switch to is_pure_lindy-trace(op).
    0.0.7 2017-10-12-11:43 Change is_every_free_lindy(p) to is_pure_lindy(p) 
          as better expression of knowing that application will not change it.
@@ -160,4 +200,4 @@ structure obap :> OBAP
          eval(e)
          *)
          
-(*                         *** end of ob.sml ***                             *)
+(*                       *** end of obap.sml ***                            *)

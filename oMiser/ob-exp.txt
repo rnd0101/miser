@@ -1,0 +1,330 @@
+ob-exp.txt 0.0.11                    UTF-8                       dh:2020-12-06
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|--*
+
+
+                           The Miser Project Code
+                           ======================
+
+      <https://github.com/orcmid/miser/blob/master/oMiser/ob-exp.txt>
+
+         FORMAL GRAMMAR FOR EXPRESSING OFRUGAL CONSTRUCTION OF OBS
+         ---------------------------------------------------------
+
+    Ob-exp texts are used as a means of specifying obs and computations
+    with them to derive an ob result.  Ob-exp is an expression language
+    that is used in digital communication of computations with obs and
+    also used to submit expressions for oMiser computation via oFrugal.
+
+    ob-exp has a context-free grammar, here specified using the original
+    Backus-Naur Form (BNF) employed in the Revised Report on the
+    Algorithmic Language ALGOL 60.  The grammar specifies exactly those
+    expressions that can be evaluated to (at most) a single ob when submitted
+    to a processor such as an oFrugal implememtation.
+
+    In addition to the grammatical structure for composing ob-exp
+    expressions, there is also a formal definition of the computation by
+    which an ob-exp is evaluated as computation of a canonical ob, the
+    formal semantics of ob-exps.  It is this fact that has ob-exp be defined
+    under oMiser, even though it is oFrugal that will enact that semantics.
+
+    For an informal introduction to the use of Frugalese in the computational
+    model defined on the mathematical structure ‹ob› = 〈Ob,Of,Ot〉, see
+    <https://github.com/orcmid/miser/blob/master/oMiser/ob.txt> and other
+    material cited there.
+
+ 1. SUMMARY GRAMMAR
+
+    The following summary form of the grammar is useful for reference.
+    It does not address the grammatical differences that are called for
+    to align with the interpretation rules by which an ob-exp is evaluated.
+
+    All ob-exps satisfy the summary grammar.  The "official" grammar
+    rules detailed in subsequent sections employ syntactically-equivalent
+    structures in order to provide rigorous interpretation as expressions of
+    ob computations.
+
+    The SML form of (* ... *) multi-line comments is allowed and defined
+    as white-space.
+
+    The concrete reference syntax consists of Unicode, usually in UTF8
+    encoding, and a %-escape mechanism is used when a character is not
+    printable.  It is recommended that characters that are not easily typed
+    be avoided by authors of ob expressions, recognizing that a recipient
+    may encounter %-encoding instead.  If you don't know what this is about,
+    you are probably on safe ground.
+
+    Basically, white-space is allowed wherever it does not change the
+    grammar of a 〈term〉 and required where consecutive 〈term〉 occurrences
+    would not be disambiguated. Using a (* ... *) comment alone for this
+    purpose is discouraged but not prohibited.
+
+    For simplicity of keyboarding, the reversed-prime, ‵, left-tick, `, and
+    apostrophe, ', are all treated the same.  The reversed-prime is the
+    "official" reference character.
+
+    〈term〉 ::= 〈lindy〉 | 〈primitive〉 | 〈binding-name〉
+
+    〈binding-name〉 ::= ^〈lindy〉
+
+    〈primitive〉 ::= .〈lindy〉
+                        from a fixed predefined list
+
+    〈lindy〉 is an alphanumeric name not beginning with a digit and without
+           spaces, corresponding to an XML NCName without "."
+
+    〈primitive〉s are not case-sensitive, although 〈lindy〉s are.
+
+
+    〈list-terms〉 ::= 〈ob-exp〉 | 〈list-terms〉, 〈ob-exp〉
+    〈list-form〉 ::= [ ] | [ 〈list-terms〉 ] | [ 〈list-terms〉 :]
+
+    〈parameters-form〉 ::= ( 〈list-terms〉 ) | 〈list-form〉
+
+    〈function-form〉 ::= 〈term〉 | 〈function-form〉 〈parameters-form〉
+                     | 〈function-form〉 . 〈term〉
+
+    〈obap-form〉 ::= ( 〈ob-exp〉 ) | 〈list-form〉 | 〈obap-form〉 〈parameters-form〉
+                  | 〈obap-form〉 . 〈term〉
+
+    〈unary〉 ::= 〈function-form〉 | ‵ 〈obap-form〉 | ‵ 〈unary〉
+
+    〈ae-form〉 ::= 〈unary〉 | 〈unary〉 〈ae-form〉
+    〈ae〉 ::= 〈ae-form〉 | 〈obap-form〉 | 〈obap-form〉 〈ae-form〉
+
+    〈binary〉 ::= 〈ae〉 | 〈ae〉 :: 〈binary〉
+
+    〈ob-exp〉 ::= 〈binary〉
+
+ 2. EXPRESSION INTERPRETATION
+
+    Interpretation of expressions as obs is accomplished using a special
+    schema notation that specifies the ‹ob› theory language, Ot, expression
+    that is the interpretation of a given ob-exp text.  The interpretation
+    schemas have distinct form.
+
+        I category ⎾pattern⏋(parameter-list) =: interpretation
+
+    where      category is one of the syntactic categories, such as
+                        〈ob-exp〉, 〈ae〉, and 〈term〉
+
+                pattern is one of the patterns for the particular category,
+                        such as 〈binary〉, 〈obap-form〉 〈ae-form〉, and 〈lindy〉
+
+       (parameter-list) is an optional list of one-or-more parameters
+
+         interpretation is an obaptheory expression schema in which any
+                        parameter and "I category (parameter-list)" forms are
+                        in reference to category appearances in the pattern
+
+    For example,
+
+        I〈ae〉⎾〈obap-form〉 〈ae-form〉⏋=: obap.ap(I〈obap-form〉,I〈ae-form〉)
+
+    On the right-hand side of the "=:" the category names refer to those
+    in the pattern on the left-hand side, and the interpretations of those
+    occurrences is called for to determine the individual ob that is the
+    evaluation.
+
+    An example employing parameters is found in the section 6 interpretation
+    of I〈arguments〉.
+
+ 3. TEXT, CHARACTERS, SPACING, AND CONCRETE LAYOUT CONSIDERATIONS
+
+    [DETAILS TBD]
+
+ 4. TERMS
+
+    〈term〉 ::= 〈lindy〉 | 〈primitive〉 | 〈binding-name〉
+
+    [DETAILS TBD]
+
+ 5. LIST FORMS
+
+    〈list-body〉 ::= 〈ob-exp〉 ] | 〈ob-exp〉 :] | 〈ob-exp〉, 〈list-body〉
+    〈list-form〉 ::= [ ] | [ 〈list-body〉
+
+    I〈list-form〉⎾[ ]⏋=: ob.NIL
+    I〈list-form〉⎾[ 〈list-body〉 ⏋=: I〈list-body〉
+
+    I〈list-body〉⎾〈ob-exp〉 ]⏋=: ob.c(I〈ob-exp〉, ob.NIL)
+    I〈list-body〉⎾〈ob-exp> :]⏋=: I〈ob-exp〉
+    I〈list-body〉⎾〈ob-exp〉, 〈list-body〉⏋=: ob.c(I〈ob-exp〉,I〈list-body〉)
+
+ 6. FUNCTIONAL FORMS
+
+    〈function-form〉 ::=  〈term〉 | 〈function-form〉 〈list-form〉
+                        | 〈function-form〉 ( 〈arguments〉 )
+                        | 〈function-form〉 . 〈term〉
+    〈obap-form〉 ::= ( 〈ob-exp〉 ) | 〈list-form〉
+                        | 〈obap-form〉 〈list-form〉
+                        | 〈obap-form〉 ( 〈arguments〉 )
+                        | 〈obap-form〉 . 〈term〉
+    〈arguments〉 ::= 〈ob-exp〉 | 〈arguments〉, 〈ob-exp〉
+
+    I〈function-form〉⎾〈term〉⏋=: I〈term〉
+    I〈function-form〉⎾〈function-form> 〈list-form〉 ⏋
+                    =: obap.ap(I〈function-form〉, I〈list-form〉 )
+    I〈function-form〉⎾〈function-form〉 ( 〈arguments〉 )⏋
+                    =: I〈arguments〉( I〈function-form〉 )
+    I〈function-form〉⎾〈function-form> . 〈term〉 ⏋
+                    =: obap.ap(I〈function-form〉, I〈term〉 )
+
+    I〈obap-form〉⎾( 〈ob-exp〉 )⏋=: I〈ob-exp〉
+    I〈obap-form〉⎾ 〈list-form〉 ⏋=: I〈list-form〉
+    I〈obap-form〉⎾〈obap-form> 〈list-form〉 ⏋
+                    =: obap.ap(I〈obap-form〉, I〈list-form〉 )
+    I〈obap-form〉⎾〈obap-form> . 〈term〉 ⏋
+                    =: obap.ap(I〈obap-form〉, I〈list-term〉 )
+    I〈obap-form〉⎾〈obap-form〉 ( 〈arguments〉 )⏋
+                    =: I〈arguments〉( I〈obap-form〉 )
+
+    I〈arguments〉⎾〈ob-exp〉⏋(p) =: ob.ap(p, I〈ob-exp〉 )
+    I〈arguments〉⎾〈arguments〉, 〈ob-exp〉⏋(p)
+                    =: obap.ap( I〈arguments〉(p), I〈ob-exp〉)
+
+ 7. UNARIES
+
+    〈unary〉 ::= 〈function-form〉 | ‵ 〈obap-form〉 | ‵ 〈unary〉
+
+    I〈unary〉⎾〈function-form〉⏋ =: I〈function-form〉
+    I〈unary〉⎾ ‵ 〈obap-form〉 ⏋ =: ob.e( I〈function-form〉 )
+    I〈unary〉⎾ ‵ 〈unary〉 ⏋ =: ob.e( I〈unary〉 )
+
+ 8. APPLICATIVE EXPRESSIONS
+
+    〈ae-form〉 ::= 〈unary〉 | 〈unary〉 〈ae-form〉
+    〈ae〉 ::= 〈ae-form〉 | 〈obap-form〉 | 〈obap-form〉 〈ae-form〉
+
+    I〈ae-form〉⎾ 〈unary〉 ⏋ =: I〈unary〉
+    I〈ae-form〉⎾ 〈unary〉 〈ae-form〉 ⏋ =: obap.ap(I〈unary〉, I〈ae-form〉)
+
+    I〈ae〉⎾ 〈ae-form〉 ⏋ =: I〈ae-form〉
+    I〈ae〉⎾ 〈obap-form〉 ⏋ =: I〈obap-form〉
+    I〈ae〉⎾ 〈obap-form〉 〈ae-form〉 ⏋=: obap.ap(I〈obap-form〉, I〈ae-form〉)
+
+ 9. OB-EXP
+
+    〈binary〉 ::= 〈ae〉 | 〈ae〉 :: 〈binary〉
+
+    〈ob-exp〉 ::= 〈binary〉
+
+    I〈binary〉⎾ 〈ae〉 ⏋ =: I〈ae〉
+    I〈binary〉⎾ 〈ae〉 :: 〈binary〉 ⏋ =: ob.c(I〈ae〉, I〈binary〉)
+
+    I〈ob-exp〉⎾ 〈binary〉 ⏋ =: I〈binary〉
+
+    The 〈ob-exp〉 grammar production is designed to allow for additional
+    forms beyond 〈binary〉.  None are anticipated at this time.
+
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                 Copyright 2018-2020 Dennis E. Hamilton
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  ATTRIBUTION
+
+   Hamilton, Dennis E. Formal Grammar for oFrugal Construction of Obs.  Miser
+   Theory Conception text file ob-exp.txt version 0.0.11 dated 2020-12-06,
+   available on the Internet as a version of
+   <https://github.com/orcmid/miser/blob/master/oMiser/ob-exp.txt>
+
+TODO
+
+ * Revealing examples are needed here.  Grace Hopper favored that and I
+   should heed it for that reason alone.
+
+ * Find reference to the BNF specification used, captured here somewhere
+   and also where formally published.
+
+ * Connect the interpretation schemata to Knuth's attribute grammars to the
+   degree that matters here.  There might be a better reference for the
+   rather simple oFrugal context-free case.
+
+ * Connect to Ershov techniques in the grammar for the Alpha language, and
+   also the (Fraser Duncan?) suggestion in the ALGOL Bulletin.
+
+ * Move up-level from ob-exp to the oFrugal command operation where the
+   semantics of 〈binding-name〉 establishment, reference, and reference-
+   failure are accounted for.  The interpretation of REPL commands will be sequential and context-free!
+
+ * We require a command separator ";" and a sequence terminator, ";;"
+   so that parsing of command names is distinguishable without crazy backup.
+   Having "ob ^mumble = ... " be disambiguated by the "=" might be troubling.
+   The definition command removes that with "!def ob ^mumble = ...".
+
+ * Add the handling of concrete cases and the tie-in to a reference
+   character code, akin to the counterpart in the XML specification.
+
+ * Use the XML 1.0 (Namespaces) characterization of white space, letters,
+   digits, and the restricted allowance of other characters in ob-exp terms.
+   Provide a reference.
+
+ * Adopt the SML/NJ use of \<white-space>\ as null?
+
+ * Do we require white-space anywhere or is it optional everywhere
+   except between two terms that must remain separated?
+
+ * I think we do not want anything between a 〈function-form〉 and a parameter
+   in the 〈function-form〉 pattern, at least not a comment.  Yet I can envision
+   cases where careful layout can be indifferent to white space.  It might
+   eventually be a lint-check on readability but not a formal condition.
+
+ * Likewise, at the concrete term level, there is the matter of IRI
+   encoding for characters having no available font glyph.  How does
+   that work into interchange of concrete ob-exp texts?  Use a rigorous
+   IRI case and provide reference to the (latest?) IETF specification on
+   the matter.  Masinter, where are you when I need you? :)
+
+ * Complete the production of 〈term〉s and their interpretations.
+
+ * explain the resolution of binding names by the presumption of an
+   (oFrugal) environment in which the binding can be resolved.  Complete
+   this specification by including the oFrugal REPL statement sequencing.
+
+ * The function for resolving binding names can be expressed in
+   oFrugal, but it requires a way to fail when the encountered
+   binding name is not bound.  So we need to have a *fail* interpretation
+   different from there being an explicit fail in oMiser.  We might
+   call it an event, but need to be careful.
+
+ * Because of binding names, include the additional parameter that takes us
+   to resolution of the binding.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 0.0.11 2020-12-06-09:36 Add infix "." modeled on method-selection notations
+        from C++ and Java, per Issue #24
+ 0.0.10 2020-07-20-11:22 Change title, manage TODOs, small touch-ups.
+ 0.0.9 2020-02-07-12:17 Expand and manage TODOs, reflecting going all the
+       way up to the oFrugal REPL command input forms.
+ 0.0.8 2019-04-29-11:10 Touch-ups, TODO management, connection to ob.txt
+       along with more detailing of the summary grammar and concrete usage.
+ 0.0.7 2019-02-10-09:29 More touch-ups.  Adjust for bindings semantics in
+       in anticipation of including REPL interpretation.
+ 0.0.6 2018-02-03-14:33 Fix typo and correct for absence of an 〈ae〉 that is
+       simply an 〈obap-form〉, including a standalone 〈list-form〉.  Hat tip to
+       Roman Susi (@rnd0101).
+ 0.0.5 2018-01-31-10:56 Complete first pass through to 9, Ob-Exp, adding
+       TODOs.
+ 0.0.4 2018-01-30-21:42 extend the formal grammar through 6. Functional Forms
+ 0.0.3 2018-01-30-18:17 Capture the summary grammar and the formalism by
+       which grammatical constructions are interpreted as expressions of obs.
+ 0.0.2 2018-01-29-21:34 Corrected with fixes from Roman Susi (@rnd0101)
+ 0.0.1 2018-01-28-15:26 Provide initial summary grammar for ob-exp.
+
+
+                     *** end of ob-exp.txt ***

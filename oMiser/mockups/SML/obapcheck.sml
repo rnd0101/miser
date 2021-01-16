@@ -1,12 +1,12 @@
-(* obapcheck.sml 0.0.6               UTF-8                        dh:2018-01-09
+(* obapcheck.sml 0.0.10             UTF-8                        dh:2018-03-**
 
                         OMISER ‹ob› INTERPRETATION IN SML
                         ================================
                        
  <https://github.com/orcmid/miser/blob/master/oMiser/mockups/SML/obapcheck.sml> 
         
-             CHECKING APPLICATIVE EXPRESSIONS IN OBAP STRUCTURE
-             --------------------------------------------------
+           CHECKING APPLICATIVE EXPRESSIONS IN SML OBAP STRUCTURE
+           ------------------------------------------------------
        
    [Author Note: Tie to obcheck.sml, obtheory.txt, ob.sml, obaptheory, and
     the obap.sml structure or similar ones.]
@@ -14,8 +14,8 @@
     
 use "obap.sml";
 open obap;
-(* MODIFY THESE TWO LINES TO CHECK OTHER IMPLEMENTATION STRUCTURES.  THE CHECKS 
-   SHOULD WORK DIRECTLY WITHOUT MODIFICATION, BELOW.
+(* MODIFY THESE TWO LINES TO CHECK OTHER IMPLEMENTATION STRUCTURES.  THE 
+   CHECKS SHOULD WORK DIRECTLY WITHOUT MODIFICATION, BELOW.
    *)
    
 infixr 5 ## ;
@@ -53,7 +53,7 @@ val CkObap2
          in are_diff (prims @ lindies)
         end )
       
-(* obap4: obap.ap(p,x) tracing some evref-stall cases *)
+(* obap4: obap.ap(p,x) cases of traces where application stalls *)
 
 val CkObap4 = ap(ARG##SELF,ARG) = e(ARG) ## e(ARG ## SELF) 
       andalso ap(e(ARG) ## e(ARG ## SELF), L"Z") = e(ARG) ## e(ARG##SELF)
@@ -76,7 +76,8 @@ val CkObap5 = ap(NIL,L"X") = L"X"
       andalso ap(ARG, L"X") = e(ARG) ## e(L"X")
       andalso ap(EV, L"X") = e(EV) ## e(L"X")
 
-(* obap6 obap.ev(p,x,e) via obap.ap(p,x) procedures and eval(exp) expressions *)
+(* obap6 obap.ev(p,x,e) via obap.ap(p,x) procedures and eval(exp) expressions 
+   *)
 
 val ckObap6 = eval(L"X" ## L"Y") = L"X" ## L"Y"
       andalso (let val xyz = L"X" ## L"Y" ## L"Z"
@@ -87,10 +88,13 @@ val ckObap6 = eval(L"X" ## L"Y") = L"X" ## L"Y"
       andalso eval((L"X" ## L"Z") ## L"Y" ## L"Z") 
                 = (L"X" ## L"Z") ## L"Y" ## L"Z" 
 
-(* Demonstrate ob cK as script for a computational manifestation of combinator K
-   having ap(ap(cK,x),y) = eval( (e(cK) ## e(x)) ## e(y) ) = x as required.
+(* Demonstrate ob cK as script for a computational manifestation of combinator 
+   K having ap(ap(cK,x),y) = eval( (e(cK) ## e(x)) ## e(y) ) = x as required.
+   See <https://github.com/orcmid/miser/blob/master/oMiser/combinators.txt>
+   sections 1.1, 1.2, 2.1, 2.3, and 3.2.
    *)
-val cK = E ## ARG
+val cK = E 
+         (* effectively lambda.X lambda.Y ‵X in oFrugalese *);
 
 val CkObap7 
     = let val cKX = e(L"X")
@@ -101,18 +105,24 @@ val CkObap7
           andalso ap( e(cK) ## L"X", NIL) = e(L"X")   
           andalso ap( e(cK) ## L"X", L"Y") = e(L"X")   
           andalso eval( (e(cK) ## L"X") ## NIL ) = L"X"
+          andalso eval( (cK ## L"X") ## NIL ) = L"X"
           andalso eval( (e(cK) ## e(L"X")) ## e(L"Y") ) = L"X"
+           andalso eval( (cK ## e(L"X")) ## e(L"Y") ) = L"X"
       end
              
-(* Demonstrate ob cS as script for a computational manifestation of combinator S
-   having 
+(* Demonstrate ob cS as script for a computational manifestation of combinator
+   S having 
             ap(ap(ap(cS,x),y),z) = eval( ( (e(cS) ## e(x)) ## e(y) ) ## e(z) ) 
                                  = ap(ap(x,z),ap(y,z))
    as required. 
+   See <https://github.com/orcmid/miser/blob/master/oMiser/combinators.txt>
+   sections 1.1, 1.2, 2.1, 2.3, and 3.2.
    *)
 val cS = C##e(C)##(C##(E##(C##(E##ARG)##e(ARG)))##e(C##(E##ARG)##e(ARG))) 
-         (* effectively lambda.X lambda.Y lambda.Z ‵(X(Z) Y(Z)) in oFrugalese *)
-
+         (* effectively lambda.X lambda.Y lambda.Z ‵((X :: Z) :: Y :: Z) 
+            in oFrugalese 
+            *);
+       
 val CkObap8 
     = let val SXYZ = (L"X" ## L"Z") ## L"Y" ## L"Z"
           val SXY = (e(L"X") ## ARG) ## e(L"Y") ## ARG
@@ -139,8 +149,8 @@ val CkObap8
           andalso eval(((e(cS)##L"X")##L"Y")##L"Z") = SXYZ                         
       end
 
-(* Demonstrate ob cI as script for a computational manifestation of combinator I
-   having
+(* Demonstrate ob cI as script for a computational manifestation of combinator
+   I having
             ap(cI,x) = eval( (e(cI) ## e(x)) ) = x
                      = ap(ap(ap(cS,cK),cK),x)
                      = x
@@ -152,11 +162,11 @@ val CkObap9 = let val SKK = eval((e(cS)##e(cK))##e(cK))
                    andalso ap(SKK,L"X") = L"X"
                    andalso eval(e(SKK)##L"X") = L"X"
                    andalso ap(cI,L"X") = L"X"
-                   andalso eval(cI ## L"X") = L"X"
                    andalso eval(e(cI) ## L"X") = L"X"
-                   andalso ap(cI##ARG, L"X") = L"X"
-                   andalso eval(e(cI##ARG)##L"X") = L"X"
-               end
+                   andalso ap(cI, L"X") = L"X"
+                   andalso eval(e(cI ## ARG)##L"X") = L"X"
+               end;
+
 
 (* Demonstrate comparison checks and conditional evaluation of
    the selected branches *)
@@ -187,7 +197,7 @@ val CkObap10
 val hasX = EV ## (D ## ARG ## B ## ARG)
               ## e( B ## ( EV ## (D ## e(L"X") ## A ## ARG)
                               ## e( A ## (SELF ## B ## ARG) )
-                              ) )
+                              ) );                          
                               
 (*  has is effectively lambda.X ‵( hasX ) in oFrugalese *)                                 
 val has 
@@ -198,7 +208,7 @@ val has
                             ## C ## (C ## e(D) 
                                        ## (C ## (E ## ARG) 
                                              ## e(A ## ARG)))
-                                 ## E ## e( A ## SELF ## B ## ARG)  
+                                 ## E ## e( A ## SELF ## B ## ARG);                              
                                  
 val ckObap11
     = ap(hasX, NIL) = B
@@ -218,7 +228,27 @@ val ckObap12
       andalso eval( (e(has) ## L"X" ) 
                     ## e(L"A" ## L"B" ## L"C" ## L"X" ## NIL)) = A
       andalso eval( (e(has) ## L"X" ) 
-                    ## e(L"A" ## (L"X" ## L"X") ## L"B" ## NIL)) = B                                      
+                    ## e(L"A" ## (L"X" ## L"X") ## L"B" ## NIL)) = B  
+
+(* Confirm some cases of SML/NJ expression evaluation involving infix
+   operators and applicative expressions.
+   *)
+   
+val ckObap13
+    = a (L"M" ## L"X" ## NIL) :: b (L"X") :: [] = L"M" :: L"X" :: []
+      andalso let fun p(f) = (fn x => f(x)) 
+               in p a (L"M" ## L"X" ## NIL) :: p b (L"X") :: [] 
+                  = L"M" :: L"X" :: []
+              end;
+              
+print( "\ncK = " ^ obstring(cK) ^ "\n");         
+print("\ncS = " ^ obstring(cS) ^ "\n");                 
+print( "\ncI = " ^ obstring(cI) ^ "\n");   
+print("\ncSKK = " ^ obstring(ap(ap(cS,cK),cK)) ^ "\n");
+print("\n(cSKK) x) = " ^ obstring(ap(ap(ap(cS,cK),cK),L"x")) ^ "\n");
+print("\ncI x = " ^ obstring(ap(cI,L"x")) ^ "\n");
+print( "\nhasX = " ^ obstring(hasX) ^ "\n");                                     
+print( "\nhas = " ^ obstring(has) ^ "\n");                 
     
 (* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -250,11 +280,19 @@ val ckObap12
       * Check that (C ## x) ## y and (C ## x ## y) work the same.
       
       * Check that (D ## x) ## y and (D ## x ## y) work the same.
+      
+      * Get string output in Unicode and verify that functionality 
                 
     *)
   
 (* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -          
                  
+   0.0.9 2018-02-08-10:50 Add checks that cI and cSKK are both identity
+         combinators, but not the same, adjusting the cI checks and also
+         simplifying cK.
+   0.0.8 2018-02-07-18:12 Touch up some comments, demonstrate obstring.
+   0.0.7 2018-01-22-19:57 Add ckObap13 to confirm SML's infix precedence
+         (e.g., ::) being after SML applicative expressions.
    0.0.6 2018-01-09-21:15 Add and adjust cases for is_pure_lindy_trace(ob)
          evaluation and interpretation confirmations.
    0.0.5 2017-12-30-16:53 Touch up oFrugalese and also make groupings so 
@@ -269,7 +307,7 @@ val ckObap12
    0.0.0 2017-09-15-12:37 Skeleton for progressive introduction of tests
          as obap.sml is extended, starting with verificaton of the traces.
          
-       *)
+   *)
          
 (*                         *** end of obapcheck.sml ***                     *)        
         

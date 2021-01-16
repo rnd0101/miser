@@ -1,172 +1,344 @@
-obtheory.txt 0.0.24                  UTF-8                       dh:2017-12-29
+obtheory.txt 1.0.1                 UTF-8                        dh:2020-01-15
 
                           MISER THEORETICAL CONCEPTION
                           ============================
-                            
+
         <https://github.com/orcmid/miser/blob/master/oMiser/obtheory.txt>
+            The latest version is always available at this location.
 
                            ‹ob› MATHEMATICAL STRUCTURE
-                           --------------------------
-                        
+                           ---------------------------
+
    The mathematical structure, ‹ob› = 〈Ob,Of,Ot〉consists of
-   
+
            Ob, all of the obs
            Of, all functions on obs
-           Ot, the applied-logic theory in which the structure is 
+           Ot, the applied-logic theory in which the structure is
                characterized
 
-LOGICAL NOTATION
-               
-   For Ot, standard first-order logic with equality is employed.  An 
-   equational format is used with variables understood to be universally
-   quantified over the domain of discourse, Ob.  Set theory is not
-   employed.
-   
-   Specific predicates and functions are introduced by presentation of
-   their characteristics in mathematical axioms that distinguish them.  The
-   logical theory Ot is expressed using the following notation.
+   Obs are mathematical entities used to demonstrate encoding of data and
+   effectively-computable functions on such data. This is the foundation on
+   which the oMiser computation model is constructed.
 
-      p ⇔ q read p if-and-only-if q, true when true both are true or
-             both are false, a kind of logical equality relation
-          
-      p ⇒ q read if p then q and when true, the truth of q is
-             deducible from the truth of p
-       
+   The appeal of ‹ob› among computational models is how interpretation of obs
+   as programs exhibits the stored-program principle and the manner in which
+   levels of abstraction become available and useful in general-purpose
+   computing.  The Miser Project provides an operational implementation that
+   demonstrates shared universality with prominent models recognized as
+   Church-Turing Complete.
+
+   An informal overview, with illustrative usage, is found in the file
+   <https://github.com/orcmid/miser/blob/master/oMiser/ob.txt>.
+
+
+                                  CONTENT
+
+     1. LOGICAL NOTATION
+        Notation for First Order Logic with Equality (FOL=) employed in
+        mathematical characterization of ‹ob› as well as of other structures.
+
+     2. PRIMITIVE NOTIONS
+        Four functions, together with "=" that are sufficient for expressing
+        all Obs, given a set of initial individuals.  All computable
+        functions in Of (and decidable predicates) can be expressed in Ot in
+        terms of the primitives.
+
+     3. DENUMERABILITY AND EFFECTIVENESS
+        Constraints on the composition of obs in relationship to other obs
+        such that there is a precedence ordering among them.  Conditions on
+        the effective representation of functions in Ot are elaborated.
+        Canonical forms are established for distinguishing and identifying
+        obs.
+
+     4. NOTES AND REFERENCES
+
+1. LOGICAL NOTATION
+
+   For Ot, standard First-Order Logic with Equality (FOL=) is employed
+   [Wikipedia2019].  An equational format is used with variables understood
+   to be universally quantified over the domain of discourse, Ob.  Set theory
+   is not employed.
+
+   Logical aspects of theory Ot are expressed using the following notation.
+   We intend truth-value semantics of deductions involving propositions
+   expressed in Ot.  Use of notions "true" and "false" is in that sense.
+
+      p ⇔ q read p if-and-only-if q, true when both are true or both
+             are false, a kind of logical equality relation
+
+      p ⇒ q read if p then q; when p ⇒ q and p both hold, it is
+             deducible that q holds.
+
       p ∨ q is logical or, true when p and q are not both false
-       
+
       p ∧ q is logical and, true when p and q are both true
-       
-        ¬ p is logical not, true when p is false, false when q is true
-          
+
+        ¬ p is logical not, true when p is false, false when p is true
+
       x = y is the identity relationship, with ≠ its negation
-       
-      x ¶ y read as x precedes y, an ordering relationship that applies 
+
+      x ¶ y read as x precedes y, an ordering relationship that applies
             over Ob
 
    Although these can be seen as rules for computation, Ot is a deductive
    theory.  E.g., if it is asserted that p ⇔ q and also ¬ p, deduction
-   that ¬ q is true is a logical inference; if it is asserted that p ⇒ q
-   and also p, deduction that q is true is a logical inference.  The law
+   that ¬ q holds is a logical consequence; if it is asserted that p ⇒ q
+   and also p, deduction that q holds is a logical inference.  The law
    of excluded middle holds:  It is the case that ¬(p ∧ ¬p) and also
-    ¬(¬p) ⇔ p and (p ⇒ q) ⇔ (¬p ∨ q).
+    ¬(¬p) ⇔ p as well as (p ⇒ q) ⇔ (¬p ∨ q).
 
-PRIMITIVE NOTIONS
+2. PRIMITIVE NOTIONS
+
+   Specific predicates and functions are introduced by presentation of their
+   characteristics via mathematical conditions that distinguish them.
 
    Functions ob.a, ob.b, ob.c, ob.e and allied relations are taken
    as given and complete.
-   
+
    Ob1. Pairs
         z = ob.c(x,y) ⇒ ob.a(z) = x ∧ ob.b(z) = y
         z = ob.c(ob.a(z),ob.b(z)) ⇔ ob.a(z) ≠ z ∧ ob.b(z) ≠ z
-       
+
    Ob2. Enclosures
         z = ob.e(x) ⇒ ob.a(z) = x ∧ ob.b(z) = z
         z = ob.e(ob.a(z)) ⇔ ob.a(z) ≠ z ∧ ob.b(z) = z
-       
+
    Ob3. Individuals
         ob.is-individual(z) ⇔ ob.a(z) = z ∧ ob.b(z) = z
-       
+
    Ob4. Structural Discrimination Predicates
         ob.is-singleton(z) ⇔ ob.b(z) = z.
         ob.is-pair(z) ⇔ ¬ ob.is-singleton(z)
         ob.is-enclosure(z) ⇔ ob.is-singleton(z) ∧ ob.a(z) ≠ z
-        
+
    Ob5. Totality
         ob.is-individual(z) ∨ ob.is-enclosure(z) ∨ ob.is-pair(z)
-        
-        It is a consequence that each ob is exactly one of pair, 
-        enclosure, and individual and there are no others.
+
+        It is a consequence that each ob is exactly one of pair,
+        enclosure, or individual and there are no others.
           (ob.is-individual(z) ∧ ¬ ob.is-enclosure(z) ∧ ¬ ob.is-pair(z))
         ∨ (ob.is-enclosure(z) ∧ ¬ ob.is-individual(z) ∧ ¬ ob.is-pair(z))
         ∨ (ob.is-pair(z) ∧ ¬ ob.is-enclosure(z) ∧ ¬ ob.is-individual(z))
-      
+
    Ob6. Structural Identity
-        u = ob.c(v,w) ∧ z = ob.c(x,y) 
+        u = ob.c(v,w) ∧ z = ob.c(x,y)
                    ⇒ (u = z ⇔ v = x ∧ w = y)                  (a)
-        
-        u = ob.e(v) ∧ z = ob.e(x) 
-                   ⇒ (u = z ⇔ v = x)                           (b)
-        
+
+        u = ob.e(v) ∧ z = ob.e(x)
+                   ⇒ (u = z ⇔ v = x)                          (b)
+
         ob.is-pair(u) ∧ ob.is-singleton(z)
                    ⇒ u ≠ z                                     (c)
-                   
+
         ob.is-individual(u) ∧ ob.a(z) ≠ z
                    ⇒ u ≠ z                                     (d)
-                   
+
    Ob7. Identity Among Primitive Individuals
         ob.is-individual(ob.NIL)
-        
-        There are a limited number of fixed-name primitive individuals.  
-        They can be taken as given.  They are not definable in terms of 
+
+        There are a limited number of fixed-name primitive individuals.
+        They can be taken as given.  They are not definable in terms of
         others.
-        
+
         Individuals identified by upper-case namings, such as ob.NIL,
-        are distinct if and only if their names differ.  Those 
-        individuals are also distinct from any other individual
-        kind that may arise. 
-                 
+        are distinct if and only if their names differ.  Those
+        individuals are also distinct from individuals of any other
+        kind that may arise.
+
+3. DENUMERABILITY AND EFFECTIVENESS
+
    Ob8. The ¶ Precedence Condition
-   
-        ¬ (x ¶ x)                                (a), irreflexive
-        (x ¶ y) ⇒ ¬ (y ¶ x)                      (b), asymmetrical
+
+        ¬ (x ¶ x)                               (a), irreflexive
+        (x ¶ y) ⇒ ¬ (y ¶ x)                     (b), asymmetrical
         (x ¶ y) ∧ (y ¶ z) ⇒ (x ¶ z)             (c), transitive
-        
-        x = y ∨ x ¶ y ∨ y ¶ x                    (d), ordering
-        
-        z = ob.e(y) ⇔ (y ¶ z)                    (e), construction
-        z = ob.c(x,y) ⇔ (x ¶ z) ∧ (y ¶ z)
-        
-        ob.is-individual(x) ⇒ x ¶ ob.e(x)         (f), floating     
-        ob.is-individual(x) ⇒ x ¶ ob.c(x,y)      
+
+        x = y ∨ x ¶ y ∨ y ¶ x                    (d), distinction
+        x = y ⇔ ¬ (x ¶ y ∨ y ¶ x)
+
+        z = ob.e(y) ⇒ (y ¶ z)                    (e), construction
+        z = ob.c(x,y) ⇒ (x ¶ z) ∧ (y ¶ z)
+
+        ob.is-individual(x) ⇒ x ¶ ob.e(x)        (f), floating
+        ob.is-individual(x) ⇒ x ¶ ob.c(x,y)
         ob.is-individual(x) ⇒ x ¶ ob.c(y,x)
-     
+
    Ob9. Denumerable Canonical Form
-   
+
         Ob consists of all distinct, finitely-expressible obs satisfying
         conditions Ob1-Ob8 and expressed without use of variables and
-        without any functions other than ob.c and ob.e.  Such expressions
-        are canonical identifiers of individual obs.  Each canonical
-        identifier is unique to a particular ob and every ob is canonically
-        identifiable.
-               
-        Ob is unbounded and denumerable provided that the individuals be 
-        denumerable.
-        
-        This case is important because computation, for oMiser, involves
-        the systematic determination of canonical obs from given ones.  This
-        contrasts with the Ot characterizations of functions via patterned 
-        specifications employing variables that assert conditions over ‹ob› 
-        entire.       
-        
+        without any functions other than ob.c and ob.e, and without any
+        extraneous parentheses.  Such expressions are canonical forms in
+        that each form is unique to a particular ob and every ob is
+        determined via a canonical form.
+
+        Ob is unbounded and denumerable provided that the individuals be
+        denumerable.  This is the case for the canonical forms, and the obs
+        are in one-to-one correspondence with their canonical forms.
+
+        We say that an ob is definite, or determined, when its canonical form
+        can be exhibited explicitly.
+
+        This case is important because computation, for oMiser, can be viewed
+        as systematic determination of obs from given definite ones.  This
+        contrasts with the Ot characterizations of functions via patterned
+        specifications employing variables that assert conditions over ‹ob›
+        entire.  This is comparable to the situation with arithmetic where
+        decimal numerals are typical canonical forms for (natural) numbers.
+
+        Certain extensions to ‹ob› will augment the variety of canonical forms
+        without ever altering the denumerability of them, preserving Ob7-Ob9.
+
    Ob10. Effectively-Computable Functions in Of
-   
+
         Without addressing fine technicalities here, a function F over Ob (and
         in Of by definition) is claimed to be effectively-computable if, given
-        canonical identifiers for the arguments, any canonical-identifier result
-        is determined uniquelly and explicitly by deduction based entirely
-        on an Ot characterization of F by a finite number of mathematical 
-        statements.  
-        
-        Predicates in Ot are effectively-computable as true or false 
+        definite obs as arguments, any definite result is determined by
+        deduction based entirely on an Ot characterization of F in a finite
+        number of mathematical statements.  It can be the case that there is
+        no definite result for some definite arguments.
+
+        Predicates in Ot are effectively-computable as true or false
         in a similar manner and termed effectively-decidable.
-        
-        Observe that ob.c(x,y), ob.e(x), the four ob.is-... predicates, and 
-        the "=" relation are all effectively-computable in this sense, so long
-        as individuals are distinguishable.  They are also total in the sense
-        that a definite result is established for any obs given as arguments.
-        
-        In contrast, x ¶ y is only partially-determined.  When x ≠ y is 
-        determined, it need not be made definite which of x ¶ y or y ¶ x holds. 
-        For Ot, Ob8 is definite enouth to ensure that any representation of a 
-        function F (or predicate P) must be such that Ob8 is not contradicted.
-        In addition, interpretations of ‹ob› are relieved from establishing an 
-        explicit counterpart of x ¶ y.  It is sufficient that no ob interpreta-
-        tioon can appear as a component of its own structure and no operations
-        violate that constraint.      
-   
+
+        Observe that ob.a(x), ob.b(x), ob.c(x,y), ob.e(x), the four ob.is-...
+        predicates, and the "=" relation are all effectively-computable in
+        this sense.  They are also total in the sense that a result is
+        determined whenever there are definite arguments.
+
+        In contrast, x ¶ y is only partially-determined.  When x ≠ y is
+        determined, it need not be deducible which of x ¶ y or y ¶ x holds.
+        This is the case among definite individuals that are distinguished
+        by literal identifiers and no other condition on comparability.  The
+        strength of Ob8 is that ¬(x ¶ x) be preserved.  The mathematical
+        benefit of the strict partial-ordering x ¶ y is the availability of
+        structural induction for deductions about functions in Of.
+
+        Later, when we make computational interpretations of ‹ob›, there'll
+        be no need for an explicit counterpart of x ¶ y.  It is sufficient
+        that no ob interpretation can appear as a component within its own
+        composition, however deeply, and supporting operations cannot violate
+        that constraint.  In valid computational interpretations, counter-
+        parts of obs are immutable and have no cycles, the special case of
+        singletons notwithstanding.
+
+4. NOTES AND REFERENCES
+
+   The notions of individual, enclosure, singleton, and pair have their
+   inspiration in the nested-array work of [More1979] and the foundation
+   structure of LISP [McCarthy1960].  The importance of enclosure as a
+   structural feature of obs was observed in an incompleteness regarding
+   nested strings in [Strachey1965].  Representations of strings that have
+   other strings as their beads was also introduced by Doug Ross and
+   colleagues in the AED-0 system. The computational model founded on ‹ob›
+   for oMiser is a fully-applicative scheme inspired through my association
+   with Peter Landin and William H. Burge in the mid-1960s, with operation
+   now via a list-processing adaptation of [Strachey1965].
+
+   "Effectively computable" and "effective computability" are used in the
+   manner of the title of [Rogers1987].  Identification, for now, with a kind
+   of deduction separate from computational interpretations (e.g., as
+   algorithms) is meant as a case of effective calculability, the term
+   employed in [Church1936] before a general-purpose digital computer had
+   ever been seen or described.  For the Miser Project, we do not confine
+   computability to Turing Computability, despite demonstrable equivalence.
+
+   When we speak of all of the effectively-computable functions on obs, as
+   obs are characterized here, the claim will be that the totality of them is
+   equivalent to the CT-computable (total) functions.  When a universal
+   function is also formulated, correspondence to a Universal Turing Machine
+   and hence Church-Turing Completeness will be claimed.  These stages will be
+   demonstrated in later progressions of these Miser Project notes.
+
+   Ob7-Ob9 must be augmented in the case of extensions that introduce new
+   distinct individuals constructed from other obs.  Supplementary
+   definitions will be provided along with the introduction of such
+   extensions.
+
+     * Miser Project documentation is being consolidated under GitHub and
+       accessible in viewable form at <https://orcmid.github.io/miser/>.
+
+     * "Golden Geek" is a Facebook Page that covers topics related to the
+       Miser Project, including some narration of computational models and
+       also how computer simulations of the ob model of computation are
+       established.  The blog posts, below, are more current.
+       <https://www.facebook.com/MiserProject>
+
+   An account of this foundational theory for the abstract data type
+   that underlies all oMiser implementations is narrated in a progression
+   of blog posts.
+
+     * Miser Project: Hark! Is That a Theory I See Before Me?
+       <https://orcmid.blogspot.com/2018/07/miser-project-hark-is-that-theory-i-see.html>
+       on the mathematical-logic notation used at the mathematical level
+
+     * Miser Project: ‹ob› Primitive Functions
+       <https://orcmid.blogspot.com/2018/08/miser-project-ob-primitive-functions.html>
+       including introduction of Ob1-Ob7 here.
+
+     * Miser Project: Narrowing ‹ob› for Computational Interpretation
+       <https://orcmid.blogspot.com/2018/09/miser-project-narrowing-ob-for.html>
+       including introduction of Ob8-Ob10 here.
+
+     * Miser Project: Representing Data as Obs
+       <https://orcmid.blogspot.com/2018/11/miser-project-representing-data-as-obs.html>
+       introducing computational interpretations of obs and obs as encodings
+       (interpretations for) data as an initial step toward the oMiser
+       computational model.  A compact canonical form expression is
+       defined.
+
+     * Miser Project: Representing Functions in ‹ob›’s Abstract World
+       <https://orcmid.blogspot.com/2018/12/miser-project-representing-functions-in.html>
+       reasoning about functions on obs and then exploring interpretation
+       of other structures with representation of functions in each other
+       and in ‹ob›.  There is extensive attention to interpretations and
+       representations of Boolean Algebras by way of illustration and for
+       future application.  See
+       <https://github.com/orcmid/miser/blob/master/oMiser/boole.txt>.
+
+     * Miser Project: Interpretation, Representation, Computation, and
+       Manifestation
+       <https://orcmid.blogspot.com/2019/02/miser-project-interpretation.html>
+       expanding on some specialized notions applied throughout development
+       of the Miser Project.
+
+   [Church1936] Church, Alonzo.  An Unsolvable Problem of Elementary Number
+       Theory.  American Journal of Mathematics 58 (1936), 345-363. Reprinted
+       on pp.88-115 with supplemental notes in "The Undecidable: Basic Papers
+       on Undecidable Propositions, Unsolvable Problems, and Computable
+       Functions," Martin Davis (ed.), Raven Press (New York: 1965), ISBN
+       0-911216-01-4.
+
+   [McCarthy1960] McCarthy, John.  Recursive functions of symbolic
+       expressions and their computation by machine, Part I.  Comm. ACM
+       3, 4 (April 1960), 184-195.  doi>10.1145/367177.367199 available at
+       <https://dl.acm.org/citation.cfm?doid=367177.367199>.
+
+   [More1979] More, Trenchard.  The nested rectangular array as a model
+       of data.  pp. 55-73 in "APL '79 Proceedings of the international
+       conference on APL: Part 1."  doi>10.1145/390009.804440 available at
+       <https://dl.acm.org/citation.cfm?id=804440>
+
+   [Rogers1987] Rogers, Hartley, Jr.  Theory of Recursive Functions and
+       Effective Computability.  MIT Press (Cambridge, MA: 1987).  ISBN
+       0-262-68052-1 pbk.
+
+   [Strachey1965] Strachey, Christopher.  A General Purpose Macrogenerator.
+       The Computer Journal 8, 3 (January 1965), 225-241.  Available at
+       <https://doi.org/10.1093/comjnl/8.3.225>
+
+   [Wikipedia2018a] Canonical form.  2018-10-10 article available on the
+       Internet at <https://en.wikipedia.org/w/index.php?title=Canonical_form&oldid=863443547>
+
+   [Wikipedia2018b] Structural induction. 2018-09-09 article available on the
+       Internet at <https://en.wikipedia.org/w/index.php?title=Structural_induction&oldid=858748480>
+
+   [Wikipedia2019] First-order logic. 2019-01-07 article available on the
+       Internet at <https://en.wikipedia.org/w/index.php?title=First-order_logic&oldid=877262034>
+
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-                       Copyright 2017 Dennis E. Hamilton
+                   Copyright 2017-2020 Dennis E. Hamilton
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -179,55 +351,105 @@ PRIMITIVE NOTIONS
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
- 
+
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
- 
+
+ ATTRIBUTION
+
+   Hamilton, Dennis E. ‹ob› Mathematical Structure.  Miser Theory Conception
+   text file obtheory.txt version 1.0.1 dated 2020-01-15, available on the
+   Internet as a version of
+   <https://github.com/orcmid/miser/blob/master/oMiser/obtheory.txt>
+
 TODO
 
- * Provide a stable location for obtheory version progressions on 
+ * Provide a stable location for obtheory version progressions on
    <http://miser-theory.info>.
-   
- * Confirm that the notation characters are preserved/presented on the
-   different storage media.
-   
+
  * Figure out what to do about well-definedness.  Is this an Ob10 or Ob11
-   condition?
- 
+   condition?  I claim it is implicit in Ob10 and it can be made explicit
+   in one of the companion text files such as miser/theory.txt.
+
  * Find places to locate this material that are perhaps easier to reach
    into than GitHub, and perhaps more durable.  This may depend on stability
    of the material.
-   
- * When we speak of all of the effectively-computable functions on Obs, as     
-   characterized here, the claim will be that the totality of them is equivalent
-   to the CT-computable (total) functions.  When a a universal function is also
-   formulated, equivalence to a Universal Turing Machine and Turing Completeness
-   will be claimed.
-   
- * Determine how we reconcile having partial functions under the umbrella of   
-   effectively-computable.  It appears that this might be related to domain
-   restrictions, although the restriction might not be (effectively-)decidable?
-   
+
  * Rely on the Stanford Encyclopedia of Philosophy (SEP) treatment of the
    Church-Turing thesis and how we navigate the CT-computable.  Put this where
-   it belongs in obaptheory, not here.
-      
+   it belongs in obaptheory.txt, not here.
+
+ * Consider Markdown versions that GitHub will render in a more-presentable
+   form.  Keep in mind that the .txt version is always definitive.
+
+ * Provide a little more about FOL= as used for ‹ob› structure, especially
+   with regard to universal quantification and similarity to familiar algebra.
+
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
- 0.0.24 2017-12-29-16:48 Adjust Ob8 and Ob10 so that x ¶ y is taken as a 
+ 1.0.1 2020-01-15-08:29 Correct file top-line typos and a change of links
+       from Wordpress to Blogger. Mention https://orcmid.github.io/miser/
+ 1.0.0 2019-11-07-12:49 Replace Wordpress Miser Project links with ones to
+       Orcmid's Lair on Blogger, declaring version 1.0.0.
+ 0.2.11 2019-10-31-13:43 Wordsmithing and beginning adjustment of blog post
+       locations
+ 0.2.10 2019-10-30-10:12 Fix a line-wrap
+ 0.2.9 2019-05-11-09:10 Adjust to wording suggested by William L. Anderson in
+       issue #19, cross-reference with ob.txt, and manage TODOs.
+ 0.2.8 2019-03-23-10:28 Correct text flow, add [Rogers1987] and [Church1936]
+       remarking use of "effective computability" here, and referencing the
+       further Orcmid's Live Hideout article of 2019-02-11.
+ 0.2.7 2019-01-19-12:07 In Notes, connect the arrival at ‹ob› to inspirations
+       in work of John McCarthy, Trenchard More, Christopher Strachey, Peter
+       Landin and W. H. Burge.
+ 0.2.6 2019-01-18-11:47 In Ob10, name x ¶ y as a strict partial-ordering.
+ 0.2.5 2019-01-17-12:40 After conversation with Bill Anderson, replaced the
+       preamble to reflect the purpose of introducing structure ‹ob›.
+ 0.2.4 2019-01-10-10:49 Correct the count of primitive functions in the
+       table of content. Touch up a little.
+ 0.2.3 2019-01-08-10:16 Manage TODOs, add attribution, expand notes and
+       repair definition of p ⇔ q caught by William L. Anderson (issue #16).
+ 0.2.2 2018-12-14-10:45 Update Notes to reflect additional blog articles.
+ 0.2.1 2018-11-17-14:05 Wordsmithing and tough-ups
+ 0.2.0 2018-11-14-08:38 Editorial cleanups, add table of contents, and more
+       connective text.
+ 0.1.2 2018-11-02-13:13 Introduce structural induction as a critical benefit
+       of requiring the existence of the partial well-ordering via x ¶ y.
+ 0.1.1 2018-10-22-17:37 Correct a surprising typo in the definition of ¬ p.
+ 0.1.0 2018-10-17-15:41 Clarify the situation of canonical forms and update
+       the Notes and References.  Manage TODOs.  Reflect confidence with the
+       increase to version 0.1.0.
+ 0.0.32 2018-09-04-10:56 Correct howler in Ob10 about strength of Ob8, since
+        it is a negation that must be preserved.  Touch up and also manage
+        TODOs.
+ 0.0.31 2018-09-04-08:30 Expand and identify Ob8(d) as distinction.  This
+        is a theorem and worth making explicit for our purposes.
+ 0.0.30 2018-08-29-12:37 Layout touch-ups, refinement of Ob8-Ob10 and
+        initiation of Notes and References.  Manage TODOs.
+ 0.0.29 2018-08-26-10:22 Clean up white space and headings, manage TODOs.
+ 0.0.28 2018-07-25-18:02 Correct serious error in Ob8.
+ 0.0.27 2018-07-14-12:50 Manage TODOs, anticipating Ob8 requiriing extension
+        later on.
+ 0.0.26 2018-07-09-15:33 Correct line flow and a typo.  There is no change
+        of substance, making this a worthy substitute for reference from
+        existing blog posts.
+ 0.0.25 2018-07-07-11:05 Repair text-flow in Visual Code and point out the
+        intended truth-value semantics of Ot.
+ 0.0.24 2017-12-29-16:48 Adjust Ob8 and Ob10 so that x ¶ y is taken as a
         sufficient constraint without explicit, strict ordering having to be
         determined in a model.  Thanks to Roman Susi (rnd0101) for Questions
-        #1 discussion at <https://github.com/orcmid/miser/issues/1>.        
- 0.0.23 2017-12-27-10:45 Touch-up, especially in Ob8-Ob10.  Review TODOs. 
+        #1 discussion at <https://github.com/orcmid/miser/issues/1>.
+ 0.0.23 2017-12-27-10:45 Touch-up, especially in Ob8-Ob10.  Review TODOs.
  0.0.22 2017-11-23-14:44 Replace ^ with ∧ in a couple of places.  Touch up
-        Ob9-Ob10 to make canonical identification relevant to computation and
-        to leave open the prospect of effective-computable partial functions.
+        Ob9-Ob10 to make canonical form relevant to computation and leave
+        open the prospect of effectively-computable partial functions.
  0.0.21 2017-11-12-09:58 Manage TODOs.  Touch up the text.
  0.0.20 2017-11-11-11:28 Cleanup Ob10 on Effective Computability.
  0.0.19 2017-09-28-13:04  Adjust TODOs.  Address some comments and suggestions
         from Paul McJones (private communication).
- 0.0.18 2017-09-17-11:22 Describe ¶ as asymmetrical rather than non-commutative
-        (hat tip to Paul McJones).  Expand Ob10 for improved informal treatment
-        of representation for effectively-computable functions.
+ 0.0.18 2017-09-17-11:22 Describe ¶ as asymmetrical rather than
+        non-commutative (hat tip to Paul McJones).  Expand Ob10 for improved
+        informal treatment of representation for effectively-computable
+        functions.
  0.0.17 2017-09-14-18:49 Add Ob10 on effective computability.
  0.0.16 2017-09-06-18:02 Correct the GitHub link and add work items about
         further steps.
@@ -235,13 +457,12 @@ TODO
         Ob7 somewhat.
  0.0.14 2017-09-03-09:38 Make the Ob5 Totality partitioning consequence
         formally-explicit.
- 0.0.13 2017-08-28-08:56 Touch-up and add TODO about well-definedness
+ 0.0.13 2017-08-28-08:56 Touch-up and add TODO about well-definedness.
  0.0.12 2017-08-27-11:43 Wordsmithing and assertion of classical conditions.
  0.0.11 2017-08-26-09:56 Smooth the description of the logical notation and
-        distinguish it from similar-appearing computational operations
+        distinguish it from similar-appearing computational operations.
  0.0.10 2017-08-24-10:17 Adapted from the SML mockup obtest.sml 0.0.9 for
         reference in all mockups and the expanded development for oMiser.
 
 
-                          *** end of obtheory.txt ***                               
-   
+                          *** end of obtheory.txt ***

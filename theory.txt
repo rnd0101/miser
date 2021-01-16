@@ -1,0 +1,289 @@
+theory.txt 0.0.7                     UTF-8                       dh:2020-07-23
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|--*
+
+                          MISER THEORETICAL CONCEPTION
+                          ============================
+
+               MISER STANDING IN THEORETICAL MODELS OF COMPUTATION
+               ---------------------------------------------------
+
+             <https://github.com/orcmid/miser/blob/master/theory.txt>
+
+             If a result is important, you badly want to find different
+             ways to see that fact; that's much safer.  If you have only
+             one proof, and it contains an error, then you're left with
+             nothing.  Having several proofs is not only safer, it gives
+             you more insight, and it gives you more understanding.  After
+             all, the real goal of mathematics is to obtain insight, not
+             just proofs.
+                                 -- Gregory Chaitin [Chaitin2005, p.25]
+
+SYNOPSIS
+
+A critical objective of the Miser Project is demonstration of a universal
+model of computation -- one among many -- that reveals how the stored-program
+principle and some elementary arrangements are so amenable to providing many
+levels of computational facility.
+
+Theoretical adequacy is demonstrated by an elementary applicative system that
+captures the essential nature of stored-program digital computing.  The system
+is demonstrated to be universal in the Church-Turing sense.  The system is
+also implemented in conventional computer software as an enactment of the
+Miser Project applicative computational model.
+
+Development of the theoretical underpinnings and confirmation of universality
+is accomplished in a staged progression, leading up to consideration of
+practical application.
+
+APPROACH
+
+The first Miser Project employment of theoretical models arises in the
+<https://github.com/orcmid/miser/blob/master/oMiser/obtheory.txt> introduction
+of the ‹ob› mathematical structure.
+
+With regard to computational interpretation of theories, there is reliance on
+transitivity of computational interpretation: If mathematical structure ‹A›
+has interpretation in structure ‹B›, and structure ‹B› has a computational
+interpretation, then that is sufficient computational interpretaton of ‹A›.
+
+
+Taking ‹ob› for ‹B›, this principle has been applied taking Boolean Algebras
+in position of ‹A› (and among each other) in the manner described in boole.txt
+<https://github.com/orcmid/miser/blob/master/oMiser/boole.txt>.
+
+The ‹ob› model of computation is itself characterized in obaptheory.txt,
+<https://github.com/orcmid/miser/blob/master/oMiser/obaptheory.txt>.  The
+computable functions f(x) on Ob are defined to be those for which there is
+a script, p, such that obap.ap(p, x) = f(x) is determined, given a definite
+ob for x.
+
+Claimed: obap.ap(p, x) and the closely-related obap.eval(e) are equivalent to
+other universal models of computation.
+
+The question of being universal-enough is addressed by demonstrating that the
+‹ob› model of computation affords simulation of other accepted universal
+models.
+
+ * Church's λ-calculus is given a computational interpretation using the
+   already-equivalent system of combinators, ‹ca›, as in combinators.txt
+   <https://github.com/orcmid/miser/blob/master/oMiser/combinators.txt>,
+   also supporting an emergent notion of types.
+
+ * A complete representation of Turing machines establishes achievement of a
+   Universal TM simulated in Miser.
+
+ * The grounding case of Number Theory and the theory of Recursive Functions
+   is accomplished via representation of natural numbers and the computational
+   representation of general recursive functions on the naturals.
+
+ * We might examine Algorithmic Information Theory to see if light can be
+   shed on the limitations of computation using the Miser computational model
+   instead of one tied more directly to LISP.
+
+The ‹ob› model is thereby no weaker, in this absolute sense, than those
+others already regarded as equivalent under the Church-Turing thesis.
+
+That the ‹ob› model of computation is no stronger than any of the others can
+be presumed by conducting one or more simulations in the other direction.  We
+shall wave at some particular as evidence of being no more powerful,
+including operational enactment of the model in a digital computer.
+
+CLOSING THE LOOP
+
+ * The ability to deal formally with obs as expressions is also demonstrated
+   by defining λ-abstraction and recursion labeling (ρ-abstraction), since
+   this makes things much handier although not particularly reversible. This
+   is a start on having more-expressive representations.  It is accomplished
+   entirely within the ‹ob› model of computation and the economical
+   expression that oFrugal supports, as defined at ob-exp.txt,
+   <https://github.com/orcmid/miser/blob/master/oMiser/ob-exp.txt>
+
+ * There is also to be consideration of "de-compiling" obs to more expressive
+   constructions, such as ob-exps with identified combinators and lambda
+   abstractions.  It is the limitations on this that are to be understood,
+   and how that might best work as an assistance, being able to re-abstract
+   to expressions in a desired context.  (Note that lambda-abstraction will
+   not choose descriptive lindies for the introduced free occurences unless
+   there is an assistance mechanism.)
+
+ * Given cross-overs of interface boundaries as part of simulating types, it
+   is valuable to identify mechanical simplifications that are essentially a
+   form of "in-lining" that coalesces in place of boundaries where it makes
+   no difference <https://github.com/orcmid/miser/issues/26>
+
+ * Computational complexity is also introducible with regard to applicative
+   and construction operations.  Accelerators tend to provide polynomial
+   speed-ups although most improvement is with regard to constants, not the
+   order of operations (unless there is a code-behind that does better).
+
+[to be continued]
+
+
+
+REFERENCES AND BIBLIOGRAPHY
+
+ * challenges.txt addresses some topics that will be explicated more here.
+   <https://github.com/orcmid/miser/blob/master/challenges.txt>.
+
+ * Some challenges and issues appear to be beyond the requirements for
+   establishing the Church-Turing computability capabilities of oMiser.  The
+   challenge is dealing with non-functional situations in a manner that allows
+   significant functional determinations and derivations to be preserved.
+   The essential question is how to isolate side-effects and dependencies of
+   various kinds for maximal preservation of our ability to reason about the
+   procedures that are situated in that kind of environment.  This may depend
+   on logic.txt, <https://github.com/orcmid/miser/blob/master/logic.txt>.
+
+[Chaitin1998]
+   Chaitin, Gregory J.  The Limits of Mathematics: A Course on Information
+   Theory and the Limits of Formal Reasoning.  Springer (Singapore: 1998).
+   ISBN 981-3083-59-X.  An objective in exploration of this material is using
+   oMiser to demonstrate Algorithmic Information Theory, and its concrete
+   cases, with sufficient translation of the version of LISP used by Chaitin.
+
+[Chaitin1999]
+   Chaitin, Gregory J.  The Unknowable.  Springer (Singapore: 1999).  ISBN
+   981-4021-72-5.  This follow-in to [Chaitin1998] provides some additional
+   support including application to incompleteness and the Turing halting
+   problem.  These should have aligned demonstrations in the oMiser computa-
+   tional model interpretation of ‹ob› obap.ap.
+
+[Chaitin2005]
+   Chaitin, Gregory J.  Meta Math!: the Quest for Omega.  Pantheon (New York:
+   2005).  ISBN 0-375-42313-3.  Digging deeper into the nature of mathematics,
+   computation, and scientific understanding.  We make no metaphysical
+   commitments in our application of Chaitin's ideas and algorithmic
+   information theory.
+
+[Kleene1950]
+   Kleene, Stephen Cole.  Introduction to Meta-Mathematics.  1950 edition
+   with Michael Beeson foreword.  ISHI Press International (Bronx: 2009).
+   ISBN 0-923891-57-9.  Kleene's bridging of model theory, recursive function
+   theory, the λ-calculus, and Turing computability is the establishment of
+   what is taken as Church-Turing computability, although Kleene did not
+   confuse Turing computability and Church's Thesis.  It is rather the
+   recognition of equivalences, not identities and those connections among
+   Church, Gödel, and Turing.  Kleene's reformulation of the Turing Machine
+   is the one relied upon in later development.  This textbook is presented as
+   suitable for graduate-school treatment.  Kleene was admirably positioned
+   for this undertaking, being a student of Church and having met Gödel at
+   that time (and having taken renouned notes of Gödel's Princeton lectures).
+
+[Kleene1967]
+   Kleene, Stephen Cole.  Mathematical Logic. Dover unabridged edition,
+   (Mineola, New York: 2002). ISBN 0-486-42533-9. This more-accessible
+   treatment beyond [Kleene1950] introduces his use of "Church-Turing thesis"
+   (§41).  Kleene does not treat the λ-calculus and λ-definability here,
+   choosing to simply use Turing Machines for his treatment of computability
+   and decidability in this shorter and less demanding textbook.
+
+[Petzold2008]
+   Petzold, Charles.  The Annotated Turing: A Guided Tour through Alan
+   Turing's Historic Paper on Computability and the Turing Machine.  Wiley
+   (Indianapolis: 2008).  ISBN 978-0-470-22905-7.  Written with great care,
+   this treatment provides thoughtful context on Alan Turing, himself, and
+   the world in which computation theory was introduced.  Fundamental sources
+   are identified and accounted for in the narrative, which addresses the
+   Church-Turing thesis and the differentiation of the computable.  Recounts
+   puzzles concerning the situation of computation in the workings of the
+   universe and the plight of humans knowing themselves.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                     Copyright 2018, 2020 Dennis E. Hamilton
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ATTRIBUTION
+
+   Hamilton, Dennis E. Miser Standing in Theoretical Models of Computation. Miser Theoretical Conception text file theory.txt version 0.0.7 dated
+   2020-07-23, available on the Internet as a version of
+   <https://github.com/orcmid/miser/blob/master/theory.txt>
+
+TODO
+
+ * Find other TODOs of this nature and transpose them to this file.
+
+ * Reconcile the inclusion, by some, of partial functions under the
+   effectively-computable ones.  This seems to collide with the halting
+   problem.  Check the treatment of the Church-Turing Thesis in SEP and also,
+   possibly in Davis and maybe Rogers.
+
+ * Recover the article on the completeness of cons, car, and cdr for appeal
+   with respect to ob.c, ob.a, ob.b, and ob.e.  Make the bridge to the
+   completeness with respect to effectively computable obs.
+
+ * Identify the confirmations, including lambda-calculus, Turing Machine,
+   and other simulations.  These need to be linked maerials.
+
+ * It might not be here, but the relationship to the Backus FP and FFP may
+   require some explanation as well.
+
+ * Address the apparent distinction around flavors of interpretation.
+
+ * The common reliance on encoding and operating to within number theory
+   (i.e., denumerable domains) is a matter for the reverse case.  That is,
+   we can treat representation via encoding in oMiser as equivalent to
+   encoding in PA, but more amenable to exposure of the stored-program
+   principle and also simpler (but not easy or efficient) representations
+   of other models in demonstration of Church-Turing computability.
+
+ * Get the Church-Turing Thesis amalgamation in a clear manner.  Find
+   accessible versions of core sources.  In particular, dismantle the
+   attribution of Kleene as reducing Church-Turing Thesis to Turing
+   Computability.
+
+ * Find a characterization of Recursive Function Theory to allude to here.
+
+ * Address simulation and the ability to simulate members of sets whose
+   totalities are inaccessible, including those of greater cardinality than
+   the denumerables.  We have fewer and fewer computable cases, yet these seem
+   to be plentiful enough.
+
+ * That the same object can be a representation in many ways (avoiding the
+   temptation to say innumerable), what does that say about the computable?
+   It would appear that the expression of representation as interpretation of
+   a theory may somehow limit us to computability after all.
+
+ * The situation of category theory here is problematic.  One can maybe talk
+   ourselves up the ladder, but maybe not compute ourselved along the same
+   route.  The treatment of classes tied to predicates might be revealing.
+
+ * Separate this specific arrangement from logic.txt where we have applied
+   logical theories (using FOL= typically) and then switch to mechanizing
+   logic and in particular computational logic on ‹ob› itself.
+
+ * The logic.txt may be needed to comprehend exactly how there are higher-
+   level computational representations (i.e., with respect to functional
+   type) while still confined to representability in the Ob domain.  Matters
+   of denumerability come into play here.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 0.0.7 2020-07-23-09:49 Touch-ups, additional considerations
+ 0.0.6 2020-07-20-10:49 Wordsmithing, some additions, management of TODOs
+ 0.0.5 2020-07-19-12:22 Extensive drafting of Synopsis and Approach.
+ 0.0.4 2020-07-18-13:56 Continuing touch-ups, references, and connections, and
+       starting the Synopsis.
+ 0.0.3 2020-07-10-10:12 More TODOs Pondering, touch-ups
+ 0.0.2 2020-07-06-12:34 Add [Petzold2008] along with musings/notes on the
+       topic here.
+ 0.0.1 2018-08-09-11:48 Add Chaitin material.  This is not primary, but an
+       element of what to explore via the Miser Project.
+ 0.0.0 2018-04-17-13:25 Create placeholder, with starter TODOs on the
+       connection of oMiser to computation theory.
+
+
+                        *** end of theory.txt ***

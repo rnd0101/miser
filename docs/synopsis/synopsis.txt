@@ -1,0 +1,68 @@
+synopsis.txt 0.0.3                   UTF-8                       dh:2019-11-24
+----|----1----|----2----|----3----|----4----|----5----|----6----|----7----|--*
+
+                           The Miser Project Code
+                           ======================
+
+       <https://github.com/orcmid/miser/blob/master/docs/docs.txt>
+
+                    MISER PROJECT SYNOPSIS PAGE AUTHORING
+                    -------------------------------------
+
+    The Miser Project docs/synopsis/ folder provides the managed source-code
+    replication of <http://miser-project.info/synopsis.htm>.
+
+    To provide some fidelity to the miser-theory.info version, a couple of
+    screen-captured elements are used for the title block and the bottom
+    material.
+
+
+MANIFEST
+
+      synopsis.txt
+               this manifest and job-jar file
+
+         index.md
+               markdown of page <https://orcmid.github.io/miser/synopsis>
+
+    Miser-0.0.3-synopsis-BottomMatter.png
+               capture of the history and footer of the original blog post
+    Miser-0.0.3-synopsis.pdf
+               PDF capture of the original 0.02 blog post, via OneNote
+    Miser-0.0.3-synopsis-TitleBlock
+               capture of the title block of the 0.02 blog post
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+                      Copyright 2019 Dennis E. Hamilton
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+TODO
+
+ * ALways check the formatting on changes of themes here.
+
+ * Note some limitations on content of material wrapped in HTML tags.  This
+   should be under construction/current/ and plain/ somewhere.
+
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ 0.0.3 2019-11-24-14:55 Update to use the repaired 0.0.3 of the original
+ 0.0.2 2019-11-23-09:02 More TODOs
+ 0.0.1 2019-11-22-15:34 Complete production of a checked synopsis version.
+ 0.0.0 2019-11-22-12:26 Create placeholder and initial job jar for replicating
+       and preserving the Miser Project synopsis.
+
+                         *** end of synopsis.txt ***
