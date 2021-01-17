@@ -261,6 +261,7 @@ def test():
 
     print(eval(c(c(L("X"), L("Z")), c(L("Y"), L("Z")))))
 
+    from library import cK
     exp = (e(cK) ** e(L("X"))) ** e(L("Y"))
     print("{} == {}".format(exp, eval(exp)))
     assert eval(exp) == L("X")

@@ -12,28 +12,6 @@ from library import cK, cS
 
 MAX_LEVEL = 25
 
-
-GROUPS = "binops", "unops", "leafs", "leafs", "leafs"
-
-
-def builder(max_level, top=False, config=None):
-    if max_level == 1:
-        return choice(config["leafs"])
-    op_group = choice(GROUPS)
-    if op_group == "binops":
-        return c(builder(max_level - 1, config=config), builder(max_level - 1, config=config))
-    elif op_group == "unops":
-        return e(builder(max_level - 1, config=config))
-    else:
-        return choice(config["leafs"])
-
-
-def do_apply_args(p, lst):
-    for arg in lst:
-        p = ap(p, arg)
-    return p
-
-
 # Some obs
 x = L("x")
 y = L("y")
@@ -62,9 +40,28 @@ def solve(rules):
             EV,
             # cK,
             # cS,
-            # SELF,
+            e(SELF),
         ]
     }
+
+    GROUPS = "binops", "unops", "leafs", "leafs", "leafs"
+
+    def builder(max_level, top=False, config=None):
+        if max_level == 1:
+            return choice(config["leafs"])
+        op_group = choice(GROUPS)
+        if op_group == "binops":
+            return c(builder(max_level - 1, config=config), builder(max_level - 1, config=config))
+        elif op_group == "unops":
+            return e(builder(max_level - 1, config=config))
+        else:
+            return choice(config["leafs"])
+
+    def do_apply_args(p, lst):
+        for arg in lst:
+            p = ap(p, arg)
+        return p
+
     while not solutions:
         t0 = time.time()
         iters = max_level * 100000
@@ -98,14 +95,14 @@ def solve(rules):
 
 if __name__ == "__main__":
     rules = [
- #       (
- #           [x],
- #           (x ** NIL)
- #       ),
-#        (
-#            [x ** y],
-#            (x ** y ** NIL)
-#        ),
+        #       (
+        #           [x],
+        #           (x ** NIL)
+        #       ),
+        #        (
+        #            [x ** y],
+        #            (x ** y ** NIL)
+        #        ),
         (
             [x],
             (x)
@@ -114,10 +111,10 @@ if __name__ == "__main__":
             [x ** y],
             (y ** x)
         ),
-#        (
-#            [e(x) ** e(y)],
-#            (e(y) ** e(x))
-#        ),
+        #        (
+        #            [e(x) ** e(y)],
+        #            (e(y) ** e(x))
+        #        ),
     ]
 
     solve(rules)
