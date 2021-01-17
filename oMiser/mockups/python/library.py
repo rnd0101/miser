@@ -18,7 +18,8 @@ cB0 = c(c(e(e(c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E
        c(e(c(E, ARG)), ARG))
 
 # Optimized
-cB = C ** (((B ** E) ** (C ** ARG)) ** e((C ** ARG)))
+# cB = C ** (((B ** E) ** (C ** ARG)) ** e((C ** ARG)))  - buggy
+cB = (C ** (e(C) ** (C ** ((E ** (E ** ARG)) ** e((C ** ((E ** ARG) ** e(ARG))))))))
 
 # C = S (S (K (S (K S) K)) S) (K K)
 
