@@ -7,9 +7,9 @@ cSpart = c(C, c(cK, e(ARG)))
 cS = c(C, c(e(C), c(C, c(c(E, cSpart), e(cSpart)))))  # S-combinator
 
 # boolean logic (buggy)
-cT = cK
-cF = c(C, c(e(c(e(c(E, ARG)), ARG)), c(C, c(c(E, ARG), e(ARG)))))
-cNOT = c(c(e(c(E, ARG)), ARG), c(e(c(E, ARG)), ARG))
+#cT = cK
+#cF = c(C, c(e(c(e(c(E, ARG)), ARG)), c(C, c(c(E, ARG), e(ARG)))))
+#cNOT = c(c(e(c(E, ARG)), ARG), c(e(c(E, ARG)), ARG))
 
 # Buggy:
 # cREV = (^cS(^cK(^cS(^cI))))(^cK)

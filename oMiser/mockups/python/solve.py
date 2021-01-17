@@ -10,23 +10,22 @@ import time
 from miser import c, E, ARG, C, e, NIL, EV, D, B, SELF, A, L, ap
 from library import cK, cS
 
+MAX_LEVEL = 25
+
+
+GROUPS = "binops", "unops", "leafs", "leafs", "leafs"
+
 
 def builder(max_level, top=False, config=None):
-    groups = "binops", "unops", "leafs"
     if max_level == 1:
-        groups = "leafs",
-
-    script = None
-    op_group = choice(groups)
-    op = choice(config[op_group])
+        return choice(config["leafs"])
+    op_group = choice(GROUPS)
     if op_group == "binops":
-        script = op(builder(max_level - 1, config=config), builder(max_level - 1, config=config))
+        return c(builder(max_level - 1, config=config), builder(max_level - 1, config=config))
     elif op_group == "unops":
-        script = op(builder(max_level - 1, config=config))
+        return e(builder(max_level - 1, config=config))
     else:
-        script = op
-
-    return script
+        return choice(config["leafs"])
 
 
 def do_apply_args(p, lst):
@@ -76,7 +75,7 @@ def solve(rules):
             if s in seen:
                 dups += 1
                 continue
-            if len(seen) < 2000000:
+            if len(seen) < 5000000:
                 seen.add(s)
             try:
                 if all(do_apply_args(s, r[0]) == r[1] for r in rules):
@@ -91,7 +90,7 @@ def solve(rules):
                 infs += 1
 
         print(("Inf: {} Seen: {} Dups: {} Speed: {} IPS".format(infs, len(seen), dups, iters // (time.time() - t0))))
-        if max_level > 20:
+        if max_level > MAX_LEVEL:
             break
 
     return solutions
