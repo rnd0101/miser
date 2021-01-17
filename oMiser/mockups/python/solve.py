@@ -40,7 +40,7 @@ def solve(rules):
             EV,
             # cK,
             # cS,
-            e(SELF),
+            #e(SELF),
         ]
     }
 

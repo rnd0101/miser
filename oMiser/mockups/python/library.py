@@ -6,11 +6,6 @@ cK = c(E, ARG)  # K-combinator
 cSpart = c(C, c(cK, e(ARG)))
 cS = c(C, c(e(C), c(C, c(c(E, cSpart), e(cSpart)))))  # S-combinator
 
-# boolean logic (buggy)
-#cT = cK
-#cF = c(C, c(e(c(e(c(E, ARG)), ARG)), c(C, c(c(E, ARG), e(ARG)))))
-#cNOT = c(c(e(c(E, ARG)), ARG), c(e(c(E, ARG)), ARG))
-
 # Buggy:
 # cREV = (^cS(^cK(^cS(^cI))))(^cK)
 cREV = c(c(e(e(c(C, c(e(c(e(c(c(e(c(E, ARG)), ARG), c(e(c(E, ARG)), ARG))), ARG)), c(C, c(c(E, ARG), e(ARG))))))), ARG),
@@ -26,11 +21,19 @@ cB0 = c(c(e(e(c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E
 cB = C ** (((B ** E) ** (C ** ARG)) ** e((C ** ARG)))
 
 # C = S (S (K (S (K S) K)) S) (K K)
-cC = c(c(e(c(c(e(e(
-    c(c(e(e(c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E, ARG), e(ARG)))))))))), ARG),
-      c(e(c(E, ARG)), ARG)))), ARG),
-    c(e(c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E, ARG), e(ARG))))))))), ARG))), ARG),
-    c(e(e(c(E, ARG))), ARG))
+
+# .C :: `.C :: .C :: ( .E :: .E :: .ARG ) :: `( .C :: `.ARG :: .E :: .ARG )
+cC = (C ** (e(C) ** (C ** ((E ** (E ** ARG)) ** e((C ** (e(ARG) ** (E ** ARG))))))))
+
+# (.C :: (`(`((.C :: (`(.C) :: (.C :: ((.E :: (.E :: .ARG)) :: `((.C :: ((.E :: .ARG) :: `(.ARG)))))))))) :: (.C :: ((.E :: .ARG) :: `(.ARG)))))
+cD = (C ** (e(e((C ** (e(C) ** (C ** ((E ** (E ** ARG)) ** e((C ** ((E ** ARG) ** e(ARG)))))))))) ** (C ** ((E ** ARG) ** e(ARG)))))
+
+#
+# (.C :: (`(.ARG) :: (.E :: .ARG)))
+cT = (C ** (e(ARG) ** (E ** ARG)))
+
+# .ARG :: `(.E :: `.NIL)
+cUobAB = (ARG ** e((E ** e(NIL))))
 
 # W = S S (S K)
 cW0 = c(c(e(c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E, ARG), e(ARG))))))))), ARG),
@@ -38,6 +41,9 @@ cW0 = c(c(e(c(C, c(e(C), c(C, c(c(E, c(C, c(c(E, ARG), e(ARG)))), e(c(C, c(c(E, 
 
 # Optimized
 cW = C ** ((C ** ARG) ** e(ARG))
+
+# (.C :: ((.C :: ((.E :: .ARG) :: `(.SELF))) :: `(.ARG)))
+cY = (C ** ((C ** ((E ** ARG) ** e(SELF))) ** e(ARG)))
 
 # TODO: iota
 # cIOTA = ...
