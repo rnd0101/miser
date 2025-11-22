@@ -85,7 +85,7 @@
   (Lindy s))
 
 ;; -----------------------
-;; Pure lindy trace flag (like your Python)
+;; Pure lindy trace flag
 ;; -----------------------
 
 (define (pure-lindy-trace? z)
@@ -149,7 +149,7 @@
     self))
 
 ;; -----------------------
-;; ap / ev semantics (mirror your Python)
+;; ap / ev semantics
 ;; -----------------------
 
 (define (ap p x)
