@@ -65,32 +65,62 @@
 ;; Default behaviors
 ;; -----------------------
 
+;; default ap: trace c(e(p), e(x))
 (define (default-ap p x) (c (e p) (e x)))
-(define (default-ev p x exp) exp)
+
+;; mk-prim makes an Ind whose default ev returns itself (2-arity),
+;; like Python ob.ev returning self unless overridden.
+(define (mk-prim name ap-proc [ev-proc #f])
+  (letrec ([self (Ind name
+                      ap-proc
+                      (or ev-proc (λ (p x) self)))])
+    self))
 
 
 ;; -----------------------
-;; Primitive individuals (FIXED)
+;; Primitive individuals (final, arity + letrec safe)
 ;; -----------------------
 
-(define (mk-prim name ap-proc [ev-proc default-ev])
-  (Ind name ap-proc ev-proc))
-
-;; Base primitives
+;; Primitives that override ap directly:
 (define NIL  (mk-prim 'NIL (λ (x) x)))
 (define A    (mk-prim 'A   (λ (x) (ob-a x))))
 (define B    (mk-prim 'B   (λ (x) (ob-b x))))
 (define E    (mk-prim 'E   (λ (x) (e x))))
-(define EV   (mk-prim 'EV  default-ap)) ; EV special-cased in Pair evaluation
-(define SELF (mk-prim 'SELF default-ap (λ (p x) p)))
-(define ARG  (mk-prim 'ARG  default-ap (λ (p x) x)))
 
-;; C and D refer to themselves, so define after base ones:
+;; Self-referential primitives:
+;; They must capture self only inside lambdas.
+
+(define EV
+  (letrec ([self (Ind 'EV
+                      (λ (x) (default-ap self x)) ; unary trace ap
+                      (λ (p x) self))])           ; eval to itself
+    self))
+
+(define SELF
+  (letrec ([self (Ind 'SELF
+                      (λ (x) (default-ap self x)) ; unary trace ap
+                      (λ (p x) p))])              ; eval-slot
+    self))
+
+(define ARG
+  (letrec ([self (Ind 'ARG
+                      (λ (x) (default-ap self x)) ; unary trace ap
+                      (λ (p x) x))])              ; eval-slot
+    self))
+
+;; C and D override ap but refer to themselves:
 (define C
-  (mk-prim 'C (λ (x) (c C (c (e x) ARG)))))
+  (letrec ([self (Ind 'C
+                      (λ (x) (c self (c (e x) ARG)))
+                      (λ (p x) self))])
+    self))
 
 (define D
-  (mk-prim 'D (λ (x) (c D (c (e x) ARG)))))
+  (letrec ([self (Ind 'D
+                      (λ (x) (c self (c (e x) ARG)))
+                      (λ (p x) self))])
+    self))
+
 
 ;; -----------------------
 ;; ap / ev semantics (mirror your Python)
