@@ -1,0 +1,38 @@
+# Racket build artifacts
+compiled/
+doc/
+compiled/**
+
+# Raco pkg links created by development installs
+links.rktd
+
+# Emacs / Vim / editors
+*~
+\#*\#
+.#*
+*.swp
+*.swo
+
+# Python artifacts (if mixing with Python version)
+__pycache__/
+*.pyc
+
+# OS / misc
+.DS_Store
+Thumbs.db
+
+# Temporary shells / scratch files
+*.bak
+*.tmp
+*.log
+
+# Dot files from experimentation
+*.dot
+
+# Local temp / scratch dirs
+tmp/
+temp/
+
+# Virtualenvs or runtimes
+.venv/
+env/

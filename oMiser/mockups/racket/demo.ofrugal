@@ -1,0 +1,7 @@
+#lang oFrugal
+
+ob ^x = `foo :: `bar :: .NIL;
+ob ^y = (.C `foo `bar);
+(.D ^y ^y);
+(.EV `(.C `a `b));
+^x
