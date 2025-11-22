@@ -1,11 +1,14 @@
 #lang racket/base
 (provide read-syntax)
 
-(require racket/list racket/match racket/port racket/string syntax/strip-context)
+(require racket/list
+         racket/match
+         racket/port
+         racket/string
+         syntax/strip-context)
 
 (define (char-alphanumeric? c)
   (or (char-alphabetic? c) (char-numeric? c)))
-
 
 ;; -----------------------
 ;; Tokenizer
@@ -18,20 +21,27 @@
   (define i 0)
   (define toks '())
 
-  (define (peek) (if (< i len) (string-ref s i) #\nul))
-  (define (advance!) (set! i (add1 i)))
-  (define (add! t v) (set! toks (cons (tok t v) toks)))
+  (define (peek)
+    (if (< i len)
+        (string-ref s i)
+        #\nul))
+  (define (advance!)
+    (set! i (add1 i)))
+  (define (add! t v)
+    (set! toks (cons (tok t v) toks)))
 
   (define (skip-ws!)
     (let loop ()
       (when (and (< i len) (char-whitespace? (peek)))
-        (advance!) (loop))))
+        (advance!)
+        (loop))))
 
   (define (read-while pred)
     (define start i)
     (let loop ()
       (when (and (< i len) (pred (peek)))
-        (advance!) (loop)))
+        (advance!)
+        (loop)))
     (substring s start i))
 
   (let loop ()
@@ -39,8 +49,7 @@
     (cond
       [(>= i len) (reverse (cons (tok 'EOF "") toks))]
 
-      [(and (char=? (peek) #\:) (< (add1 i) len)
-            (char=? (string-ref s (add1 i)) #\:))
+      [(and (char=? (peek) #\:) (< (add1 i) len) (char=? (string-ref s (add1 i)) #\:))
        (set! i (+ i 2))
        (add! 'COLON2 "::")
        (loop)]
@@ -56,19 +65,33 @@
        (loop)]
 
       [(char=? (peek) #\()
-       (advance!) (add! 'LP "(") (loop)]
+       (advance!)
+       (add! 'LP "(")
+       (loop)]
       [(char=? (peek) #\))
-       (advance!) (add! 'RP ")") (loop)]
+       (advance!)
+       (add! 'RP ")")
+       (loop)]
       [(char=? (peek) #\[)
-       (advance!) (add! 'LB "[") (loop)]
+       (advance!)
+       (add! 'LB "[")
+       (loop)]
       [(char=? (peek) #\])
-       (advance!) (add! 'RB "]") (loop)]
+       (advance!)
+       (add! 'RB "]")
+       (loop)]
       [(char=? (peek) #\,)
-       (advance!) (add! 'COMMA ",") (loop)]
+       (advance!)
+       (add! 'COMMA ",")
+       (loop)]
       [(char=? (peek) #\;)
-       (advance!) (add! 'SEMI ";") (loop)]
+       (advance!)
+       (add! 'SEMI ";")
+       (loop)]
       [(char=? (peek) #\=)
-       (advance!) (add! 'EQ "=") (loop)]
+       (advance!)
+       (add! 'EQ "=")
+       (loop)]
 
       [(char=? (peek) #\.)
        (advance!)
@@ -87,8 +110,7 @@
        (add! 'LINDY name)
        (loop)]
 
-      [else
-       (error 'tokenize (format "unexpected character: ~a" (peek)))])))
+      [else (error 'tokenize (format "unexpected character: ~a" (peek)))])))
 
 ;; -----------------------
 ;; Recursive-descent parser
@@ -101,9 +123,12 @@
 (define toks #f)
 (define pos 0)
 
-(define (cur) (list-ref toks pos))
-(define (cur-type) (tok-type (cur)))
-(define (cur-val) (tok-val (cur)))
+(define (cur)
+  (list-ref toks pos))
+(define (cur-type)
+  (tok-type (cur)))
+(define (cur-val)
+  (tok-val (cur)))
 
 (define (eat! t)
   (unless (eq? (cur-type) t)
@@ -120,7 +145,8 @@
   (let loop ()
     (unless (eq? (cur-type) 'EOF)
       (set! stmts (cons (parse-statement) stmts))
-      (when (eq? (cur-type) 'SEMI) (eat! 'SEMI))
+      (when (eq? (cur-type) 'SEMI)
+        (eat! 'SEMI))
       (loop)))
   (reverse stmts))
 
@@ -148,8 +174,7 @@
   (define f (parse-unary))
   (let loop ([acc f])
     (if (starts-unary? (cur-type))
-        (let ([arg (parse-unary)])
-          (loop (list 'app acc arg)))
+        (let ([arg (parse-unary)]) (loop (list 'app acc arg)))
         acc)))
 
 ;; unary := QUOTE unary | list | "(" binary ")" | term
@@ -182,8 +207,8 @@
 (define (parse-term)
   (match (cur-type)
     ['LINDY (list 'lindy (eat! 'LINDY))]
-    ['PRIM  (list 'prim (eat! 'PRIM))]
-    ['VAR   (list 'var (eat! 'VAR))]
+    ['PRIM (list 'prim (eat! 'PRIM))]
+    ['VAR (list 'var (eat! 'VAR))]
     [else (error 'parse-term "expected term")]))
 
 ;; -----------------------
@@ -200,20 +225,22 @@
 (define (compile ast)
   (match ast
     [(list 'lindy s) #`(L #,s)]
-    [(list 'prim p)  #`#,(prim->id p)]
-    [(list 'var v)   #`#, (var->id v)]
-    [(list 'enc e)   #`(e #,(compile e))]
+    [(list 'prim p) #`#,(prim->id p)]
+    [(list 'var v) #`#,(var->id v)]
+    [(list 'enc e) #`(e #,(compile e))]
     [(list 'pair a b) #`(c #,(compile a) #,(compile b))]
     [(list 'app f x) #`(ap #,(compile f) #,(compile x))]
     [(list 'list items)
      ;; consify ending in NIL
      (define compiled (map compile items))
      (define (fold-right xs tail)
-       (if (null? xs) tail
+       (if (null? xs)
+           tail
            #`(c #,(car xs) #,(fold-right (cdr xs) tail))))
      (fold-right compiled #'NIL)]
     [(list 'assign v e)
-     #`(define #,(var->id v) #,(compile e))]
+     #`(define #,(var->id v)
+         #,(compile e))]
     [else (error 'compile (format "unknown AST ~a" ast))]))
 
 (define (read-syntax path port)
@@ -226,18 +253,17 @@
 
   (define compiled (map compile asts))
 
-;; Wrap non-assignments so they print when they evaluate to an ob.
-(define (wrap-for-print stx)
-  (syntax-case stx (define)
-    [(define _ _) stx] ; assignment stays a definition
-    [expr
-     #`(let ([v expr])
-         (when (ob? v)
-           (displayln (ob->cfob (eval-top v)))))]))
+  ;; Wrap non-assignments so they print when they evaluate to an ob.
+  (define (wrap-for-print stx)
+    (syntax-case stx (define)
+      [(define _ _) stx] ; assignment stays a definition
+      [expr
+       #`(let ([v expr])
+           (when (ob? v)
+             (displayln (ob->cfob (eval-top v)))))]))
 
-(define forms (map wrap-for-print compiled))
- (strip-context
- #`(module oFrugal-module racket/base
-     (require omiser/runtime)
-     #,@forms))
-)
+  (define forms (map wrap-for-print compiled))
+  (strip-context #`(module oFrugal-module racket/base
+                     (require omiser/runtime
+                              oFrugal/stdlib)
+                     #,@forms)))

@@ -1,20 +1,44 @@
 #lang racket/base
-(provide
-  ;; structs + constructors
-  ob? Lindy? Ind? Pair? Enc?
-  (struct-out Lindy) (struct-out Ind) (struct-out Pair) (struct-out Enc)
-  L c e
-  ;; projections + predicates
-  ob-a ob-b
-  is-singleton? is-individual? is-pair? is-lindy? is-enc?
-  ;; primitives
-  NIL A B C D E SELF ARG EV
-  ;; semantics
-  ap ev eval-top
-  ;; printing
-  ob->cfob)
+;; structs + constructors
+(provide ob?
+         Lindy?
+         Ind?
+         Pair?
+         Enc?
+         (struct-out Lindy)
+         (struct-out Ind)
+         (struct-out Pair)
+         (struct-out Enc)
+         L
+         c
+         e
+         ;; projections + predicates
+         ob-a
+         ob-b
+         is-singleton?
+         is-individual?
+         is-pair?
+         is-lindy?
+         is-enc?
+         ;; primitives
+         NIL
+         A
+         B
+         C
+         D
+         E
+         SELF
+         ARG
+         EV
+         ;; semantics
+         ap
+         ev
+         eval-top
+         ;; printing
+         ob->cfob)
 
-(require racket/match racket/list)
+(require racket/match
+         racket/list)
 
 ;; -----------------------
 ;; Core data representations
@@ -25,7 +49,8 @@
 (struct Pair (a b) #:transparent)
 (struct Enc (a) #:transparent)
 
-(define (ob? x) (or (Lindy? x) (Ind? x) (Pair? x) (Enc? x)))
+(define (ob? x)
+  (or (Lindy? x) (Ind? x) (Pair? x) (Enc? x)))
 
 ;; Projections
 (define (ob-a z)
@@ -37,19 +62,27 @@
 (define (ob-b z)
   (match z
     [(Pair _ y) y]
-    [(Enc _) z]  ; singleton self-loop
+    [(Enc _) z] ; singleton self-loop
     [_ z]))
 
-(define (is-singleton? x) (equal? (ob-b x) x))
-(define (is-individual? x) (and (equal? (ob-a x) x) (equal? (ob-b x) x)))
-(define (is-pair? x) (Pair? x))
-(define (is-lindy? x) (Lindy? x))
-(define (is-enc? x) (and (is-singleton? x) (not (is-individual? x))))
+(define (is-singleton? x)
+  (equal? (ob-b x) x))
+(define (is-individual? x)
+  (and (equal? (ob-a x) x) (equal? (ob-b x) x)))
+(define (is-pair? x)
+  (Pair? x))
+(define (is-lindy? x)
+  (Lindy? x))
+(define (is-enc? x)
+  (and (is-singleton? x) (not (is-individual? x))))
 
 ;; Constructors matching ob.c / ob.e / L(...)
-(define (c x y) (Pair x y))
-(define (e x) (Enc x))
-(define (L s) (Lindy s))
+(define (c x y)
+  (Pair x y))
+(define (e x)
+  (Enc x))
+(define (L s)
+  (Lindy s))
 
 ;; -----------------------
 ;; Pure lindy trace flag (like your Python)
@@ -66,26 +99,24 @@
 ;; -----------------------
 
 ;; default ap: trace c(e(p), e(x))
-(define (default-ap p x) (c (e p) (e x)))
+(define (default-ap p x)
+  (c (e p) (e x)))
 
 ;; mk-prim makes an Ind whose default ev returns itself (2-arity),
 ;; like Python ob.ev returning self unless overridden.
 (define (mk-prim name ap-proc [ev-proc #f])
-  (letrec ([self (Ind name
-                      ap-proc
-                      (or ev-proc (λ (p x) self)))])
+  (letrec ([self (Ind name ap-proc (or ev-proc (λ (p x) self)))])
     self))
-
 
 ;; -----------------------
 ;; Primitive individuals (final, arity + letrec safe)
 ;; -----------------------
 
 ;; Primitives that override ap directly:
-(define NIL  (mk-prim 'NIL (λ (x) x)))
-(define A    (mk-prim 'A   (λ (x) (ob-a x))))
-(define B    (mk-prim 'B   (λ (x) (ob-b x))))
-(define E    (mk-prim 'E   (λ (x) (e x))))
+(define NIL (mk-prim 'NIL (λ (x) x)))
+(define A (mk-prim 'A (λ (x) (ob-a x))))
+(define B (mk-prim 'B (λ (x) (ob-b x))))
+(define E (mk-prim 'E (λ (x) (e x))))
 
 ;; Self-referential primitives:
 ;; They must capture self only inside lambdas.
@@ -93,34 +124,29 @@
 (define EV
   (letrec ([self (Ind 'EV
                       (λ (x) (default-ap self x)) ; unary trace ap
-                      (λ (p x) self))])           ; eval to itself
+                      (λ (p x) self))]) ; eval to itself
     self))
 
 (define SELF
   (letrec ([self (Ind 'SELF
                       (λ (x) (default-ap self x)) ; unary trace ap
-                      (λ (p x) p))])              ; eval-slot
+                      (λ (p x) p))]) ; eval-slot
     self))
 
 (define ARG
   (letrec ([self (Ind 'ARG
                       (λ (x) (default-ap self x)) ; unary trace ap
-                      (λ (p x) x))])              ; eval-slot
+                      (λ (p x) x))]) ; eval-slot
     self))
 
 ;; C and D override ap but refer to themselves:
 (define C
-  (letrec ([self (Ind 'C
-                      (λ (x) (c self (c (e x) ARG)))
-                      (λ (p x) self))])
+  (letrec ([self (Ind 'C (λ (x) (c self (c (e x) ARG))) (λ (p x) self))])
     self))
 
 (define D
-  (letrec ([self (Ind 'D
-                      (λ (x) (c self (c (e x) ARG)))
-                      (λ (p x) self))])
+  (letrec ([self (Ind 'D (λ (x) (c self (c (e x) ARG))) (λ (p x) self))])
     self))
-
 
 ;; -----------------------
 ;; ap / ev semantics (mirror your Python)
@@ -146,21 +172,14 @@
     [(Ind _ _ ev-proc) (ev-proc p x)]
     [(Pair a b)
      (cond
-       [(and (equal? a C) (Pair? b))
-        (c (ev p x (Pair-a b))
-           (ev p x (Pair-b b)))]
-       [(and (equal? a D) (Pair? b))
-        (if (equal? (ev p x (Pair-a b))
-                    (ev p x (Pair-b b)))
-            A B)]
-       [(equal? a EV)
-        (ev p x (ev p x b))]
-       [else
-        (ap (ev p x a)
-            (ev p x b))])]
+       [(and (equal? a C) (Pair? b)) (c (ev p x (Pair-a b)) (ev p x (Pair-b b)))]
+       [(and (equal? a D) (Pair? b)) (if (equal? (ev p x (Pair-a b)) (ev p x (Pair-b b))) A B)]
+       [(equal? a EV) (ev p x (ev p x b))]
+       [else (ap (ev p x a) (ev p x b))])]
     [_ exp]))
 
-(define (eval-top exp) (ev SELF ARG exp))
+(define (eval-top exp)
+  (ev SELF ARG exp))
 
 ;; -----------------------
 ;; CFob-ish pretty printer
