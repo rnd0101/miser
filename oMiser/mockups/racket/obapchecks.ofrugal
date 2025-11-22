@@ -1,0 +1,105 @@
+#lang oFrugal
+
+ob ^cK = .E;
+ob ^cI = .NIL;
+
+.D (.ARG :: .SELF) .ARG `.ARG :: `(.ARG :: .SELF);
+.D (`.ARG :: `(.ARG :: .SELF)) Z `.ARG :: `(.ARG :: .SELF);
+.D (`X Y) Z X;
+.D (X :: Y) .NIL (X :: Y);
+.D (X :: Y) Z ((X :: Y) :: Z);
+
+.D (.NIL X) X;
+.D (.A (X :: Y)) X;
+.D (.B (X :: Y)) Y;
+.D (.C X) (.C :: `X :: .ARG);
+.D (.D X) (.D :: `X :: .ARG);
+.D (.E X) `X;
+.D (X Y) (X :: Y);
+.D (X .NIL) (X :: `.NIL);
+.D (X `Y) (X :: ``Y);
+.D (.SELF X) (`.SELF :: `X);
+.D (.ARG X) (`.ARG :: `X);
+.D (.EV X) (`.EV :: `X);
+
+.D (X :: Y) (X :: Y);
+
+ob ^xyz = X :: Y :: Z;
+.D (^xyz .NIL) ^xyz;
+.D (.EV ^xyz) ^xyz;
+
+.D (X :: Z) (Y :: Z) ((X :: Z) :: Y :: Z);
+.D (.EV ((X :: Z) :: Y :: Z)) ((X :: Z) :: Y :: Z);
+
+ob ^cKX = `X;
+.D (^cKX .NIL) X;
+.D (^cKX Y) X;
+.D (^cK X) ^cKX;
+.D ((^cK X) Y) X;
+.D ((`^cK :: X) .NIL) `X;
+.D ((`^cK :: X) Y) `X;
+.D (.EV ((`^cK :: X) .NIL)) X;
+.D (.EV ((^cK :: X) .NIL)) X;
+.D (.EV ((`^cK :: `X) :: `Y)) X;
+.D (.EV ((^cK :: `X) :: `Y)) X;
+
+
+ob ^SXYZ = (X :: Z) :: Y :: Z;
+ob ^SXY  = (`X :: .ARG) :: `Y :: .ARG;
+ob ^SX   = .C :: ``(X :: .ARG) :: .C :: (.E :: .ARG) :: `.ARG;
+
+.D (X Z) (X :: Z);
+.D (Y Z) (Y :: Z);
+.D ((X :: Z) (Y :: Z)) ^SXYZ;
+.D ((X Z) (Y Z)) ^SXYZ;
+.D (^SXYZ .NIL) ^SXYZ;
+.D (.EV ^SXYZ) ^SXYZ;
+.D (^SXYZ more) (^SXYZ :: more);
+.D (.EV (`^SXYZ :: more)) (^SXYZ :: more);
+.D (^SXY Z) ^SXYZ;
+.D (.EV (`^SXY :: Z)) ^SXYZ;
+.D (^SX Y) ^SXY;
+.D ((^SX Y) Z) ^SXYZ;
+.D (.EV (`^SX :: Y)) ^SXY;
+.D (.EV ((`^SX :: Y) :: Z)) ^SXYZ;
+.D (^cS X) ^SX;
+.D ((^cS X) Y) ^SXY;
+.D (((^cS X) Y) Z) ^SXYZ;
+.D (.EV (`^cS :: X)) ^SX;
+.D (.EV ((`^cS :: X) :: Y)) ^SXY;
+.D (.EV (((`^cS :: X) :: Y) :: Z)) ^SXYZ;
+
+ob ^SKK = .EV ((`^cS :: `^cK) :: `^cK);
+.D ^SKK ((`^cK :: .ARG) :: (`^cK :: .ARG));
+.D (^SKK X) X;
+.D (.EV (`^SKK :: X)) X;
+.D (^cI X) X;
+.D (.EV (`^cI :: X)) X;
+.D (^cI X) X;
+.D (.EV (`(^cI :: .ARG) :: X)) X;
+
+.D (.EV (.D X X)) .A;
+.D (.EV (.D X .NIL)) .B;
+.D (.EV ((.D X X) true false)) true;
+.D (.EV ((.D X Y) true false)) false;
+.D (.EV (.EV (.D X X) `true `false)) true;
+.D (.EV (.EV (.D X Y) `true `false)) false;
+
+.D (^hasX .NIL) .B;
+.D (.EV (`^hasX :: .NIL)) .B;
+.D (^hasX (X :: .NIL)) .A;
+.D (^hasX (Y :: .NIL)) .B;
+.D (^hasX X) .B;
+.D (^hasX (A :: (X :: X) :: B :: .NIL)) .B;
+.D (^hasX (A :: B :: C :: X :: .NIL)) .A;
+.D (.EV (`^hasX :: `(A :: (X :: X) :: B :: .NIL))) .B;
+.D (.EV (`^hasX :: `(A :: B :: C :: X :: .NIL))) .A;
+
+.D (^has X) ^hasX;
+.D ((^has .NIL) .NIL) .B;
+.D ((^has .NIL) (.NIL :: .NIL)) .A;
+.D (.EV ((`^has :: X) :: `(A :: B :: C :: X :: .NIL))) .A;
+.D (.EV ((`^has :: X) :: `(A :: (X :: X) :: B :: .NIL))) .B;
+
+.D (.A (M :: X :: .NIL)) M;
+.D (.B X) X;
