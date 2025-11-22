@@ -1,161 +1,70 @@
-oFrugal / oMiser — Local Development Setup (Plain Text)
-=======================================================
+oFrugal / oMiser — Development Setup
+====================================
 
-This project contains two Racket collections:
-
-  • omiser/   – runtime for ob / c / e / ap / ev / eval
-  • oFrugal/  – #lang oFrugal reader + module-begin
-
-Everything is installed in *development (linked) mode*, so Racket
-loads your source files directly — no copying.
-
-
-0. Requirements
+Project purpose
 ---------------
-Racket 8.18 or later.
+This repository provides a Racket implementation of the **oMiser computational model**
+and the **oFrugal language** (a surface syntax for expressing ob-expressions).
+
+For theory, reference documentation, and background materials, see:
+
+    https://orcmid.github.io/miser/
+
+This includes the ob model, CFob canonical forms, Frugalese grammar,
+and the broader Miser computational framework.
 
 
+Development installation
+------------------------
+Install the repository as a *linked* Racket package (no copying):
 
-1. Directory Layout (expected)
-------------------------------
-Your repo root should look like this:
-
-  repo-root/
-    info.rkt                  <-- root (multi-collection) info
-    omiser/
-      info.rkt
-      runtime.rkt
-    oFrugal/
-      info.rkt
-      lang/
-        reader.rkt
-        module-begin.rkt
-    demo.ofrugal
-
-
-
-2. Required info.rkt Files
---------------------------
-
-(2.1) repo-root/info.rkt
--------------------------
-#lang info
-(define collection 'multi)
-(define deps '("base"))
-(define version "0.0.1")
-(define pkg-desc "oFrugal language + oMiser runtime")
-
-This tells Racket the package contains multiple collections.
-
-
-(2.2) omiser/info.rkt
-----------------------
-#lang info
-(define collection "omiser")
-(define deps '("base"))
-(define version "0.0.1")
-
-
-(2.3) oFrugal/info.rkt
------------------------
-#lang info
-(define collection "oFrugal")
-(define deps '("base"))
-(define version "0.0.1")
-
-
-
-3. Install the Package (development link)
------------------------------------------
-
-IMPORTANT: You must run raco from the repo root — the directory
-that contains the root info.rkt.
-
-Commands:
-
-  cd /path/to/repo-root
   raco pkg install
 
-This installs the entire directory as a linked package
-(i.e., no copying of files).
+Run this from the repository root (the directory containing info.rkt).
 
-Alternative explicit install:
-
-  raco pkg install --link . --name oFrugal-multi
-
-(but normally just “raco pkg install” is correct when run
-in the directory containing info.rkt.)
+This makes Racket load your local source files directly, so edits are
+immediately reflected.
 
 
-
-4. Build/Compile the Collections
---------------------------------
-
-After installation, build both collections:
+Rebuilding after changes
+------------------------
+When you change interpreter/runtime or language reader code:
 
   raco setup -D oFrugal omiser
 
-(-D skips docs for speed.)
-
-If you see errors, check that all info.rkt files exist.
-
-
-
-5. Running Files
-----------------
-
-Example file: demo.ofrugal
-
-  #lang oFrugal
-
-  ob ^x = `foo :: `bar :: .NIL;
-  (.D ^x ^x);
-  ^x
-
-Run:
-
-  racket demo.ofrugal
-
-
-
-6. Development Workflow
------------------------
-
-Because the package is **linked**, normal code edits do NOT
-require reinstallation.
-
-Just rerun:
-
-  racket demo.ofrugal
-
-Racket automatically recompiles changed modules.
-
-
-When you change the language reader or macros:
-----------------------------------------------
-Force rebuild:
+When changing only the oFrugal reader:
 
   raco setup -D oFrugal
 
-
-When you modify info.rkt or change layout:
-------------------------------------------
-Update metadata, then rebuild:
+When metadata or directory layout changes:
 
   raco pkg update
   raco setup -D oFrugal omiser
 
 
-If compiled artifacts become corrupted:
----------------------------------------
-  raco setup --clean oFrugal
-  raco setup -D oFrugal
+Uninstall
+---------
+To remove the package:
 
-
-
-7. Uninstall
-------------
   raco pkg remove oFrugal
 
-(Use “raco pkg show” to find the installed name.)
+You can inspect installed package names with:
 
+  raco pkg show
+
+
+Running .ofrugal programs
+-------------------------
+An oFrugal file begins with:
+
+  #lang oFrugal
+
+Run any such file with:
+
+  racket your-file.ofrugal
+
+Example:
+
+  racket demo.ofrugal
+
+Any top-level expression producing an ob value will be displayed in CFob form.
